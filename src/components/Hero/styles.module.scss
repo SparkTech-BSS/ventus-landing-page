@@ -1,0 +1,56 @@
+.hero {
+  background-image: url("../../assets/png/HeroBackground.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 0% 0%;
+  background-attachment: scroll;
+  padding-block-start: calc(var(--section-padding) + 70px);
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .heading {
+    font-size: var(--fs-64xl);
+    font-weight: var(--fw-700);
+    color: var(--white-color);
+    line-height: 1.2;
+    // display: inline-block;
+
+    .heading-colored {
+        display: inline-block;
+      background: var(--gradient-linear-text);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  .btn-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn {
+
+  }
+
+  .btn-outline {
+
+  }
+
+  .btn-full {
+
+  }
+
+  .subheading {
+
+  }
+
+  .btn-go-down {
+    
+  }
+}

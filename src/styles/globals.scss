@@ -1,0 +1,81 @@
+@import "./reset.scss";
+
+:root {
+  --primary-color: #ff5555;
+  --gradient-linear: linear-gradient(90deg, #ff5555 0%, #ff8b71 100%);
+  --gradient-linear-hover: linear-gradient(90deg, #FF8B71 0%, #FF5555 100%);
+  --gradient-linear-text: -webkit-linear-gradient(90deg, #ff5555 0%, #ff8b71 100%);
+  --white-color: #ffffff;
+
+  --black-color: #000000;
+  --black-900: #1f1f1f;
+  --black-700: #484848;
+
+  --grey-color-100: #e8e8e8;
+  --grey-color-400: #939598;
+
+  --ff-inter: "Inter", sans-serif;
+
+  --fw-400: 400;
+  --fw-500: 500;
+  --fw-600: 600;
+  --fw-700: 700;
+
+  --fs-xs: 1.2rem;
+  --fs-sm: 1.4rem;
+  --fs-md: 1.6rem;
+  --fs-lg: 1.8rem;
+  --fs-xl: 2rem;
+  --fs-3xl: 3rem;
+  --fs-32xl: 3.2rem;
+  --fs-64xl: 6.4rem;
+
+  --shadow-1: 0px 2px 15px hsla(0, 0%, 0%, 0.05);
+  --shadow-2: -10px 10px 40px -2px hsla(217, 21%, 16%, 0.05);
+
+  --section-padding: 80px;
+
+  --transition-1: all 0.3s ease-in;
+  --transition-2: 0.5s ease;
+  --cubic-in: cubic-bezier(0.51, 0.03, 0.64, 0.28);
+  --cubic-out: cubic-bezier(0.33, 0.85, 0.4, 0.96);
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--ff-inter);
+  font-size: 10px;
+  scroll-behavior: smooth;
+  min-height: 300vh;
+
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+body {
+  background-color: var(--white-color);
+  -webkit-font-smoothing: antialiased;
+  font-size: var(--fs-md);
+  line-height: 1.7;
+}
+
+/*-----------------------------------*\
+  #REUSED STYLE
+\*-----------------------------------*/
+
+.container {
+  padding-inline: 15px;
+}
+
+
+.section {
+  padding-block: var(--section-padding);
+}
