@@ -9,7 +9,6 @@ import { Hero } from "../components/Hero";
 import { StartParty } from "../components/StartParty";
 import { State } from "../components/State";
 import { GoUpButton } from "../components/GoUpButton";
-import ScrollReveal from "../components/ScrollReveal";
 
 const Home: NextPage = () => {
   return (
@@ -21,42 +20,25 @@ const Home: NextPage = () => {
       <Header />
 
       <main>
-        <Hero />
-        <ScrollReveal>
-          <State
-            text="Descubra festas em todas as cidades"
-            state="1"
-            heading="Inicie"
-          />
-        </ScrollReveal>
-
-        <ScrollReveal>
-          <Event />
-        </ScrollReveal>
-
-        <ScrollReveal>
-          <StartParty />
-        </ScrollReveal>
-
-        <ScrollReveal>
-          <State
-            text="Termine curtindo com a galera"
-            state="2"
-            heading="Finalize"
-          />
-        </ScrollReveal>
-
-        <ScrollReveal>
-          <CashBack />
-        </ScrollReveal>
-
-        <ScrollReveal>
-          <Footer />
-        </ScrollReveal>
+        <Hero/>
+        <Event/>
+        <State
+          text="Descubra festas em todas as cidades"
+          state="1"
+          heading="Inicie"
+        />
+        <StartParty/>
+        <State
+          text="Termine curtindo com a galera"
+          state="2"
+          heading="Finalize"
+        />
+        <CashBack/>
+        <Footer/>
       </main>
 
-      <WhatsappButton />
-      <GoUpButton />
+      <WhatsappButton/>
+      <GoUpButton/>
     </>
   );
 };

@@ -16,7 +16,7 @@ export function Footer() {
         <div className={styles["row-body"]}>
           <div className={styles["logo-container"]}>
             <a className={styles.logo}>
-              <Image src={LogoSVG} width={90} height={42} />
+              <Image src={LogoSVG} width={90} height={42} alt=""/>
             </a>
             <span className={styles.since}>Copyright © 2022</span>
           </div>

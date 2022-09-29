@@ -68,7 +68,7 @@ export function Header() {
     setScrollY(window.pageYOffset);
   }
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     handleSize();
   }, []);
 

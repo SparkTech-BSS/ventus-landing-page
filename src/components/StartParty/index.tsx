@@ -43,6 +43,7 @@ export function StartParty() {
               src={mobileAppSVG}
               objectFit={"cover"}
               className={styles.figure}
+              alt=""
             />
           </div>
 

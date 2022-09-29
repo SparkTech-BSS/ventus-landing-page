@@ -16,6 +16,7 @@ export function Avatar() {
           height={"100%"}
           className={styles.avatar}
           objectFit="cover"
+          alt=""
         />
       </div>
       <div className={styles["avatar-image-box"]}>
@@ -25,6 +26,7 @@ export function Avatar() {
           objectFit="cover"
           width={"100%"}
           height={"100%"}
+          alt=""
         />
       </div>
       <div className={styles["avatar-image-box"]}>
@@ -34,6 +36,7 @@ export function Avatar() {
           objectFit="cover"
           width={"100%"}
           height={"100%"}
+          alt=""
         />
         <div className={styles.more}><span>+250</span></div>
       </div>
