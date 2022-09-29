@@ -1,0 +1,31 @@
+.button {
+  position: fixed;
+  bottom: 2rem;
+  right: 3rem;
+  z-index: 900;
+  width: 53px;
+  height: 53px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white-color);
+  background-color: var(--primary-color);
+  border-radius: 10px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.4);
+  transition: all .2s;
+
+  visibility: hidden;
+    opacity: 0;
+    transform: translateX(200%);
+    transition: all 0.5s;
+
+    &.active {
+      visibility: visible;
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+  &:hover {
+    opacity: 0.6;
+  }
+}

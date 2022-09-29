@@ -1,18 +1,33 @@
 @import "./reset.scss";
 
 :root {
+  // COLOR CONFIGURATION
   --primary-color: #ff5555;
   --gradient-linear: linear-gradient(90deg, #ff5555 0%, #ff8b71 100%);
-  --gradient-linear-hover: linear-gradient(90deg, #FF8B71 0%, #FF5555 100%);
-  --gradient-linear-text: -webkit-linear-gradient(90deg, #ff5555 0%, #ff8b71 100%);
+  --gradient-linear-hover: linear-gradient(90deg, #ff8b71 0%, #ff5555 100%);
+  --gradient-linear-text: -webkit-linear-gradient(
+    90deg,
+    #ff5555 0%,
+    #ff8b71 100%
+  );
+  --gradient-linear-state: linear-gradient(
+    0.01deg,
+    #ff5555 3.19%,
+    rgba(255, 85, 85, 0) 100%
+  );
   --white-color: #ffffff;
 
   --black-color: #000000;
   --black-900: #1f1f1f;
   --black-700: #484848;
+  --black-color-hover: #222222;
 
   --grey-color-100: #e8e8e8;
   --grey-color-400: #939598;
+
+  --whatsApp-color: #04D361;
+
+  //FONT CONFIGURATION
 
   --ff-inter: "Inter", sans-serif;
 
@@ -20,20 +35,27 @@
   --fw-500: 500;
   --fw-600: 600;
   --fw-700: 700;
+  --fw-900: 900;
 
   --fs-xs: 1.2rem;
   --fs-sm: 1.4rem;
   --fs-md: 1.6rem;
   --fs-lg: 1.8rem;
   --fs-xl: 2rem;
+  --fs-24xl: 2.4rem;
   --fs-3xl: 3rem;
   --fs-32xl: 3.2rem;
+  --fs-6xl: 6rem;
   --fs-64xl: 6.4rem;
+  --fs-8xl: 8rem;
+  --fs-96xl: 9.6rem;
 
   --shadow-1: 0px 2px 15px hsla(0, 0%, 0%, 0.05);
   --shadow-2: -10px 10px 40px -2px hsla(217, 21%, 16%, 0.05);
 
-  --section-padding: 80px;
+  --section-hero-padding: 80px;
+
+  --section-padding: 40px;
 
   --transition-1: all 0.3s ease-in;
   --transition-2: 0.5s ease;
@@ -53,11 +75,11 @@ html {
   font-family: var(--ff-inter);
   font-size: 10px;
   scroll-behavior: smooth;
-  min-height: 300vh;
+  min-height: 100vh;
 
-  -webkit-user-select: none; /* Safari */
-  -ms-user-select: none; /* IE 10 and IE 11 */
-  user-select: none; /* Standard syntax */
+  //-webkit-user-select: none; /* Safari */
+  //-ms-user-select: none; /* IE 10 and IE 11 */
+ // user-select: none; /* Standard syntax */
 }
 
 body {
@@ -65,6 +87,13 @@ body {
   -webkit-font-smoothing: antialiased;
   font-size: var(--fs-md);
   line-height: 1.7;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: var(--primary-color);
+  color: var(--white-color);
 }
 
 /*-----------------------------------*\
@@ -75,7 +104,101 @@ body {
   padding-inline: 15px;
 }
 
+.section-hero {
+  padding-block: var(--section-hero-padding);
+}
 
 .section {
   padding-block: var(--section-padding);
 }
+
+.section-heading {
+  font-size: var(--fs-32xl);
+  font-weight: var(--fw-700);
+  color: var(--black-900);
+}
+
+/*-----------------------------------*\
+  #REUSED STYLE
+\*-----------------------------------*/
+
+.keen-slider__slide {
+  // transition: all .1s;
+
+  &:hover > * {
+    // transform: scale(1.2);
+  }
+}
+
+.dots {
+  display: flex;
+  padding: 10px 0;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4rem;
+  height: 4rem;
+}
+
+.dot {
+  border: none;
+  width: 12px;
+  height: 12px;
+  background: var(--grey-color-100);
+  border-radius: 50%;
+  margin: 0 5px;
+  padding: 5px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.dot:focus {
+  outline: none;
+}
+
+.dot.active {
+  background: var(--primary-color);
+  width: 17px;
+  height: 17px;
+}
+
+/*-----------------------------------*\
+#MEDIA QUERIES
+\*-----------------------------------*/
+@media (min-width: 575px) {
+  .header {
+    .container {
+      max-width: 540px;
+      width: 100%;
+      margin-inline: auto;
+    }
+  }
+}
+
+@media (min-width: 575px) {
+  .container {
+    max-width: 540px;
+    width: 100%;
+    margin-inline: auto;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+
+//  max-width: 600px;

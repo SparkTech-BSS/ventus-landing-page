@@ -1,0 +1,100 @@
+.card {
+  display: flex;
+  flex-direction: column;
+
+  max-width: 303px;
+  width: 100%;
+
+  position: relative;
+
+  cursor: pointer;
+
+  transition: all .3s;
+
+  &:hover {
+    // transform: scale(0.9);
+  }
+
+  .card-img {
+    object-fit: cover;
+    border-radius: 10px 10px 0px 0px;
+  }
+
+  .date {
+    width: 54px;
+    height: 66px;
+    border-radius: 10px;
+    background: var(--primary-color);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    right: 1.4rem;
+    top: 12.7rem;
+
+    .date-month, .date-day { line-height: 1.2; color: var(--white-color); }
+
+    .date-month {
+        font-size: var(--fs-md);
+        font-weight: var(--fw-700);
+    }
+
+    .date-day {
+        font-size: var(--fs-24xl);
+        font-weight: var(--fw-700);
+    }
+  }
+
+  .card-content {
+    background-color: var(--grey-color-100);
+    border-radius: 0px 0px 10px 10px;
+    padding: 2rem;
+  }
+
+  .card-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+  }
+
+  .card-title {
+    color: var(--black-700);
+    font-size: var(--fs-xl);
+    font-weight: var(--fw-700);
+  }
+
+  .rating-container {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+
+    color: var(--black-700);
+    font-size: var(--fs-md);
+    font-weight: var(--fw-700);
+  }
+
+  .card-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+
+  .card-item-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.6rem;
+    height: 2.6rem;
+  }
+
+  .card-item-text {
+    color: var(--black-700);
+    font-size: var(--fs-md);
+    font-weight: var(--fw-400);
+  }
+}

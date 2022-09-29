@@ -18,7 +18,7 @@
     font-weight: var(--fw-700);
     color: var(--white-color);
     line-height: 1.2;
-    // display: inline-block;
+    display: inline-block;
 
     .heading-colored {
         display: inline-block;
@@ -31,26 +31,126 @@
   .btn-group {
     display: flex;
     flex-direction: column;
+    gap: 2rem;
     width: 100%;
+    margin-top: 5rem;
   }
 
   .btn {
+    width: 100%;
+    font-size: var(--fs-md);
+    font-weight: var(--fw-700);
+    color: var(--white-color);
+    padding: 1.5rem 2rem;
+    border-radius: 5px;
+    transition: all .25s;
 
+    &:hover {
+      opacity: 0.6;
+    }
   }
 
   .btn-outline {
-
+    border: .2rem solid var(--primary-color);
   }
 
   .btn-full {
-
+    background: var(--gradient-linear);
   }
 
   .subheading {
-
+    font-size: var(--fs-md);
+    color: var(--white-color);
+    text-align: center;
+    margin-top: 5.6rem;
   }
 
   .btn-go-down {
+    color: var(--white-color);
+    font-size: var(--fs-32xl);
+    margin-top: 4.2rem;
+  }
+}
+
+
+@media (min-width: 575px) { 
+  .hero { 
+    padding-block-start: calc(var(--section-padding) + 100px);
+    .heading {
+      text-align: center;
+    }
+  }
+}
+
+@media (min-width: 768px) { 
+  .hero { 
     
+
+    .btn-group {
+      flex-direction: row;
+    }
+  }
+}
+
+@media (min-width: 992px) { 
+  .hero { 
+    min-height: 100vh;
+    height: 100%;
+    padding-block-start: calc(var(--section-padding) + 160px);
+    
+    .btn-group {
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn {
+      width: auto;
+      padding: 1.5rem 5rem;
+    }
+
+    .btn-go-down {
+      font-size: var(--fs-64xl);
+      margin-top: 8rem;
+    }
+  }
+}
+
+
+@media (min-width: 1200px) { 
+  .hero { 
+    min-height: 100vh;
+    height: 100%;
+    padding-block-start: calc(var(--section-padding) + 160px);
+    
+    .heading {
+      font-size: var(--fs-96xl);
+      font-weight: var(--fw-700);
+      color: var(--white-color);
+      line-height: 1.2;
+      display: inline-block;
+      width: 801px;
+  
+      .heading-colored {
+          display: inline-block;
+        background: var(--gradient-linear-text);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+
+    .btn {
+      width: auto;
+    }
+
+    .btn-go-down {
+      font-size: var(--fs-8xl);
+      margin-top: 0;
+      display: inline-flex;
+    }
+
+    .subheading {
+      width: 600px;
+      margin-bottom: 10rem;
+    }
   }
 }
