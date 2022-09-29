@@ -22,6 +22,7 @@ export function EventCard() {
         height={207}
         className={styles["card-img"]}
         objectFit="cover"
+        alt=""
       />
 
       <div className={styles.date}>
