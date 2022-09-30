@@ -15,11 +15,7 @@ export function Cookies() {
     <>
       <div className={`${styles.shadow} ${active ? styles.active : ""}`}></div>
 
-      <motion.section
-        exit="exit"
-        initial="hidden"
-        animate="show"
-        variants={goUp}
+      <section
         className={`${styles.cookies} ${active ? styles.active : ""}`}
       >
         <p className={styles["cookies-text"]}>
@@ -39,7 +35,7 @@ export function Cookies() {
           </button>
           <button className={styles["btn-secondary"]}>Mais Detalhes</button>
         </div>
-      </motion.section>
+      </section>
     </>
   );
 }

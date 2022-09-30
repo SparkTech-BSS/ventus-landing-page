@@ -76,7 +76,7 @@ export const pageAnimation = {
       transition: {
         duration: 1,
         ease: "easeOut",
-        delay: 2
+        // delay: 2
       },
     },
   };
@@ -93,7 +93,7 @@ export const pageAnimation = {
       transition: {
         duration: 1,
         ease: "easeOut",
-        delay: 2
+        // delay: 2
       },
     },
   }
@@ -109,7 +109,7 @@ export const pageAnimation = {
       transition: {
         duration: 1,
         ease: "easeOut",
-        delay: 2
+        // delay: 2
       },
     },
   }

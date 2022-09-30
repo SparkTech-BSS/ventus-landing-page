@@ -27,15 +27,7 @@ const Home: NextPage = () => {
       <Header />
 
 
-      <motion.main
-        initial={{ opacity: 1, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{
-          duration: 0.8,
-          ease: [0, 0.81, 0.2, 1.01],
-          delay: 1
-        }}
-      >
+      <main>
         <Hero />
         <Event />
         <State
@@ -51,7 +43,7 @@ const Home: NextPage = () => {
         />
         <CashBack />
         <Footer />
-      </motion.main>
+      </main>
 
       <WhatsappButton />
       <GoUpButton />

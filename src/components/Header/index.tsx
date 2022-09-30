@@ -100,11 +100,7 @@ export function Header() {
   }, [scrollY, windowSize.height]);
 
   return (
-    <motion.header
-      exit="exit"
-      variants={goDown}
-      initial="hidden"
-      animate="show"
+    <header
       className={`${styles.header} ${activeHeader ? styles.active : ""}`}
     >
       <div className={`container ${styles.container}`}>
@@ -194,6 +190,6 @@ export function Header() {
           <div className={styles.three}></div>
         </button>
       </div>
-    </motion.header>
+    </header>
   );
 }
