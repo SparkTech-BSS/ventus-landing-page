@@ -20,7 +20,7 @@ const Home: NextPage = () => {
         <title>Ventus</title>
       </Head>
 
-      <Rainbow/>
+      {/* <Rainbow/> */}
 
       <Cookies />
 
