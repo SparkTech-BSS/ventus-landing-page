@@ -6,11 +6,13 @@ import {
   useLayoutEffect,
 } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import LogoSVG from "../../assets/svg/logo(full-size).svg";
 import { ApplePlayICON, GooglePlayICON } from "../Icon";
 
 import styles from "./styles.module.scss";
+import { goDown } from "utils";
 
 export function Header() {
   const [showMenu, setShowMenu] = useState(false);
@@ -98,7 +100,13 @@ export function Header() {
   }, [scrollY, windowSize.height]);
 
   return (
-    <header className={`${styles.header} ${activeHeader ? styles.active : ""}`}>
+    <motion.header
+      exit="exit"
+      variants={goDown}
+      initial="hidden"
+      animate="show"
+      className={`${styles.header} ${activeHeader ? styles.active : ""}`}
+    >
       <div className={`container ${styles.container}`}>
         <Link href="#">
           <a href="#" className={styles.logo}>
@@ -186,6 +194,6 @@ export function Header() {
           <div className={styles.three}></div>
         </button>
       </div>
-    </header>
+    </motion.header>
   );
 }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { EventCard } from "../EventCard";
-
+import { motion } from "framer-motion";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 

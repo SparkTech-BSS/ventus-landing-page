@@ -3,6 +3,7 @@
 :root {
   // COLOR CONFIGURATION
   --primary-color: #ff5555;
+  --primary-color-hover: #C83B3B;
   --gradient-linear: linear-gradient(90deg, #ff5555 0%, #ff8b71 100%);
   --gradient-linear-hover: linear-gradient(90deg, #ff8b71 0%, #ff5555 100%);
   --gradient-linear-text: -webkit-linear-gradient(
@@ -20,6 +21,7 @@
   --black-color: #000000;
   --black-900: #1f1f1f;
   --black-700: #484848;
+  --black-600: #333333;
   --black-color-hover: #222222;
 
   --grey-color-100: #e8e8e8;
@@ -61,6 +63,8 @@
   --transition-2: 0.5s ease;
   --cubic-in: cubic-bezier(0.51, 0.03, 0.64, 0.28);
   --cubic-out: cubic-bezier(0.33, 0.85, 0.4, 0.96);
+
+  --overflow: hidden;
 }
 
 *,
@@ -74,9 +78,7 @@
 html {
   font-family: var(--ff-inter);
   font-size: 10px;
-  scroll-behavior: smooth;
-  min-height: 100vh;
-
+  overflow: var(--overflow);
   //-webkit-user-select: none; /* Safari */
   //-ms-user-select: none; /* IE 10 and IE 11 */
  // user-select: none; /* Standard syntax */
@@ -88,7 +90,7 @@ body {
   font-size: var(--fs-md);
   line-height: 1.7;
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  min-height: 100vh;
 }
 
 ::selection {
