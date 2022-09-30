@@ -211,83 +211,24 @@ export function GooglePlayICON() {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 48 48"
-      width="30px"
-      height="30px"
-      fillRule="evenodd"
-      clipRule="evenodd"
-      baseProfile="basic"
+      width="32px"
+      height="32px"
     >
-      <linearGradient
-        id="jFdG-76_seIEvf-hbjSsaa"
-        x1="1688.489"
-        x2="1685.469"
-        y1="-883.003"
-        y2="-881.443"
-        gradientTransform="matrix(11.64 0 0 22.55 -19615.32 19904.924)"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop offset="0" stopColor="#047ed6" />
-        <stop offset="1" stopColor="#50e6ff" />
-      </linearGradient>
       <path
-        fill="url(#jFdG-76_seIEvf-hbjSsaa)"
-        fillRule="evenodd"
-        d="M7.809,4.608c-0.45,0.483-0.708,1.227-0.708,2.194	v34.384c0,0.967,0.258,1.711,0.725,2.177l0.122,0.103L27.214,24.2v-0.433L7.931,4.505L7.809,4.608z"
-        clipRule="evenodd"
+        fill="#4db6ac"
+        d="M7.705,4.043C7.292,4.15,7,4.507,7,5.121c0,1.802,0,18.795,0,18.795S7,42.28,7,43.091c0,0.446,0.197,0.745,0.5,0.856l20.181-20.064L7.705,4.043z"
       />
-      <linearGradient
-        id="jFdG-76_seIEvf-hbjSsab"
-        x1="1645.286"
-        x2="1642.929"
-        y1="-897.055"
-        y2="-897.055"
-        gradientTransform="matrix(9.145 0 0 7.7 -15001.938 6931.316)"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop offset="0" stopColor="#ffda1c" />
-        <stop offset="1" stopColor="#feb705" />
-      </linearGradient>
       <path
-        fill="url(#jFdG-76_seIEvf-hbjSsab)"
-        fillRule="evenodd"
-        d="M33.623,30.647l-6.426-6.428v-0.45l6.428-6.428	l0.139,0.086l7.603,4.321c2.177,1.227,2.177,3.249,0,4.493l-7.603,4.321C33.762,30.561,33.623,30.647,33.623,30.647z"
-        clipRule="evenodd"
+        fill="#dce775"
+        d="M33.237,18.36l-8.307-4.796c0,0-15.245-8.803-16.141-9.32C8.401,4.02,8.019,3.961,7.705,4.043l19.977,19.84L33.237,18.36z"
       />
-      <linearGradient
-        id="jFdG-76_seIEvf-hbjSsac"
-        x1="1722.978"
-        x2="1720.622"
-        y1="-889.412"
-        y2="-886.355"
-        gradientTransform="matrix(15.02 0 0 11.5775 -25848.943 10324.73)"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop offset="0" stopColor="#d9414f" />
-        <stop offset="1" stopColor="#8c193f" />
-      </linearGradient>
       <path
-        fill="url(#jFdG-76_seIEvf-hbjSsac)"
-        fillRule="evenodd"
-        d="M33.762,30.561l-6.565-6.567L7.809,43.382	c0.708,0.761,1.9,0.847,3.232,0.103L33.762,30.561"
-        clipRule="evenodd"
+        fill="#d32f2f"
+        d="M8.417,43.802c0.532-0.308,15.284-8.825,24.865-14.357l-5.601-5.562L7.5,43.947C7.748,44.038,8.066,44.004,8.417,43.802z"
       />
-      <linearGradient
-        id="jFdG-76_seIEvf-hbjSsad"
-        x1="1721.163"
-        x2="1722.215"
-        y1="-891.39"
-        y2="-890.024"
-        gradientTransform="matrix(15.02 0 0 11.5715 -25848.943 10307.886)"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop offset="0" stopColor="#33c481" />
-        <stop offset="1" stopColor="#61e3a7" />
-      </linearGradient>
       <path
-        fill="url(#jFdG-76_seIEvf-hbjSsad)"
-        fillRule="evenodd"
-        d="M33.762,17.429L11.041,4.522	c-1.33-0.761-2.524-0.658-3.232,0.103l19.386,19.369L33.762,17.429z"
-        clipRule="evenodd"
+        fill="#fbc02d"
+        d="M41.398,23.071c-0.796-0.429-8.1-4.676-8.1-4.676l-0.061-0.035l-5.556,5.523l5.601,5.562c4.432-2.559,7.761-4.48,8.059-4.653C42.285,24.248,42.194,23.5,41.398,23.071z"
       />
     </svg>
   );

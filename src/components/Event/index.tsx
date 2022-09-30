@@ -49,7 +49,7 @@ export function Event() {
         if (mouseOver) return
         timeout = setTimeout(() => {
           slider.next()
-        }, 1200)
+        }, 3000)
       }
       slider.on("created", () => {
         slider.container.addEventListener("mouseover", () => {
