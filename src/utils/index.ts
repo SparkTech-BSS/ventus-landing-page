@@ -20,18 +20,31 @@ export const pageAnimation = {
     },
   };
 
+  export const fadeIn = {
+    hidden: {
+      opacity: 0,
+    },
+    show: {
+      opacity: 1,
+      transition: {
+        ease: "easeOut",
+        duration: 1,
+      },
+    },
+  };
+
   export const goDown = {
     hidden: {
-      y: -300,
-      // opacity: 0
+      y: '-100%',
+      opacity: 0
     },
     show: {
       y: 0,
       opacity: 1,
       transition: {
-        duration: 1,
+        duration: 1.5,
         ease: "easeOut",
-        delay: 1
+        delay: 2
       },
     },
   }
@@ -47,7 +60,7 @@ export const pageAnimation = {
       transition: {
         duration: 1,
         ease: "easeOut",
-        delay: 3.3
+        delay:4
       },
     },
   }
