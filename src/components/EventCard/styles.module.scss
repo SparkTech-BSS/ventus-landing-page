@@ -9,7 +9,11 @@
 
   cursor: pointer;
 
-  transition: all .3s;
+  transition: all 0.3s;
+
+  &.full {
+    max-width: 100%;
+  }
 
   &:hover {
     // transform: scale(0.9);
@@ -35,16 +39,54 @@
     right: 1.4rem;
     top: 12.7rem;
 
-    .date-month, .date-day { line-height: 1.2; color: var(--white-color); }
+    .date-month,
+    .date-day {
+      line-height: 1.2;
+      color: var(--white-color);
+    }
 
     .date-month {
-        font-size: var(--fs-md);
-        font-weight: var(--fw-700);
+      font-size: var(--fs-md);
+      font-weight: var(--fw-700);
     }
 
     .date-day {
-        font-size: var(--fs-24xl);
-        font-weight: var(--fw-700);
+      font-size: var(--fs-24xl);
+      font-weight: var(--fw-700);
+    }
+  }
+
+  .date-multiple {
+    width: 122px;
+    height: 66px;
+    border-radius: 10px;
+    background: var(--primary-color);
+
+    padding: 1rem;
+
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+
+    position: absolute;
+    right: 1.4rem;
+    top: 12.7rem;
+
+    .date-month,
+    .date-day {
+      line-height: 1.2;
+      color: var(--white-color);
+    }
+
+    .date-month {
+      font-size: var(--fs-md);
+      font-weight: var(--fw-700);
+    }
+
+    .date-day {
+      font-size: var(--fs-24xl);
+      font-weight: var(--fw-700);
     }
   }
 
@@ -70,7 +112,7 @@
   .rating-container {
     display: flex;
     align-items: center;
-    gap: .5rem;
+    gap: 0.5rem;
 
     color: var(--black-700);
     font-size: var(--fs-md);

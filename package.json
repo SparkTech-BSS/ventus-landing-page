@@ -9,6 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@radix-ui/react-popover": "^1.0.0",
+    "@radix-ui/react-progress": "^1.0.0",
+    "@radix-ui/react-radio-group": "^1.0.0",
+    "@radix-ui/react-switch": "^1.0.0",
     "framer-motion": "^7.5.1",
     "keen-slider": "^6.8.2",
     "next": "12.3.1",
@@ -16,6 +20,7 @@
     "react-dom": "18.2.0",
     "react-icons": "^4.4.0",
     "react-intersection-observer": "^9.4.0",
+    "react-modal": "^3.15.1",
     "sass": "^1.55.0",
     "scrollreveal": "^4.0.9"
   },

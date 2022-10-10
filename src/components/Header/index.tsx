@@ -1,20 +1,17 @@
-import {
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-  useLayoutEffect,
-} from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { UserICON } from "../../components/Icon";
 import LogoSVG from "../../assets/svg/logo(full-size).svg";
 import { ApplePlayICON, GooglePlayICON } from "../Icon";
-
+import { addEventOnElem, removeEventOnElem } from "../../utils";
+import { UserHeaderBox } from "../UserHeaderBox";
+import { SearchBox } from "components/SearchBox";
 import styles from "./styles.module.scss";
-import { goDown } from "utils";
 
 export function Header() {
+  const [isLogged, setIsLogged] = useState(true);
   const [showMenu, setShowMenu] = useState(false);
   const [activeHeader, setActiveHeader] = useState(false);
   const [scrollY, setScrollY] = useState(0);
@@ -30,26 +27,6 @@ export function Header() {
       width: window.innerWidth,
       height: window.innerHeight,
     });
-  };
-
-  const addEventOnElem = function (elem: any, type: any, callback: any) {
-    if (elem.length > 1) {
-      for (let i = 0; i < elem.length; i++) {
-        elem[i].addEventListener(type, callback);
-      }
-    } else {
-      elem.addEventListener(type, callback);
-    }
-  };
-
-  const removeEventOnElem = function (elem: any, type: any, callback: any) {
-    if (elem.length > 1) {
-      for (let i = 0; i < elem.length; i++) {
-        elem[i].removeEventListener(type, callback);
-      }
-    } else {
-      elem.removeEventListener(type, callback);
-    }
   };
 
   const activeElementOnScroll = function () {
@@ -100,20 +77,20 @@ export function Header() {
   }, [scrollY, windowSize.height]);
 
   return (
-    <header
-      className={`${styles.header} ${activeHeader ? styles.active : ""}`}
-    >
+    <header className={`${styles.header} ${activeHeader ? styles.active : ""}`}>
       <div className={`container ${styles.container}`}>
-        <Link href="#">
+        <Link href="/">
           <a href="#" className={styles.logo}>
             <Image src={LogoSVG} width={90} height={42} alt="" />
           </a>
         </Link>
 
+        <SearchBox />
+
         <nav className={`${styles.navbar} ${showMenu ? styles.active : ""}`}>
           <ul className={`${styles["navbar-list"]}`}>
             <li className="navbar-item">
-              <Link href="#about" scroll={false}>
+              <Link href="/#about" scroll={false}>
                 <a className={styles["navbar-link"]} data-nav-link>
                   Sobre
                 </a>
@@ -121,9 +98,9 @@ export function Header() {
             </li>
 
             <li className="navbar-item">
-              <Link href="#">
+              <Link href="/#promoter" scroll={false}>
                 <a
-                  href="#promoter"
+                  // href="#promoter"
                   className={styles["navbar-link"]}
                   data-nav-link
                 >
@@ -133,21 +110,30 @@ export function Header() {
             </li>
 
             <li className="navbar-item">
-              <Link href="#contact" scroll={false}>
+              <Link href="/#contact" scroll={false}>
                 <a
-                  href="#promoter"
+                  // href="#promoter"
                   className={styles["navbar-link"]}
                   data-nav-link
                 >
-                  Contato
+                  Baixar
                 </a>
               </Link>
             </li>
           </ul>
 
-          <div className="container">
-            <button className={styles["navbar-btn"]}>Baixar Aplicativo</button>
-          </div>
+          {isLogged ? (
+            <UserHeaderBox />
+          ) : (
+            <div className="container">
+              <div className={styles["navbar-btn-group"]}>
+                <button className={styles["navbar-btn-outline"]}>
+                  <UserICON /> Entrar
+                </button>
+                <button className={styles["navbar-btn"]}>CRIAR CONTA</button>
+              </div>
+            </div>
+          )}
 
           <div className={`container ${styles["btn-group"]}`}>
             <button className={styles["btn-download-app"]}>

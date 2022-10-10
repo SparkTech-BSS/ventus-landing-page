@@ -7,15 +7,21 @@ import {
   PeopleICON,
   TimeICON,
   StarICON,
+  ArrowEventICON,
 } from "../../components/Icon";
 
 import EventImg from "../../assets/png/event/event-1.png";
 
 import styles from "./styles.module.scss";
 
-export function EventCard() {
+interface Props {
+  width?: "full";
+  multipleData?: boolean;
+}
+
+export function EventCard({ width, multipleData }: Props) {
   return (
-    <a className={styles.card}>
+    <a className={`${styles.card} ${width === "full" ? styles.full : ""}`}>
       <Image
         src={EventImg}
         width={280}
@@ -25,10 +31,24 @@ export function EventCard() {
         alt=""
       />
 
-      <div className={styles.date}>
-        <span className={styles["date-month"]}>Out</span>
-        <span className={styles["date-day"]}>20</span>
-      </div>
+      {multipleData ? (
+        <div className={styles["date-multiple"]}>
+          <div className={styles["date-multiple__col"]}>
+            <span className={styles["date-month"]}>Out</span>
+            <span className={styles["date-day"]}>20</span>
+          </div>
+          <ArrowEventICON />
+          <div className={styles["date-multiple__col"]}>
+            <span className={styles["date-month"]}>Nov</span>
+            <span className={styles["date-day"]}>01</span>
+          </div>
+        </div>
+      ) : (
+        <div className={styles.date}>
+          <span className={styles["date-month"]}>Out</span>
+          <span className={styles["date-day"]}>20</span>
+        </div>
+      )}
 
       <div className={styles["card-content"]}>
         <div className={styles["card-title-row"]}>

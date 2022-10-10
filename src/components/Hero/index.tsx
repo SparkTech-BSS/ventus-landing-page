@@ -16,8 +16,8 @@ export function Hero() {
             exit="exit"
             initial="hidden"
             animate="show"
-            className={styles.heading}
             variants={titleAnimation}
+            className={styles.heading}
           >
             Encontre <span className={styles["heading-colored"]}>Festas</span> e{" "}
             <span className={styles["heading-colored"]}>Eventos</span> em Angola
