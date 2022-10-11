@@ -1,5 +1,5 @@
-import { useRef, useState, useCallback } from "react";
-
+import { useRef, useState, useCallback, useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoExitOutline } from "react-icons/io5";
 import { HiOutlineTicket } from "react-icons/hi";
@@ -10,6 +10,7 @@ import { useClickOutside } from "../../hooks/useClickOutside";
 import styles from "./styles.module.scss";
 
 export function UserHeaderBox() {
+  const { user, isAuthenticated, logout } = useContext(AuthContext);
   const [openPopover, setOpenPopover] = useState(false);
   const clickRef = useRef() as React.MutableRefObject<HTMLDivElement>;
   useClickOutside(clickRef, handleClosePopover);
@@ -65,7 +66,7 @@ export function UserHeaderBox() {
           </span>
           Central de ajuda
         </a>
-        <a className={styles["menu-item"]}>
+        <a className={styles["menu-item"]} onClick={logout}>
           <span className={styles["menu-item-icon"]}>
             <IoExitOutline size={24} color="#ff5555"/>
           </span>

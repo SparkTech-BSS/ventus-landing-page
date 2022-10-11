@@ -3,7 +3,7 @@
 :root {
   // COLOR CONFIGURATION
   --primary-color: #ff5555;
-  --primary-color-hover: #C83B3B;
+  --primary-color-hover: #c83b3b;
   --gradient-linear: linear-gradient(90deg, #ff5555 0%, #ff8b71 100%);
   --gradient-linear-hover: linear-gradient(90deg, #ff8b71 0%, #ff5555 100%);
   --gradient-linear-text: -webkit-linear-gradient(
@@ -27,7 +27,7 @@
   --grey-color-100: #e8e8e8;
   --grey-color-400: #939598;
 
-  --whatsApp-color: #04D361;
+  --whatsApp-color: #04d361;
 
   //FONT CONFIGURATION
 
@@ -81,7 +81,7 @@ html {
   overflow: var(--overflow);
   //-webkit-user-select: none; /* Safari */
   //-ms-user-select: none; /* IE 10 and IE 11 */
- // user-select: none; /* Standard syntax */
+  // user-select: none; /* Standard syntax */
 }
 
 body {
@@ -163,6 +163,49 @@ body {
   height: 17px;
 }
 
+.react-modal-overlay {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.react-modal-content {
+  min-width: 10rem;
+  max-width: 50rem;
+  width: 100%;
+  background: var(--white-color);
+  position: relative;
+  border-radius: 1rem;
+  outline: none;
+
+  &.w-40 {
+    max-width: 40rem;
+  }
+}
+
+
+
+.react-modal-close {
+  position: absolute;
+  right: 1.5rem;
+  top: 1.5rem;
+  border: 0;
+  background: transparent;
+  transition: filter 0.2s;
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
+
 /*-----------------------------------*\
 #MEDIA QUERIES
 \*-----------------------------------*/
@@ -184,6 +227,27 @@ body {
   }
 }
 
+@media (max-width: 668px) {
+
+  .react-modal-overlay {
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .react-modal-content {
+    max-width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &.w-40 {
+      max-width: 100%;
+    }
+  }
+}
+
 @media (min-width: 768px) {
   .container {
     max-width: 720px;
@@ -201,6 +265,5 @@ body {
     max-width: 1140px;
   }
 }
-
 
 //  max-width: 600px;

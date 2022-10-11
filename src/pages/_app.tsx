@@ -1,10 +1,16 @@
 import "../styles/globals.scss";
+import { AuthProvider } from "../contexts/AuthContext";
+import { ToastProvider } from "react-toast-notifications";
 import type { AppProps } from "next/app";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <Component {...pageProps} />
+      <AuthProvider>
+        <ToastProvider>
+          <Component {...pageProps} />
+        </ToastProvider>
+      </AuthProvider>
     </>
   );
 }

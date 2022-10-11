@@ -1,0 +1,163 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 3rem 1rem;
+  width: 100%;
+
+  form {
+    width: 100%;
+    padding: 2.5rem 0 2rem;
+  }
+}
+
+.heading {
+  font-size: 2.8rem;
+  font-weight: 400;
+}
+
+.input-group {
+  width: 100%;
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.input-group-icon {
+  position: absolute;
+  top: 1.2rem;
+  left: 1rem;
+}
+
+.password-icon {
+  position: absolute;
+  top: 1.2rem;
+  right: 1rem;
+  cursor: pointer;
+}
+
+.input {
+  width: 100%;
+  background-color: #f6f6f6;
+  width: 100%;
+  height: 4.5rem;
+  border-radius: 4px;
+  border: 0.2rem solid transparent;
+  padding: 1.6rem 4rem 1.6rem;
+  font-size: 1.4rem;
+  outline: none;
+  transition: all 0.3s;
+
+  &:focus {
+    border: 0.2rem solid var(--primary-color);
+  }
+}
+
+.error-message {
+  color: #ff0000;
+  font-size: 1.4rem;
+}
+
+.btn {
+  width: 100%;
+  padding: 1.4rem;
+  border-radius: 5px;
+  background: var(--gradient-linear);
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  color: var(--white-color);
+  &:hover {
+    opacity: 0.6;
+  }
+}
+
+.social-btn {
+  background-color: #17a8fd;
+  width: 100%;
+  padding: 1.6rem 2.4rem;
+  border-radius: 5px;
+  color: var(--white-color);
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  transition: all 300ms ease 0s;
+  font-weight: 600;
+
+  &:hover {
+    background-color: #1087cc;
+  }
+}
+
+.forget-password {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 2rem 0 0;
+
+  font-size: 1.4rem;
+}
+
+.link {
+  display: inline;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.register-box {
+  background-color: #f3f3f6;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 2rem;
+  border-top: 1px solid #becadb;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: auto;
+
+  span {
+    color: var(--black-900);
+    font-weight: 500;
+    font-size: 1.4rem;
+  }
+}
+
+.btn-loader {
+  border-radius: 100%;
+  width: 0;
+  height: 0;
+  border: 2.5px solid rgba(255, 255, 255, 0.5);
+
+  border-left-color: var(--white-color);
+  border-top-color: var(--white-color);
+
+  @keyframes spin {
+    to {
+      transform: rotate(359deg);
+    }
+  }
+
+  @keyframes grow {
+    to {
+      width: 1.8rem;
+      height: 1.8rem;
+    }
+  }
+
+  animation: spin 0.6s infinite linear, grow 0.3s forwards ease-out;
+}
