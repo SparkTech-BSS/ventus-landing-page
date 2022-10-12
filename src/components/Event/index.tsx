@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { EventCard } from "../EventCard";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
@@ -7,70 +8,74 @@ import "keen-slider/keen-slider.min.css";
 import styles from "./styles.module.scss";
 import { useEvents } from "hooks/api/events";
 
-export function Event() {
-  const { data, isLoading } = useEvents();
+interface Props {
+  data: any;
+}
+
+export function Event({ data }: Props) {
+  // const { data, isLoading } = useEvents();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
-  const [ref, instanceRef] = useKeenSlider<HTMLDivElement>({
-    breakpoints: {
-      "(min-width: 575px)": {
-        slides: { perView: 1, spacing: 5 },
+  const [ref, instanceRef] = useKeenSlider<HTMLDivElement>(
+    {
+      breakpoints: {
+        "(min-width: 575px)": {
+          slides: { perView: 1, spacing: 5 },
+        },
+        "(min-width: 600px)": {
+          slides: { perView: 2, spacing: 5 },
+        },
+        "(min-width: 992px)": {
+          slides: { perView: 3, spacing: 5 },
+        },
+        "(min-width: 1000px)": {
+          slides: { perView: 3, spacing: 10 },
+        },
+        "(min-width: 1200px)": {
+          slides: { perView: 4, spacing: 10 },
+        },
       },
-      "(min-width: 600px)": {
-        slides: { perView: 2, spacing: 5 },
+      loop: true,
+      slides: { perView: 1 },
+      initial: 0,
+      slideChanged(slider) {
+        setCurrentSlide(slider.track.details.rel);
       },
-      "(min-width: 992px)": {
-        slides: { perView: 3, spacing: 5 },
-      },
-      "(min-width: 1000px)": {
-        slides: { perView: 3, spacing: 10 },
-      },
-      "(min-width: 1200px)": {
-        slides: { perView: 4, spacing: 10 },
+      created() {
+        setLoaded(true);
       },
     },
-    loop: true,
-    slides: { perView: 1 },
-    initial: 0,
-    slideChanged(slider) {
-      setCurrentSlide(slider.track.details.rel);
-    },
-    created() {
-      setLoaded(true);
-    },
-  },
-  [
-    (slider) => {
-      let timeout: ReturnType<typeof setTimeout>
-      let mouseOver = false
-      function clearNextTimeout() {
-        clearTimeout(timeout)
-      }
-      function nextTimeout() {
-        clearTimeout(timeout)
-        if (mouseOver) return
-        timeout = setTimeout(() => {
-          slider.next()
-        }, 3000)
-      }
-      slider.on("created", () => {
-        slider.container.addEventListener("mouseover", () => {
-          mouseOver = true
-          clearNextTimeout()
-        })
-        slider.container.addEventListener("mouseout", () => {
-          mouseOver = false
-          nextTimeout()
-        })
-        nextTimeout()
-      })
-      slider.on("dragStarted", clearNextTimeout)
-      slider.on("animationEnded", nextTimeout)
-      slider.on("updated", nextTimeout)
-    },
-  ]);
-
-  console.log(data)
+    [
+      (slider) => {
+        let timeout: ReturnType<typeof setTimeout>;
+        let mouseOver = false;
+        function clearNextTimeout() {
+          clearTimeout(timeout);
+        }
+        function nextTimeout() {
+          clearTimeout(timeout);
+          if (mouseOver) return;
+          timeout = setTimeout(() => {
+            slider.next();
+          }, 3000);
+        }
+        slider.on("created", () => {
+          slider.container.addEventListener("mouseover", () => {
+            mouseOver = true;
+            clearNextTimeout();
+          });
+          slider.container.addEventListener("mouseout", () => {
+            mouseOver = false;
+            nextTimeout();
+          });
+          nextTimeout();
+        });
+        slider.on("dragStarted", clearNextTimeout);
+        slider.on("animationEnded", nextTimeout);
+        slider.on("updated", nextTimeout);
+      },
+    ]
+  );
 
   return (
     <section className={`section ${styles.event}`} aria-label="event">
@@ -78,29 +83,20 @@ export function Event() {
         <div className={styles["header-row"]}>
           <h1 className={`section-heading`}>Explorar Eventos</h1>
 
-          <a href="#" className={styles["se-more"]}>
-            Explore mais
-          </a>
+          <Link href="#" shallow={true}>
+            <a className={styles["se-more"]}>Explore mais</a>
+          </Link>
         </div>
 
         <div className={`${styles["carousel-wrapper"]}`}>
           <div ref={ref} className="keen-slider">
-            <div className="keen-slider__slide">
-              <EventCard />
-            </div>
-            <div className="keen-slider__slide">
-              <EventCard />
-            </div>
-            <div className="keen-slider__slide">
-              <EventCard />
-            </div>
-            <div className="keen-slider__slide">
-              <EventCard />
-            </div>
-
-            <div className="keen-slider__slide">
-              <EventCard />
-            </div>
+            {data?.map((item: any) => {
+              return (
+                <div className="keen-slider__slide" key={item?.event?._id}>
+                  <EventCard data={item?.event}/>
+                </div>
+              );
+            })}
           </div>
 
           {loaded && instanceRef.current && (

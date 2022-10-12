@@ -1,6 +1,11 @@
 import type { NextPage } from "next";
-
+import { GetStaticProps } from "next";
 import Head from "next/head";
+import EventService from "../services/EventService";
+import { api } from "services/api";
+import { Error404 } from "../components/Error404";
+import { withCSR } from "HOC/with-CSR";
+import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { motion } from "framer-motion";
 import { CashBack } from "../components/CashBack";
 import { Event } from "../components/Event";
@@ -13,7 +18,8 @@ import { Cookies } from "../components/Cookies";
 import { Rainbow } from "components/Rainbow";
 import Layout from "../components/Layout";
 
-const Home: NextPage = () => {
+export default function Home({ events }: any) {
+
   return (
     <>
       <Head>
@@ -23,7 +29,7 @@ const Home: NextPage = () => {
       <Cookies />
       <Layout>
         <Hero />
-        <Event />
+        <Event data={events}/>
         <State
           text="Descubra festas em todas as cidades"
           state="1"
@@ -41,4 +47,22 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export const getStaticProps: GetStaticProps = withCSR( async (ctx: any) => { 
+  let events: any;
+  let isError = false;
+
+  try {
+    const data = await EventService.findAll();
+    events = data;
+  } catch (error) {
+    isError = true;
+  }
+
+  return {
+    props: {
+      events,
+    },
+    revalidate: 60
+  }
+});
+

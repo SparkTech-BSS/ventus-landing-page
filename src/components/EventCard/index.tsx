@@ -17,13 +17,16 @@ import styles from "./styles.module.scss";
 interface Props {
   width?: "full";
   multipleData?: boolean;
+  data: any;
 }
 
-export function EventCard({ width, multipleData }: Props) {
+export function EventCard({ width, multipleData = true, data }: Props) {
+  console.log(data)
+
   return (
     <a className={`${styles.card} ${width === "full" ? styles.full : ""}`}>
       <Image
-        src={EventImg}
+        src={data?.images[0]}
         width={280}
         height={207}
         className={styles["card-img"]}
@@ -52,7 +55,7 @@ export function EventCard({ width, multipleData }: Props) {
 
       <div className={styles["card-content"]}>
         <div className={styles["card-title-row"]}>
-          <h3 className={styles["card-title"]}>Show de Heavy C </h3>
+          <h3 className={styles["card-title"]}>{data?.name}</h3>
 
           <span className={styles["rating-container"]}>
             <StarICON />
@@ -66,7 +69,7 @@ export function EventCard({ width, multipleData }: Props) {
           </div>
 
           <span className={styles["card-item-text"]}>
-            Martires de Kifangondo
+            {data?.location}
           </span>
         </div>
 
