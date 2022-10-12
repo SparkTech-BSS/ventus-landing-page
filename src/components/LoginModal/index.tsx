@@ -59,8 +59,7 @@ export function LoginModal({ isOpen, onRequestClose }: Props) {
       } else {
         onRequestClose();
         reset();
-        Router.push("/");
-        Router.reload();
+        // Router.push("/");
       }
     } catch (error) {
       addToast("Credenciais inválidas...", {

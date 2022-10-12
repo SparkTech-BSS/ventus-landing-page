@@ -5,8 +5,10 @@ import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 
 import styles from "./styles.module.scss";
+import { useEvents } from "hooks/api/events";
 
 export function Event() {
+  const { data, isLoading } = useEvents();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const [ref, instanceRef] = useKeenSlider<HTMLDivElement>({
@@ -67,6 +69,8 @@ export function Event() {
       slider.on("updated", nextTimeout)
     },
   ]);
+
+  console.log(data)
 
   return (
     <section className={`section ${styles.event}`} aria-label="event">

@@ -16,7 +16,6 @@ import styles from "./styles.module.scss";
 Modal.setAppElement("#__next");
 
 export function Header() {
-  const [isLogged, setIsLogged] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [activeHeader, setActiveHeader] = useState(false);
   const [scrollY, setScrollY] = useState(0);
@@ -99,6 +98,7 @@ export function Header() {
 
     document.documentElement.style.setProperty("--vh", `${vh}px`);
   }, [scrollY, windowSize.height]);
+
 
   return (
     <>

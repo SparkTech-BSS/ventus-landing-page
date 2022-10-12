@@ -230,6 +230,26 @@ export const removeEventOnElem = function (
   }
 };
 
+export function getFirstAndLastLetter(name: string) {
+  let arrFullName = name.split(" ");
+
+  let firstLetter = name.charAt(0).toUpperCase();
+
+  let lastLetter = arrFullName[arrFullName.length - 1].charAt(0).toUpperCase();
+
+  return `${firstLetter}${lastLetter}`;
+}
+
+
+export function getFirstAndLastName(name: string) {
+  let nameSplit = name.split(" ");
+
+  let firstName = nameSplit[0];
+  let lastName = nameSplit[nameSplit.length - 1];
+
+  return `${firstName} ${lastName}`;
+}
+
 export const MAP_INFO = {
   latitude: -8.913780239768586,
   longitude: 13.230998780986711,

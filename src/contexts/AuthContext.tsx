@@ -7,7 +7,7 @@ import { api } from "../services/api";
 
 type AuthContextType = {
   isAuthenticated: boolean;
-  user: UserDTO | null;
+  user: UserDTO | null | any;
   signIn: (data: LoginDTO) => Promise<void>;
   logout: () => void;
   getLoginStatus: () => any;

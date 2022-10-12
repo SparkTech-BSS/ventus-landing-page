@@ -7,10 +7,11 @@ import { MdOutlineFavoriteBorder } from "react-icons/md";
 import { BiUser } from "react-icons/bi";
 import { FiHelpCircle } from "react-icons/fi";
 import { useClickOutside } from "../../hooks/useClickOutside";
+import { getFirstAndLastLetter, getFirstAndLastName } from "../../utils";
 import styles from "./styles.module.scss";
 
 export function UserHeaderBox() {
-  const { user, isAuthenticated, logout } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
   const [openPopover, setOpenPopover] = useState(false);
   const clickRef = useRef() as React.MutableRefObject<HTMLDivElement>;
   useClickOutside(clickRef, handleClosePopover);
@@ -30,9 +31,9 @@ export function UserHeaderBox() {
       onClick={handleToggleOpenPopover}
     >
       <div className={styles["user-avatar"]}>
-        <span className={styles["user-avatar__heading"]}>FB</span>
+        <span className={styles["user-avatar__heading"]}>{getFirstAndLastLetter(user?.name)}</span>
       </div>
-      <span className={styles["user-name"]}>Fábio Baziota</span>
+      <span className={styles["user-name"]}>{getFirstAndLastName(user?.name)}</span>
       <button className={`${styles["btn-dropdown"]} ${openPopover ? styles.active : ''}`}>
         <IoIosArrowDown size={18} />
       </button>

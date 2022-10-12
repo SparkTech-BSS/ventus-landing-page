@@ -4,7 +4,10 @@
   align-items: center;
   justify-content: center;
   padding: 3rem 3rem 1rem;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
   width: 100%;
+  background-color: var(--white-color);
 
   form {
     width: 100%;
@@ -67,6 +70,16 @@
   text-transform: uppercase;
   transition: all 0.3s;
   color: var(--white-color);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
   &:hover {
     opacity: 0.6;
   }
@@ -141,6 +154,31 @@
   font-size: 1.2rem;
   text-transform: center;
   display: inline;
+}
+
+.btn-loader {
+  border-radius: 100%;
+  width: 0;
+  height: 0;
+  border: 2.5px solid rgba(255, 255, 255, 0.5);
+
+  border-left-color: var(--white-color);
+  border-top-color: var(--white-color);
+
+  @keyframes spin {
+    to {
+      transform: rotate(359deg);
+    }
+  }
+
+  @keyframes grow {
+    to {
+      width: 1.8rem;
+      height: 1.8rem;
+    }
+  }
+
+  animation: spin 0.6s infinite linear, grow 0.3s forwards ease-out;
 }
 
 /************************************

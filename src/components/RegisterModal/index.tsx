@@ -1,5 +1,11 @@
 import { useRef, useState } from "react";
 import Modal from "react-modal";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { UserDTO } from "../../dto/UserDTO";
+import { api } from "services/api";
+import { userSchema } from "../../validations/UserValidation";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { useToasts } from "react-toast-notifications";
 import { CgClose } from "react-icons/cg";
 import { BsEnvelope } from "react-icons/bs";
 import { CgLock } from "react-icons/cg";
@@ -17,6 +23,7 @@ interface Props {
 }
 
 export function RegisterModal({ isOpen, onRequestClose }: Props) {
+  const [loading, setLoading] = useState(false);
   const [inputPasswordType, setInputPasswordType] = useState("password");
   const [inputConfirmPasswordType, setInputConfirmPasswordType] =
     useState("password");
@@ -25,9 +32,21 @@ export function RegisterModal({ isOpen, onRequestClose }: Props) {
   const [currentProgressBarType, setCurrentProgressBarType] = useState("");
   const [isActiveLowUpperCaseRule, setIsActivLowUpperCaseRule] =
     useState(false);
+  const { addToast } = useToasts();
   const [isActiveNumberRule, setIsActiveNumberRule] = useState(false);
   const [isSpecialCharRule, SetIsSpecialCharRule] = useState(false);
   const [isEightCharRule, setIsEightCharRule] = useState(false);
+  const {
+    reset,
+    control,
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<UserDTO>({
+    mode: "all",
+    reValidateMode: "onChange",
+    resolver: yupResolver(userSchema),
+  });
 
   function handleInputPasswordVisible() {
     setInputPasswordType("text");
@@ -46,47 +65,47 @@ export function RegisterModal({ isOpen, onRequestClose }: Props) {
     setInputConfirmPasswordType("password");
   }
 
-  function checkStrength(e: React.ChangeEvent<HTMLInputElement>) {
-    let strength = 0;
+  // function checkStrength(e: React.ChangeEvent<HTMLInputElement>) {
+  //   let strength = 0;
 
-    if (e.target.value.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) {
-      strength += 1;
-      setIsActivLowUpperCaseRule(true);
-    } else {
-      setIsActivLowUpperCaseRule(false);
-    }
+  //   if (e.target.value.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) {
+  //     strength += 1;
+  //     setIsActivLowUpperCaseRule(true);
+  //   } else {
+  //     setIsActivLowUpperCaseRule(false);
+  //   }
 
-    if (e.target.value.match(/([0-9])/)) {
-      strength += 1;
-      setIsActiveNumberRule(true);
-    } else {
-      setIsActiveNumberRule(false);
-    }
+  //   if (e.target.value.match(/([0-9])/)) {
+  //     strength += 1;
+  //     setIsActiveNumberRule(true);
+  //   } else {
+  //     setIsActiveNumberRule(false);
+  //   }
 
-    if (e.target.value.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) {
-      strength += 1;
-      SetIsSpecialCharRule(true);
-    } else {
-      SetIsSpecialCharRule(false);
-    }
+  //   if (e.target.value.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) {
+  //     strength += 1;
+  //     SetIsSpecialCharRule(true);
+  //   } else {
+  //     SetIsSpecialCharRule(false);
+  //   }
 
-    if (e.target.value.length > 7) {
-      strength += 1;
-      setIsEightCharRule(true);
-    } else {
-      setIsEightCharRule(false);
-    }
+  //   if (e.target.value.length > 7) {
+  //     strength += 1;
+  //     setIsEightCharRule(true);
+  //   } else {
+  //     setIsEightCharRule(false);
+  //   }
 
-    if (strength < 2) {
-      progressBarPasswordStrengthRef.current.style.width = "10%";
-    } else if (strength === 3) {
-      progressBarPasswordStrengthRef.current.style.width = "60%";
-    } else if (strength === 4) {
-      progressBarPasswordStrengthRef.current.style.width = "100%";
-    }
+  //   if (strength < 2) {
+  //     progressBarPasswordStrengthRef.current.style.width = "10%";
+  //   } else if (strength === 3) {
+  //     progressBarPasswordStrengthRef.current.style.width = "60%";
+  //   } else if (strength === 4) {
+  //     progressBarPasswordStrengthRef.current.style.width = "100%";
+  //   }
 
-    setProgressBarWidth(strength);
-  }
+  //   setProgressBarWidth(strength);
+  // }
 
   function setProgressBarWidth(passwordStrengthValue: number) {
     if (passwordStrengthValue < 2) {
@@ -97,6 +116,38 @@ export function RegisterModal({ isOpen, onRequestClose }: Props) {
       setCurrentProgressBarType("progress-bar-success");
     }
   }
+
+  const onSubmit: SubmitHandler<UserDTO> = async (data) => {
+    setLoading(true);
+    console.log(data);
+    try {
+      const response = await api.post("users", {
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        password: data.password,
+        phone: String(data.phone),
+      });
+
+      console.log(response);
+
+      addToast("Conta criada com sucesso...", {
+        appearance: "success",
+        autoDismiss: true,
+      });
+
+      onRequestClose();
+      reset();
+
+    } catch (error) {
+      addToast("Credenciais inválidas...", {
+        appearance: "error",
+        autoDismiss: true,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Modal
@@ -116,7 +167,7 @@ export function RegisterModal({ isOpen, onRequestClose }: Props) {
       <div className={styles["content"]}>
         <h1 className={styles.heading}>Criar Conta</h1>
 
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className={styles["input-group"]}>
             <span className={styles["input-group-icon"]}>
               <FiUser size={18} color="#888" />
@@ -125,8 +176,11 @@ export function RegisterModal({ isOpen, onRequestClose }: Props) {
               type="text"
               className={styles.input}
               placeholder="Primeiro nome"
+              {...register("firstName")}
             />
-            <span className={styles["error-message"]}></span>
+            <span className={styles["error-message"]}>
+              {errors.firstName?.message}
+            </span>
           </div>
 
           <div className={styles["input-group"]}>
@@ -137,8 +191,11 @@ export function RegisterModal({ isOpen, onRequestClose }: Props) {
               type="text"
               className={styles.input}
               placeholder="Sobre nome"
+              {...register("lastName")}
             />
-            <span className={styles["error-message"]}></span>
+            <span className={styles["error-message"]}>
+              {errors.lastName?.message}
+            </span>
           </div>
 
           <div className={styles["input-group"]}>
@@ -149,8 +206,11 @@ export function RegisterModal({ isOpen, onRequestClose }: Props) {
               type="text"
               className={styles.input}
               placeholder="Seu email"
+              {...register("email")}
             />
-            <span className={styles["error-message"]}></span>
+            <span className={styles["error-message"]}>
+              {errors.email?.message}
+            </span>
           </div>
 
           <div className={styles["input-group"]}>
@@ -161,8 +221,11 @@ export function RegisterModal({ isOpen, onRequestClose }: Props) {
               type="number"
               className={styles.input}
               placeholder="Contacto"
+              {...register("phone")}
             />
-            <span className={styles["error-message"]}></span>
+            <span className={styles["error-message"]}>
+              {errors.phone?.message}
+            </span>
           </div>
 
           <div className={styles["input-group"]}>
@@ -173,7 +236,8 @@ export function RegisterModal({ isOpen, onRequestClose }: Props) {
               type={inputPasswordType || ""}
               className={styles.input}
               placeholder="Senha"
-              onChange={checkStrength}
+              {...register("password")}
+              // onChange={checkStrength}
             />
             <div className={styles["password-icon"]}>
               {inputPasswordType === "password" ? (
@@ -190,7 +254,9 @@ export function RegisterModal({ isOpen, onRequestClose }: Props) {
                 />
               )}
             </div>
-            <span className={styles["error-message"]}></span>
+            <span className={styles["error-message"]}>
+              {errors.password?.message}
+            </span>
           </div>
 
           <div className={styles["input-group"]}>
@@ -201,6 +267,7 @@ export function RegisterModal({ isOpen, onRequestClose }: Props) {
               type={inputConfirmPasswordType || ""}
               className={styles.input}
               placeholder="Confirmar Senha"
+              {...register("passwordConfirmation")}
             />
             <div className={styles["password-icon"]}>
               {inputConfirmPasswordType === "password" ? (
@@ -217,17 +284,19 @@ export function RegisterModal({ isOpen, onRequestClose }: Props) {
                 />
               )}
             </div>
-            <span className={styles["error-message"]}></span>
+            <span className={styles["error-message"]}>
+              {errors.passwordConfirmation?.message}
+            </span>
           </div>
 
-          <div className={styles["progress-bar-width"]}>
+          {/* <div className={styles["progress-bar-width"]}>
             <div
               className={`${styles["progress-bar"]} ${styles[currentProgressBarType]}`}
               ref={progressBarPasswordStrengthRef}
             />
-          </div>
+          </div> */}
 
-          <ul className={styles["list-password-checked-requisite"]}>
+          {/* <ul className={styles["list-password-checked-requisite"]}>
             <li>
               {isActiveLowUpperCaseRule ? (
                 <IoCheckboxOutline color="#67C859" size={15} />
@@ -260,9 +329,11 @@ export function RegisterModal({ isOpen, onRequestClose }: Props) {
               )}
               Pelo menos 8 caracteres
             </li>
-          </ul>
+          </ul> */}
 
-          <button className={styles.btn}>Login</button>
+          <button className={styles.btn} type="submit">
+            {loading ? <div className={styles["btn-loader"]} /> : "Criar Conta"}
+          </button>
           {/* <button className={styles["social-btn"]}>
             <FaFacebookF size={24} />
             Entrar com o Facebook

@@ -11,17 +11,26 @@ const findById = async (id: any) => {
 };
 
 const findByName = async (name: string) => {
-    const { data }: any = await api.get(`events/findbyname/${name}`);
-    return data;
-}
+  const { data }: any = await api.get(`events/findbyname/${name}`);
+  return data;
+};
 
 const findByDate = async (date: string | Date) => {
-    const { data }: any = await api.get(`events/findbydate/${date}`);
-    return data;
-}
+  const { data }: any = await api.get(`events/findbydate/${date}`);
+  return data;
+};
 
 const findByCategory = async (category_id: string) => {
-    const { data }: any = await api.get(`events/findbycategory/${category_id}`);
-    return data;
-}
+  const { data }: any = await api.get(`events/findbycategory/${category_id}`);
+  return data;
+};
 
+const EventService = {
+  findAll,
+  findById,
+  findByName,
+  findByDate,
+  findByCategory,
+};
+
+export default EventService;
