@@ -75,12 +75,12 @@ export function ResultSearch() {
           </div>
 
           <div className={styles.content}>
-            <EventCard width="full" multipleData/>
+            {/* <EventCard width="full" multipleData/>
             <EventCard width="full"/>
             <EventCard width="full"/>
             <EventCard width="full" />
             <EventCard width="full" multipleData/>
-            <EventCard width="full"/>
+            <EventCard width="full"/> */}
           </div>
         </div>
       </section>
