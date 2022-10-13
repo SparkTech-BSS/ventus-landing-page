@@ -82,6 +82,29 @@ export function Reference() {
     );
   }
 
+  async function copyTextToClipboard(text: string) {
+    if ('clipboard' in navigator) {
+      return await navigator.clipboard.writeText(text);
+    } else {
+      return document.execCommand('copy', true, text);
+    }
+  } 
+
+  const handleCopyClick = () => {
+    // Asynchronously call copyTextToClipboard
+    copyTextToClipboard(ticket?.referenceId)
+      .then(() => {
+        // If successful, update the isCopied state value
+        setIsCopied(true);
+        setTimeout(() => {
+          setIsCopied(false);
+        }, 2000);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   return (
     <section className={styles["reference-page"]}>
       {loading ? (
@@ -102,7 +125,7 @@ export function Reference() {
               habilitado
             </span>
 
-            <button className={styles["copy-clipboard"]}>
+            <button className={styles["copy-clipboard"]} onClick={handleCopyClick}>
               {ticket?.referenceId}
               <CopyIcon />
             </button>
