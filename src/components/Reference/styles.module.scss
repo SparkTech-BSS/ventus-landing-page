@@ -61,6 +61,16 @@
   }
 }
 
+.copied-text-wrapper {
+  margin: 1rem 0;
+  width: 100%;
+  span {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--primary-color);
+  }
+}
+
 .time-left-container {
   width: 100%;
   margin: 2rem 0;

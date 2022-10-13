@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import produce from "immer";
+import { Spinner } from "components/Spinner";
 import { useRouter } from "next/router";
 import EventService from "services/EventService";
 import TicketService from "services/TicketService";
@@ -32,6 +34,8 @@ interface CartItem {
 }
 
 const initialStateCart = {
+  dateEvent: '',
+  paymentMethod: '',
   total: 0,
   ticketsReservation: [],
 };
@@ -114,6 +118,8 @@ export function SelectTicket() {
         })
       );
     }
+
+    localStorage.setItem("@ventus:cart", JSON.stringify(cart));
   }
 
   function accumulateTicketNumber(object: any) {
@@ -160,6 +166,8 @@ export function SelectTicket() {
         })
       );
     }
+
+    localStorage.setItem("@ventus:cart", JSON.stringify(cart));
   }
 
   useEffect(() => {
@@ -186,7 +194,7 @@ export function SelectTicket() {
   return (
     <section className={styles["select-ticket"]}>
       {loading ? (
-        <h1>Carregando...</h1>
+        <Spinner/>
       ) : (
         <div className={`container ${styles.container}`}>
           <h1 className={styles["event-name"]}>Nocal Summer</h1>
@@ -287,7 +295,9 @@ export function SelectTicket() {
                 </span>
               </span>
             </div>
-            <button className={styles.btn}>Próximo Passo</button>
+            <Link href={`/payment-method/${id}`}>
+              <button className={styles.btn}>Próximo Passo</button>
+            </Link>
           </div>
         </div>
       )}

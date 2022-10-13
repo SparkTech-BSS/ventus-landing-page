@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import * as RadioGroup from "@radix-ui/react-radio-group";
+import { Spinner } from "components/Spinner";
+import EventService from "services/EventService";
+import { api } from "services/api";
 import {
   MultiCaixaExpress26Icon,
   PaySmart26Icon,
@@ -8,98 +13,203 @@ import {
 import styles from "./styles.module.scss";
 
 export function PaymentMethod() {
+  const router = useRouter();
+  const [paymentMethodValue, setPaymentMethodValue] = useState<string>("");
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [dataEvent, setDataEvent] = useState<any>([]);
+  const [cart, setCart] = useState<any>();
+  const { id } = router.query;
+
   useEffect(() => {
     document.documentElement.style.setProperty("--overflow", `auto`);
+
+    const storage = localStorage.getItem("@ventus:cart") as any;
+
+    const dateStorage = localStorage.getItem("@ventus:eventDate") as any;
+
+    if (storage && dateStorage) {
+      const storageParsed = JSON.parse(storage) as any;
+
+      const dateStorageParsed = JSON.parse(dateStorage) as any;
+
+      storageParsed.dateEvent = dateStorageParsed;
+
+      setCart(storageParsed);
+    }
+
+    if (dateStorage) {
+      const dateStorageParsed = JSON.parse(dateStorage) as any;
+    }
   }, []);
+
+  useEffect(() => {
+    document.documentElement.style.setProperty("--overflow", `auto`);
+
+    async function fetchData() {
+      try {
+        const eventData = await EventService.findById(id);
+        setDataEvent(eventData);
+      } catch (error) {
+        console.log(error);
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
+  
+  async function submitPayment() {
+    
+  }
+
+  async function handleSubmit() {
+    if (paymentMethodValue) {
+      const newCart = cart;
+      newCart.paymentMethod = paymentMethodValue;
+
+      setCart({...cart, paymentMethod: paymentMethodValue});
+
+      localStorage.setItem("@ventus:cart", JSON.stringify(newCart));
+
+      try {
+        const { data } = await api.post(`/orders/create/${dataEvent?.event?._id}`, newCart);
+        localStorage.setItem("@ventus:current", JSON.stringify(data));
+        console.log(data)
+        router.push(`/payment-method/reference/${data?._id}`);
+      } catch (error) {
+        console.log(error)
+      }
+
+    }
+  }
 
   return (
     <section className={styles["payment-method"]}>
-      <form className={`container ${styles.container}`}>
-        <h1 className={styles["event-name"]}>Nocal Summer</h1>
-        <span className={styles["event-info"]}>Sex, Ago 12 · 21:00 Pm</span>
-        <span className={styles["event-info"]}>Baía de Luanda, Luanda</span>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <>
+          <div className={`container ${styles.container}`}>
+            <h1 className={styles["event-name"]}>{dataEvent?.event?.name}</h1>
+            <span className={styles["event-info"]}>Sex, Ago 12 · 21:00 Pm</span>
+            <span className={styles["event-info"]}>Baía de Luanda, Luanda</span>
 
-        <h1 className={styles.heading}>Método de pagamento</h1>
+            <h1 className={styles.heading}>Método de pagamento</h1>
 
-        <span className={styles["select-payment-text"]}>Qual a forma de pagamento?</span>
+            <span className={styles["select-payment-text"]}>
+              Qual a forma de pagamento?
+            </span>
 
-        <RadioGroup.Root defaultValue="default" className={styles.content}>
-          <RadioGroup.Item
-            value="multicaixa-reference"
-            className={styles["radio-button"]}
-          >
-            {/* <RadioGroup.Indicator
-              className={styles["radio-button-indicator"]}
-            /> */}
+            <RadioGroup.Root
+              defaultValue="default"
+              className={styles.content}
+              onValueChange={(value) => setPaymentMethodValue(value)}
+            >
+              <RadioGroup.Item
+                value="reference"
+                className={styles["radio-button"]}
+                onChange={() => setPaymentMethodValue("reference")}
+              >
+                <div className={styles["payment-icon"]}>
+                  <MultiCaixaExpress26Icon />
+                </div>
 
-            <div className={styles["payment-icon"]}>
-              <MultiCaixaExpress26Icon />
+                <span className={styles["payment-title"]}>
+                  Pagar com referência
+                </span>
+              </RadioGroup.Item>
+
+              <RadioGroup.Item
+                value="pay-smart"
+                className={styles["radio-button"]}
+              >
+                <div className={styles["payment-icon"]}>
+                  <PaySmart26Icon />
+                </div>
+
+                <span className={styles["payment-title"]}>
+                  Pagar com Paysmart
+                </span>
+              </RadioGroup.Item>
+            </RadioGroup.Root>
+
+            <span className={styles.text}>Revise seu pedido</span>
+
+            <div className={styles["review-order"]}>
+              <div className={styles["review-order-item"]}>
+                <span className={styles["review-order-item-heading"]}>
+                  Item
+                </span>
+                <span className={styles["review-order-item-heading"]}>
+                  Valor
+                </span>
+              </div>
+              {cart?.ticketsReservation?.map((item: any) => {
+                return (
+                  <div
+                    className={styles["review-order-item"]}
+                    key={item?.ticketLotId}
+                  >
+                    <span className={styles["review-order-item-subheading"]}>
+                      {item?.type}
+                    </span>
+                    <span className={styles["review-order-item-subheading"]}>
+                      {new Intl.NumberFormat("de-DE", {
+                        style: "currency",
+                        currency: "AOA",
+                      }).format(item?.price)}
+                    </span>
+                  </div>
+                );
+              })}
+              {/* <div className={styles["review-order-item"]}>
+                <span className={styles["review-order-item-heading"]}>
+                  Taxas
+                </span>
+                <span className={styles["review-order-item-heading"]}>
+                  AOA 250
+                </span>
+              </div> */}
+              <div className={styles["review-order-item"]}>
+                <span className={styles["review-order-item-heading"]}>
+                  Total
+                </span>
+                <span className={styles["review-order-item-heading"]}>
+                  {new Intl.NumberFormat("de-DE", {
+                    style: "currency",
+                    currency: "AOA",
+                  }).format(cart?.total)}
+                </span>
+              </div>
             </div>
 
-            <span className={styles["payment-title"]}>
-              Pagar com referência
+            <span className={styles["term-text"]}>
+              Ao clicar no botão abaixo, você declara concordar com nossos{" "}
+              <a href="#" className={styles["term-text-link"]}>
+                Termos de Serviço
+              </a>
             </span>
-          </RadioGroup.Item>
 
-          <RadioGroup.Item value="pay-smart" className={styles["radio-button"]}>
-            {/* <RadioGroup.Indicator
-              className={styles["radio-button-indicator"]}
-            /> */}
+            <button
+              className={styles["btn-buy-ticket"]}
+              disabled={!paymentMethodValue}
+              onClick={handleSubmit}
+            >
+              <ShoppingCartICON />
+              Concluir compra
+            </button>
 
-            <div className={styles["payment-icon"]}>
-              <PaySmart26Icon />
+            <div className={styles["expiration-time"]}>
+              <span className={styles["expiration-time-heading"]}>
+                Tempo de expiração do carrinho:
+              </span>
+              <span className={styles["expiration-time-heading"]}>10:00</span>
             </div>
-
-            <span className={styles["payment-title"]}>Pagar com Paysmart</span>
-          </RadioGroup.Item>
-        </RadioGroup.Root>
-
-        <span className={styles.text}>Revise seu pedido</span>
-
-        <div className={styles["review-order"]}>
-          <div className={styles["review-order-item"]}>
-            <span className={styles["review-order-item-heading"]}>Item</span>
-            <span className={styles["review-order-item-heading"]}>Valor</span>
           </div>
-          <div className={styles["review-order-item"]}>
-            <span className={styles["review-order-item-subheading"]}>
-              1x FÊMININO 2º LOTE
-            </span>
-            <span className={styles["review-order-item-subheading"]}>
-              AOA 10.000
-            </span>
-          </div>
-          <div className={styles["review-order-item"]}>
-            <span className={styles["review-order-item-heading"]}>Taxas</span>
-            <span className={styles["review-order-item-heading"]}>AOA 250</span>
-          </div>
-          <div className={styles["review-order-item"]}>
-            <span className={styles["review-order-item-heading"]}>Total</span>
-            <span className={styles["review-order-item-heading"]}>
-              AOA 2050
-            </span>
-          </div>
-        </div>
-
-        <span className={styles["term-text"]}>
-          Ao clicar no botão abaixo, você declara concordar com nossos{" "}
-          <a href="#" className={styles["term-text-link"]}>
-            Termos de Serviço
-          </a>
-        </span>
-
-        <button className={styles["btn-buy-ticket"]}>
-          <ShoppingCartICON />
-          Concluir compra
-        </button>
-
-        <div className={styles["expiration-time"]}>
-          <span className={styles["expiration-time-heading"]}>
-            Tempo de expiração do carrinho:
-          </span>
-          <span className={styles["expiration-time-heading"]}>10:00</span>
-        </div>
-      </form>
+        </>
+      )}
     </section>
   );
 }

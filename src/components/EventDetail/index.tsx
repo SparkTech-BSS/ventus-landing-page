@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { Spinner } from "components/Spinner";
 import { useRouter } from "next/router";
 import { GoCalendar } from "react-icons/go";
 import Image from "next/future/image";
@@ -53,19 +54,17 @@ export function EventDetail() {
     fetchData();
   }, []);
 
-  console.log(dataEvent)
+  console.log(dataEvent);
 
   function getPrice(list: any) {
     if (!list) return [];
     return list?.map((item: any) => item.price);
   }
 
-
-
   return (
     <section className={styles["event-detail"]}>
       {loading ? (
-        <h1>Carregando...</h1>
+        <Spinner/>
       ) : (
         <>
           <div className={`${styles["event-banner"]}`}>
@@ -173,7 +172,10 @@ export function EventDetail() {
                       }`}
                       onClick={() => {
                         selectSelectedDate(item);
-                        localStorage.setItem("eventDate", item);
+                        localStorage.setItem(
+                          "@ventus:eventDate",
+                          JSON.stringify(item)
+                        );
                       }}
                     >
                       <span>{getObjectDate(item).week_day}</span>

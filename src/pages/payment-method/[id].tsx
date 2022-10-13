@@ -12,11 +12,20 @@ const PaymentMethodPage: NextPage = () => {
       </Head>
 
       <Layout>
-        <PaymentMethod/>
+        <PaymentMethod />
       </Layout>
     </>
   );
 };
 
+export async function getServerSideProps(ctx: any) {
+  const { id } = ctx.params;
+
+  console.log(id);
+
+  return {
+    props: {}, // will be passed to the page component as props
+  };
+}
 
 export default PaymentMethodPage;
