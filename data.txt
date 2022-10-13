@@ -1,1 +1,45 @@
 12345678A
+
+{/* <RadioGroup.Item
+                  value="pre-vend"
+                  className={styles["radio-button"]}
+                >
+                  <RadioGroup.Indicator
+                    className={styles["radio-button-indicator"]}
+                  />
+                </RadioGroup.Item> */}
+
+                {/* <div className={styles["input-amount"]}>
+                  <button
+                    className={`${styles["input-amount-button"]} ${styles.increase}`}
+                    type="button"
+                  >
+                    <FiMinus size={20} />
+                  </button>
+                  <span className={styles["input-amount-text"]}>0</span>
+                  <button
+                    className={`${styles["input-amount-button"]} ${styles.decrease}`}
+                    type="button"
+                  >
+                    <FiPlus size={20} />
+                  </button>
+                </div> */}
+
+
+                {/* <RadioGroup.Item
+                  value="area-normal"
+                  className={styles["radio-button"]}
+                >
+                  <RadioGroup.Indicator
+                    className={styles["radio-button-indicator"]}
+                  />
+                </RadioGroup.Item> */}
+
+                {/* <RadioGroup.Item
+                  value="area-vip"
+                  className={styles["radio-button"]}
+                >
+                  <RadioGroup.Indicator
+                    className={styles["radio-button-indicator"]}
+                  />
+                </RadioGroup.Item> */}

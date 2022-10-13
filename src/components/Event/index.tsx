@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { EventCard } from "../EventCard";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useKeenSlider } from "keen-slider/react";
@@ -14,6 +15,7 @@ interface Props {
 
 export function Event({ data }: Props) {
   // const { data, isLoading } = useEvents();
+  const router = useRouter();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const [ref, instanceRef] = useKeenSlider<HTMLDivElement>(
@@ -83,7 +85,7 @@ export function Event({ data }: Props) {
         <div className={styles["header-row"]}>
           <h1 className={`section-heading`}>Explorar Eventos</h1>
 
-          <Link href="#" shallow={true}>
+          <Link href="/result-search" shallow={true}>
             <a className={styles["se-more"]}>Explore mais</a>
           </Link>
         </div>
@@ -93,7 +95,7 @@ export function Event({ data }: Props) {
             {data?.map((item: any) => {
               return (
                 <div className="keen-slider__slide" key={item?.event?._id}>
-                  <EventCard data={item?.event}/>
+                  <EventCard data={item?.event} />
                 </div>
               );
             })}

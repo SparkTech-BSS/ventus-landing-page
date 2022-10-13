@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
-import Layout from "../components/Layout";
 import Head from "next/head";
+import Layout from "../components/Layout";
 import { EventDetail } from "../components/EventDetail";
 
 const EventDetailPage: NextPage = () => {

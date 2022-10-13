@@ -10,7 +10,7 @@ const findById = async (id: any) => {
   return data;
 };
 
-const findByName = async (name: string) => {
+const findByName = async (name: string | any) => {
   const { data }: any = await api.get(`events/findbyname/${name}`);
   return data;
 };

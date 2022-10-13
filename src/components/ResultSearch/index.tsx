@@ -1,9 +1,18 @@
 import { useEffect } from "react";
 import { IoIosArrowForward } from "react-icons/io";
+import { useRouter } from "next/router";
 import { EventCard } from "components/EventCard";
 import styles from "./styles.module.scss";
+import { useEventsByName } from "hooks/api/events";
 
 export function ResultSearch() {
+  const router = useRouter();
+  const { name } = router.query;
+
+  const { data, isLoading, isError } = useEventsByName(name);
+
+  console.log(data);
+
   useEffect(() => {
     document.documentElement.style.setProperty("--overflow", `auto`);
   }, []);

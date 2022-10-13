@@ -240,7 +240,6 @@ export function getFirstAndLastLetter(name: string) {
   return `${firstLetter}${lastLetter}`;
 }
 
-
 export function getFirstAndLastName(name: string) {
   let nameSplit = name.split(" ");
 
@@ -262,3 +261,47 @@ export const MAP_INFO = {
   width: "100%",
   height: "100%",
 };
+
+export function getHourFormatToAPI(value: string): string {
+  return value?.split(":")[0];
+}
+
+function getMonthByIndex(index: number): string {
+  const month = [
+    "Janeiro",
+    "Fevereiro",
+    "Março",
+    "Abril",
+    "Maio",
+    "Junho",
+    "Julho",
+    "Agosto",
+    "Setembro",
+    "outubro",
+    "Dezembro",
+  ];
+  return month[index];
+}
+
+export function getObjectDate(date: string | any) {
+  const weeks_days = [
+    "Domingo",
+    "Segunda-feira",
+    "Terça-feira",
+    "Quarta-feira",
+    "Quinta-feira",
+    "Sexta-feira",
+    "Sábado",
+  ];
+
+  const convertedToDateObject = new Date(date);
+
+  const dateObject = {
+    week_day: weeks_days[convertedToDateObject.getDay()],
+    day: convertedToDateObject.getDate().toString().length > 1 ? convertedToDateObject.getDate(): `0${convertedToDateObject.getDate()}`,
+    month: convertedToDateObject.getMonth() + 1,
+    fullYear: convertedToDateObject.getFullYear(),
+  };
+
+  return dateObject;
+}
