@@ -23,7 +23,7 @@ export async function getServerSideProps(ctx: any) {
   console.log(id);
 
   return {
-    props: {}, // will be passed to the page component as props
+    props: {}, 
   };
 }
 

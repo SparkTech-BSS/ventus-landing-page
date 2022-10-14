@@ -46,3 +46,9 @@
 
 //josedasilva0112@gmail.com
 //123456
+
+
+//localStorage.removeItem("@ventus:eventDate");
+localStorage.getItem("@ventus:eventDate");
+localStorage.getItem("@ventus:cart");
+localStorage.removeItem("@ventus:cart");

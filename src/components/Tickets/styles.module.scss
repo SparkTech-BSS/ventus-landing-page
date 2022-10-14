@@ -83,25 +83,26 @@
   padding: 4rem 0 2rem;
   //   min-height: 100vh;
 
-  display: flex;
-  flex-direction: column;
+  // display: flex;
+  // flex-direction: column;
   position: relative;
 
-//   &::before {
-//     content: '';
-//     position: absolute;
-//     height: 100%;
-//     left: 10rem;
-//     width: 1rem;
-//     background-color: #7C7C7C;
-//   }
+  //   &::before {
+  //     content: '';
+  //     position: absolute;
+  //     height: 100%;
+  //     left: 10rem;
+  //     width: 1rem;
+  //     background-color: #7C7C7C;
+  //   }
+
 }
 
 .list-date {
-    font-size: 2rem;
-    font-weight: 600;
-    margin-bottom: 2rem;
-    color: #7C7C7C;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: #7c7c7c;
 }
 
 .empty-box {
@@ -149,27 +150,27 @@ Event Item
   cursor: pointer;
   margin-left: 4rem;
   margin-top: 4rem;
-//   background-image: linear-gradient(
-//       180deg,
-//       rgba(58, 26, 26, 0.62) 0%,
-//       rgba(255, 137, 112, 0.33) 100%
-//     ),
-//     url("https://images.unsplash.com/photo-1483101974978-cf266fdf1139?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3289&q=80");
+  //   background-image: linear-gradient(
+  //       180deg,
+  //       rgba(58, 26, 26, 0.62) 0%,
+  //       rgba(255, 137, 112, 0.33) 100%
+  //     ),
+  //     url("https://images.unsplash.com/photo-1483101974978-cf266fdf1139?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3289&q=80");
   background-position: 0% 0%;
   background-size: cover;
   background-repeat: no-repeat;
-  transition: all .3s;
+  transition: all 0.3s;
 
   &:hover {
     transform: translateX(30px);
   }
-//   overflow: hidden;
+  //   overflow: hidden;
 
   display: flex;
 
   &::before {
     content: "";
-    border-right: 12px dotted #F5F7F8;
+    border-right: 12px dotted #f5f7f8;
     height: 100%;
     position: absolute;
     top: 0;
@@ -177,23 +178,23 @@ Event Item
   }
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     height: 100%;
     top: 0;
     left: -4rem;
-    width: .3rem;
-    background-color: #7C7C7C;
+    width: 0.3rem;
+    background-color: #7c7c7c;
     border-radius: 2rem;
   }
 }
 
 .ticket-brand {
-    font-size: 14rem;
-    position: absolute;
-    z-index: 1;
-    font-weight: 600;
-    color: #F5F7F825;
+  font-size: 14rem;
+  position: absolute;
+  z-index: 1;
+  font-weight: 600;
+  color: #f5f7f825;
 }
 
 .col-left {

@@ -273,7 +273,7 @@ export function EventDetail() {
                   </h2>
                 </div>
               </div>
-              <Link href={`/select-ticket/${id}`}>
+              <Link href={`/select-ticket/${id}`} prefetch={false}>
                 <button
                   className={styles["btn-buy-ticket"]}
                   disabled={!selectedDate}

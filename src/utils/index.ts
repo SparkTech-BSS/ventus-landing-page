@@ -298,10 +298,21 @@ export function getObjectDate(date: string | any) {
 
   const dateObject = {
     week_day: weeks_days[convertedToDateObject.getDay()],
-    day: convertedToDateObject.getDate().toString().length > 1 ? convertedToDateObject.getDate(): `0${convertedToDateObject.getDate()}`,
+    day:
+      convertedToDateObject.getDate().toString().length > 1
+        ? convertedToDateObject.getDate()
+        : `0${convertedToDateObject.getDate()}`,
     month: convertedToDateObject.getMonth() + 1,
     fullYear: convertedToDateObject.getFullYear(),
   };
 
   return dateObject;
+}
+
+export function accumulateTicketNumber(object: any) {
+  return object?.ticketsReservation?.reduce(
+    (total: number, currentValue: any) =>
+      total + currentValue?.totalTicketReserved,
+    0
+  );
 }

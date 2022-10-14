@@ -1,0 +1,266 @@
+.order {
+  position: relative;
+  padding: 0 0 0 5rem;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 0.3rem;
+    height: 100%;
+    background-color: #7c7c7c;
+    border-radius: 15px;
+    left: 0;
+    top: 0;
+  }
+}
+
+.order-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--white-color);
+  box-shadow: 0px 4px 10px -8px rgba(0, 0, 0, 0.8);
+  border-radius: 15px;
+  padding: 4rem 3rem 3rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+  margin-bottom: 4rem;
+
+  &:hover {
+    transform: translateX(2rem);
+    background-color: var(--black-color);
+
+    .order-title,
+    .time-to-pay,
+    .time-to-pay-text,
+    .time-icon,
+    .payment-method-text {
+      color: var(--white-color);
+    }
+
+    .copy-text,
+    .item-text,
+    .item-subheading,
+    .item-heading {
+      color: rgb(188, 188, 188);
+    }
+
+    .copy-clipboard {
+      color: var(--primary-color);
+    }
+
+    .time-to-pay-wrapper {
+      background-color: var(--primary-color);
+    }
+  }
+
+  &.expired::after {
+    display: flex;
+  }
+
+  &.expired:hover {
+    & > * {
+      color: unset;
+    }
+  }
+
+  &::after {
+    position: absolute;
+    content: "Tempo de pagamento expirado";
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    top: 0;
+    left: 0;
+    z-index: 10;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+    color: var(--white-color);
+    font-size: 2.4rem;
+    font-weight: 500;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2rem;
+    background: var(--gradient-linear);
+  }
+}
+
+.row {
+  display: flex;
+  align-items: flex-start;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 400px;
+}
+
+.col-right {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin-left: auto;
+}
+
+.order-title {
+  color: var(--black-700);
+  font-size: 1.6rem;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.copy-text {
+  color: #636363;
+  font-size: 1.6rem;
+  line-height: 1.4;
+  margin: 2rem 0;
+  transition: all 0.3s;
+}
+
+.copy-clipboard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  border: 2px dashed #d9d9d9;
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  color: var(--black-700);
+  font-size: 1.6rem;
+  font-weight: 700;
+  width: 100%;
+  transition: all 0.3s;
+
+  &:hover {
+    border: 2px dashed var(--primary-color);
+    box-shadow: 0 0 0.28rem #ffd1d1;
+  }
+}
+
+.copied-text-wrapper {
+  margin: 1rem 0;
+  width: 100%;
+  span {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--primary-color);
+  }
+}
+
+.time-to-pay-wrapper {
+  display: flex;
+  background-color: #f5f7f8;
+  -webkit-box-align: center;
+  background-color: rgb(245, 247, 248);
+  align-items: center;
+  padding: 12px 16px;
+  width: fit-content;
+  border-radius: 5px;
+  transition: all 0.3s;
+  margin-top: 2rem;
+  gap: 2rem;
+}
+
+.time-to-pay {
+  color: #191f28;
+  font-weight: 700;
+  font-size: 2rem;
+}
+
+.time-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  color: #848c9a;
+}
+
+.time-to-pay-text {
+  font-size: 1.2rem;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.item-heading {
+  color: #4a4a4a;
+  font-size: 1.6rem;
+  transition: all 0.3s;
+  font-weight: 700;
+}
+
+.item-subheading {
+  color: #4a4a4a;
+  font-size: 1.6rem;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.item-text {
+  color: #4a4a4a;
+  font-size: 1.6rem;
+  font-weight: 400;
+  transition: all 0.3s;
+}
+
+.payment-method-wrapper {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 100%;
+  gap: 4rem;
+  border-top: 2px dashed #eee;
+  padding-top: 2rem;
+  margin-top: 1rem;
+}
+
+.payment-method-text {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--black-900);
+  transition: all 0.3s;
+}
+
+.payment-method-img {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+}
+
+.empty-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10rem 0;
+
+  button {
+    background-color: var(--primary-color);
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--white-color);
+    transition: all 0.3s;
+    margin: 2rem 0;
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+}

@@ -42,7 +42,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     });
 
     setCookie(undefined, "login.status", data.error, {
-      maxAge: 60 * 60 * 1, // 1 hour
+      maxAge: 24 * 60 * 60 * 1, // 1 hour
     });
 
     api.defaults.headers.common.Authorization = `Bearer ${access_token}`;
@@ -54,8 +54,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   function logout() {
     destroyCookie(null, "ventus.token");
-    Router.push("/");
     Router.reload();
+    Router.push("/#");
   }
 
   function getLoginStatus() {

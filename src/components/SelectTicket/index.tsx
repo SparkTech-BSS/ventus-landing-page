@@ -119,7 +119,7 @@ export function SelectTicket() {
       );
     }
 
-    localStorage.setItem("@ventus:cart", JSON.stringify(cart));
+    // localStorage.setItem("@ventus:cart", JSON.stringify(cart));
   }
 
   function accumulateTicketNumber(object: any) {
@@ -167,7 +167,7 @@ export function SelectTicket() {
       );
     }
 
-    localStorage.setItem("@ventus:cart", JSON.stringify(cart));
+    // localStorage.setItem("@ventus:cart", JSON.stringify(cart));
   }
 
   useEffect(() => {
@@ -190,6 +190,13 @@ export function SelectTicket() {
     }
     fetchData();
   }, []);
+
+
+  useEffect(() => {
+    localStorage.setItem("@ventus:cart", JSON.stringify(cart));
+  }, [cart]);
+
+  console.log(cart);
 
   return (
     <section className={styles["select-ticket"]}>

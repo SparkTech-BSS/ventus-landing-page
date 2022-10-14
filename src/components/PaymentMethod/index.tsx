@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import { Spinner } from "components/Spinner";

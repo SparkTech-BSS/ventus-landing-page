@@ -24,7 +24,7 @@ export function EventCard({ width, multipleData = true, data }: Props) {
   // console.log(data);
 
   return (
-    <Link href={`/event-detail/${data?._id}`}>
+    <Link href={`/event-detail/${data?._id}`} prefetch={false}>
       <a className={`${styles.card} ${width === "full" ? styles.full : ""}`}>
         <Image
           src={data?.images[0]}

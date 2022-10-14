@@ -6,6 +6,7 @@ import * as Tabs from "@radix-ui/react-tabs";
 import { QRCodeSVG } from "qrcode.react";
 import styles from "./styles.module.scss";
 import { TicketLinearGradient } from "config";
+import { OrderList } from "components/OrderList";
 
 export function Tickets() {
   const [tickets, setTickets] = useState([]);
@@ -41,7 +42,11 @@ export function Tickets() {
           <div className="container">
             <h1 className={styles.heading}>Ingressos</h1>
           </div>
-          <Tabs.Root className={styles["tabs"]} defaultValue="actives">
+          <Tabs.Root
+            className={styles["tabs"]}
+            defaultValue="actives"
+            orientation="horizontal"
+          >
             <Tabs.List
               aria-label="Courses Editor"
               className={`container ${styles["tabs-list"]}`}
@@ -52,7 +57,15 @@ export function Tickets() {
               <Tabs.Trigger value="closed" className={styles["tabs-trigger"]}>
                 Encerrados
               </Tabs.Trigger>
+              <Tabs.Trigger
+                value="in-progress"
+                className={styles["tabs-trigger"]}
+              >
+                Pedidos
+              </Tabs.Trigger>
             </Tabs.List>
+
+            {/* //Aprovado, cancelados, pendendete */}
 
             <Tabs.Content
               value="actives"
@@ -63,7 +76,11 @@ export function Tickets() {
               ) : (
                 <>
                   <div className={`container`}>
-                    {tickets?.length ? <span className={styles["list-date"]}>2022</span> : ''}
+                    {tickets?.length ? (
+                      <span className={styles["list-date"]}>2022</span>
+                    ) : (
+                      ""
+                    )}
 
                     {!tickets?.length ? (
                       <div className={styles["empty-box"]}>
@@ -149,10 +166,19 @@ export function Tickets() {
                 <button>Encontrar Eventos</button>
               </div>
             </Tabs.Content>
+
+            <Tabs.Content value="in-progress" className={styles["tab-content"]}>
+              <div className={`container`}>
+                  <span className={styles["list-date"]}>2022</span>
+                  <OrderList/>
+              </div>
+              {/* <span className={styles["list-date"]}>2022</span>
+              <div className={`container`}>
+              </div> */}
+            </Tabs.Content>
           </Tabs.Root>
         </div>
       </div>
-      <div className={`container`}></div>
     </div>
   );
 }

@@ -5,7 +5,7 @@ import EventService from "../services/EventService";
 import { api } from "services/api";
 import { Error404 } from "../components/Error404";
 import { withCSR } from "HOC/with-CSR";
-import { dehydrate, QueryClient } from '@tanstack/react-query';
+import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { CashBack } from "../components/CashBack";
 import { Event } from "../components/Event";
@@ -18,7 +18,8 @@ import { Cookies } from "../components/Cookies";
 import { Rainbow } from "components/Rainbow";
 import Layout from "../components/Layout";
 
-export default function Home({ events }: any) {
+export default function Home({ events, isError }: any) {
+  console.log(events);
 
   return (
     <>
@@ -26,28 +27,34 @@ export default function Home({ events }: any) {
         <title>Ventus</title>
       </Head>
 
-      <Cookies />
-      <Layout>
-        <Hero />
-        <Event data={events}/>
-        <State
-          text="Descubra festas em todas as cidades"
-          state="1"
-          heading="Inicie"
-        />
-        <StartParty />
-        <State
-          text="Termine curtindo com a galera"
-          state="2"
-          heading="Finalize"
-        />
-        <CashBack />
-      </Layout>
+      {isError ? (
+        <Error404 />
+      ) : (
+        <>
+          <Cookies />
+          <Layout>
+            <Hero />
+            <Event data={events} />
+            <State
+              text="Descubra festas em todas as cidades"
+              state="1"
+              heading="Inicie"
+            />
+            <StartParty />
+            <State
+              text="Termine curtindo com a galera"
+              state="2"
+              heading="Finalize"
+            />
+            <CashBack />
+          </Layout>
+        </>
+      )}
     </>
   );
-};
+}
 
-export const getStaticProps: GetStaticProps = withCSR( async (ctx: any) => { 
+export const getStaticProps: GetStaticProps = withCSR(async (ctx: any) => {
   let events: any;
   let isError = false;
 
@@ -60,9 +67,9 @@ export const getStaticProps: GetStaticProps = withCSR( async (ctx: any) => {
 
   return {
     props: {
-      events,
+      events: events ? events : null,
+      isError,
     },
-    revalidate: 60
-  }
+    revalidate: 60,
+  };
 });
-
