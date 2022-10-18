@@ -23,8 +23,6 @@ const EventDetailPage: NextPage = () => {
 
     const { id } = ctx.params;
 
-    console.log(id)
-
     return {
       props: {
         

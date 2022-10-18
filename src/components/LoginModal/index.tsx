@@ -51,15 +51,11 @@ export function LoginModal({ isOpen, onRequestClose }: Props) {
     try {
       await signIn(data);
 
-      if (getLoginStatus() == "invalid_grant") {
+      if (getLoginStatus() == 401) {
         addToast("Credenciais inválidas...", {
           appearance: "error",
           autoDismiss: true,
         });
-      } else {
-        onRequestClose();
-        reset();
-        // Router.push("/");
       }
     } catch (error) {
       addToast("Credenciais inválidas...", {
@@ -67,6 +63,8 @@ export function LoginModal({ isOpen, onRequestClose }: Props) {
         autoDismiss: true,
       });
     } finally {
+      reset();
+      onRequestClose();
       setLoading(false);
     }
   };

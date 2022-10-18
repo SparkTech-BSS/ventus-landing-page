@@ -80,6 +80,7 @@
     color: var(--white-color);
     font-size: 2.4rem;
     font-weight: 500;
+    text-align: center;
   }
 
   &::before {
@@ -262,5 +263,53 @@
     &:hover {
       opacity: 0.6;
     }
+  }
+}
+
+@media (max-width: 992px) {
+  .order-title {
+    text-align: center;
+  }
+
+  .row {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .col-right {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .order-card:hover {
+    transform: unset;
+  }
+}
+
+@media (max-width: 500px) {
+  .time-to-pay-wrapper {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .time-to-pay-text {
+    text-align: center;
+  }
+
+  .order-card {
+    padding: 4rem 2rem 3rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .order-card {
+    padding: 4rem 1rem 3rem;
   }
 }

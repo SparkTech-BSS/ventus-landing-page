@@ -57,7 +57,6 @@ export function RegisterModal({ isOpen, onRequestClose }: Props) {
   }
 
   function handleInputConfirmPasswordVisible() {
-    console.log(inputConfirmPasswordType);
     setInputConfirmPasswordType("text");
   }
 
@@ -119,7 +118,6 @@ export function RegisterModal({ isOpen, onRequestClose }: Props) {
 
   const onSubmit: SubmitHandler<UserDTO> = async (data) => {
     setLoading(true);
-    console.log(data);
     try {
       const response = await api.post("users", {
         email: data.email,

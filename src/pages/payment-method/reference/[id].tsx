@@ -1,8 +1,13 @@
-import type { NextPage } from "next";
-import { Reference } from "../../../components/Reference";
 import Head from "next/head";
+import { withCSR } from "HOC/with-CSR";
+import OrderService from "../../../services/OrderService";
+import EventService from "../../../services/EventService";
+import { Reference } from "../../../components/Reference";
+import { getAPIClient } from "services/axios";
+import { api } from "services/api";
 
-const ReferencePaymentPage: NextPage = () => {
+
+function ReferencePaymentPage() {
   return (
     <>
       <Head>
@@ -14,13 +19,9 @@ const ReferencePaymentPage: NextPage = () => {
       </main>
     </>
   );
-};
+}
 
 export async function getServerSideProps(ctx: any) {
-  const { id } = ctx.params;
-
-  console.log(id);
-
   return {
     props: {}, // will be passed to the page component as props
   };

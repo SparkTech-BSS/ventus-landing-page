@@ -11,8 +11,6 @@ export function ResultSearch() {
 
   const { data, isLoading, isError } = useEventsByName(name);
 
-  console.log(data);
-
   useEffect(() => {
     document.documentElement.style.setProperty("--overflow", `auto`);
   }, []);

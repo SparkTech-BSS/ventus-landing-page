@@ -1,10 +1,6 @@
-import Image from "next/future/image";
-import { CopyIcon } from "../Icon";
 import { useEffect, useState } from "react";
-import { MdAccessTime } from "react-icons/md";
 import { api } from "services/api";
 import { Loading } from "components/Loading";
-import MulticaixaReferencePNG from "../../assets/png/payment-method/multicaixa-reference.png";
 import styles from "./styles.module.scss";
 import { OrderItem } from "components/OrderItem";
 
@@ -20,11 +16,9 @@ export function OrderList() {
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      //tickets/findbyclientid
       try {
         const { data } = await api.get(`orders/findbystatususerid/pending`);
         setOrders(data);
-        console.log(data);
       } catch (error) {
         console.log(error);
         setError(true);

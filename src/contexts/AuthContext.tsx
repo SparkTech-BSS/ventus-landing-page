@@ -25,6 +25,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const isAuthenticated = !!user;
 
   useEffect(() => {
+
     const { "ventus.token": access_token } = parseCookies();
 
     if (access_token || !(access_token === "undefined")) {
@@ -38,10 +39,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const access_token = data.access_token;
 
     setCookie(undefined, "ventus.token", access_token, {
-      maxAge: 60 * 60 * 1, // 1 hour
+      maxAge: 60 * 60 * 24 * 30, // 30 days,
+      // path: '/'
     });
 
-    setCookie(undefined, "login.status", data.error, {
+    setCookie(undefined, "login.status", data.statusCode, {
       maxAge: 24 * 60 * 60 * 1, // 1 hour
     });
 
@@ -49,13 +51,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     setUser(getCurrentUserObject());
 
-    Router.push("/");
+    // await Router.push("/");
   }
 
-  function logout() {
+  async function logout() {
     destroyCookie(null, "ventus.token");
+    await Router.push("/");
     Router.reload();
-    Router.push("/#");
   }
 
   function getLoginStatus() {

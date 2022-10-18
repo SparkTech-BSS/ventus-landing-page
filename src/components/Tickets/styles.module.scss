@@ -95,7 +95,6 @@
   //     width: 1rem;
   //     background-color: #7C7C7C;
   //   }
-
 }
 
 .list-date {
@@ -150,21 +149,16 @@ Event Item
   cursor: pointer;
   margin-left: 4rem;
   margin-top: 4rem;
-  //   background-image: linear-gradient(
-  //       180deg,
-  //       rgba(58, 26, 26, 0.62) 0%,
-  //       rgba(255, 137, 112, 0.33) 100%
-  //     ),
-  //     url("https://images.unsplash.com/photo-1483101974978-cf266fdf1139?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3289&q=80");
   background-position: 0% 0%;
   background-size: cover;
   background-repeat: no-repeat;
   transition: all 0.3s;
+  display: flex;
+  align-items: center;
 
   &:hover {
     transform: translateX(30px);
   }
-  //   overflow: hidden;
 
   display: flex;
 
@@ -299,5 +293,101 @@ Event Item
 @media (min-width: 992px) {
   .ticket {
     padding-block-start: calc(var(--section-padding) + 70px);
+  }
+}
+
+@media (max-width: 672px) {
+  .event-item {
+    margin-left: 0rem;
+
+    &:hover {
+      transform: unset;
+    }
+
+    display: flex;
+
+    &::before {
+      display: none;
+    }
+
+    &::after {
+      display: none;
+    }
+  }
+
+  .ticket-brand {
+    font-size: 8rem;
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(30deg);
+    font-weight: 600;
+    color: #f5f7f825;
+  }
+}
+
+@media (max-width: 560px) {
+  .event-item {
+    height: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .col-left {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    gap: 4rem;
+    flex: 1;
+    z-index: 2;
+  }
+
+  .col-left-1 {
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .col-left-2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    z-index: 2;
+  }
+
+  .col-right {
+    // flex: .5;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-top: 2rem;
+  }
+
+  .ticket-number {
+    transform: unset;
+  }
+}
+
+@media (max-width: 350px) {
+  .ticket-brand {
+    font-size: 6rem;
+  }
+
+  .tabs-list {
+    gap: 2.5rem;
+  }
+
+  .event-heading {
+    font-size: 2.5rem;
+  }
+
+  .location-heading {
+    font-size: 1.8rem;
   }
 }

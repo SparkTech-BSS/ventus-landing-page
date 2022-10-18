@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/future/image";
 import EventService from "services/EventService";
 import { api } from "services/api";
@@ -47,7 +48,6 @@ export function Reference() {
         setDataEvent(eventData);
         ticketData(data);
         setCountDownDate(new Date(data?.timeToPay).getTime());
-        console.log(data);
       } catch (error) {
         console.log(error);
         setError(true);
@@ -70,6 +70,8 @@ export function Reference() {
 
       if (distance < 0) {
         clearInterval(x);
+        setMinute(0);
+        setSecond(0);
       }
     }, 1000);
   }, [countDownDate, minute, second]);
@@ -83,12 +85,12 @@ export function Reference() {
   }
 
   async function copyTextToClipboard(text: string) {
-    if ('clipboard' in navigator) {
+    if ("clipboard" in navigator) {
       return await navigator.clipboard.writeText(text);
     } else {
-      return document.execCommand('copy', true, text);
+      return document.execCommand("copy", true, text);
     }
-  } 
+  }
 
   const handleCopyClick = () => {
     // Asynchronously call copyTextToClipboard
@@ -103,7 +105,15 @@ export function Reference() {
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
+
+  const isExpiredOrder = useMemo(() => {
+    const distanceBetweenDate = countDownDate - new Date().getTime();
+    return distanceBetweenDate <= 0 ? true : false;
+  }, []);
+
+  const minutes = String(minute).padStart(2, "0");
+  const seconds = String(second).padStart(2, "0");
 
   return (
     <section className={styles["reference-page"]}>
@@ -125,7 +135,10 @@ export function Reference() {
               habilitado
             </span>
 
-            <button className={styles["copy-clipboard"]} onClick={handleCopyClick}>
+            <button
+              className={styles["copy-clipboard"]}
+              onClick={handleCopyClick}
+            >
               {ticket?.referenceId}
               <CopyIcon />
             </button>
@@ -144,7 +157,9 @@ export function Reference() {
               </span>
 
               <span className={styles["timer-heading"]}>
-                {minute}:{second}
+                {minutes[0]}
+                {minutes[1]}:{seconds[0]}
+                {seconds[1]}
               </span>
 
               <Progress.Root className={styles["progress-bar"]} value={66}>
@@ -187,9 +202,11 @@ export function Reference() {
             </div>
 
             <div className={styles["btn-group"]}>
-              <button className={styles["btn-primary"]}>
-                Voltar para Home
-              </button>
+              <Link href="/">
+                <button className={styles["btn-primary"]}>
+                  Voltar para Home
+                </button>
+              </Link>
               {/* <button className={styles["btn-secondary"]}>Compartilhar código</button> */}
             </div>
           </div>

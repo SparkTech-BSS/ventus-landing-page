@@ -54,8 +54,6 @@ export function EventDetail() {
     fetchData();
   }, []);
 
-  console.log(dataEvent);
-
   function getPrice(list: any) {
     if (!list) return [];
     return list?.map((item: any) => item.price);

@@ -21,7 +21,6 @@ interface Props {
 }
 
 export function EventCard({ width, multipleData = true, data }: Props) {
-  // console.log(data);
 
   return (
     <Link href={`/event-detail/${data?._id}`} prefetch={false}>

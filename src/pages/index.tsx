@@ -14,13 +14,11 @@ import { Hero } from "../components/Hero";
 import { StartParty } from "../components/StartParty";
 import { State } from "../components/State";
 import { GoUpButton } from "../components/GoUpButton";
-import { Cookies } from "../components/Cookies";
+import { CookiesConsent } from "../components/CookiesConsent";
 import { Rainbow } from "components/Rainbow";
 import Layout from "../components/Layout";
 
 export default function Home({ events, isError }: any) {
-  console.log(events);
-
   return (
     <>
       <Head>
@@ -31,7 +29,7 @@ export default function Home({ events, isError }: any) {
         <Error404 />
       ) : (
         <>
-          <Cookies />
+          <CookiesConsent />
           <Layout>
             <Hero />
             <Event data={events} />

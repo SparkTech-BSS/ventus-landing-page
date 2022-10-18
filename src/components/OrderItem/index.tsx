@@ -24,10 +24,8 @@ export function OrderItem({ data }: Props) {
   }
 
   const handleCopyClick = () => {
-    // Asynchronously call copyTextToClipboard
     copyTextToClipboard(data?.order?.referenceId)
       .then(() => {
-        // If successful, update the isCopied state value
         setIsCopied(true);
         setTimeout(() => {
           setIsCopied(false);
@@ -64,7 +62,6 @@ export function OrderItem({ data }: Props) {
     }, 1000);
   }, [countDownDate, minute, second]);
 
-  //${styles.expired}
 
   const minutes = String(minute).padStart(2, "0");
   const seconds = String(second).padStart(2, "0");

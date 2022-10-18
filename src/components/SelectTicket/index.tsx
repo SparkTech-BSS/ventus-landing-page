@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { MdOutlineArrowBackIos } from "react-icons/md";
 import produce from "immer";
 import { Spinner } from "components/Spinner";
 import { useRouter } from "next/router";
@@ -7,8 +8,6 @@ import EventService from "services/EventService";
 import TicketService from "services/TicketService";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import { FiPlus, FiMinus } from "react-icons/fi";
-import ImgDetailPNG from "../../assets/png/event-detail/img-1.png";
-import Image from "next/future/image";
 import styles from "./styles.module.scss";
 
 interface TicketsReservation {
@@ -34,8 +33,8 @@ interface CartItem {
 }
 
 const initialStateCart = {
-  dateEvent: '',
-  paymentMethod: '',
+  dateEvent: "",
+  paymentMethod: "",
   total: 0,
   ticketsReservation: [],
 };
@@ -55,13 +54,11 @@ export function SelectTicket() {
 
   const [dataTicket, setDataTicket] = useState<any>([]);
 
+  const [eventDate, setEventDate] = useState();
+
   const [error, setError] = useState(false);
 
   const { id } = router.query;
-
-  function handleChangeType(value: string) {
-    setType(value);
-  }
 
   function getItemQuantity(id: any) {
     return (
@@ -118,8 +115,6 @@ export function SelectTicket() {
         })
       );
     }
-
-    // localStorage.setItem("@ventus:cart", JSON.stringify(cart));
   }
 
   function accumulateTicketNumber(object: any) {
@@ -166,20 +161,15 @@ export function SelectTicket() {
         })
       );
     }
-
-    // localStorage.setItem("@ventus:cart", JSON.stringify(cart));
   }
 
   useEffect(() => {
-    document.documentElement.style.setProperty("--overflow", `auto`);
-    console.log(localStorage.getItem("eventDate"));
     async function fetchData() {
       try {
         const eventDateSelected = localStorage.getItem("eventDate") as string;
         const eventData = await EventService.findById(id);
         const ticketData = await TicketService.findByEventId(id);
-
-        console.log(eventData);
+        setDataEvent(eventData);
         setDataTicket(ticketData);
       } catch (error) {
         console.log(error);
@@ -191,26 +181,31 @@ export function SelectTicket() {
     fetchData();
   }, []);
 
-
   useEffect(() => {
     localStorage.setItem("@ventus:cart", JSON.stringify(cart));
   }, [cart]);
 
-  console.log(cart);
+  function handleBack() {
+    router.back();
+  }
 
   return (
     <section className={styles["select-ticket"]}>
       {loading ? (
-        <Spinner/>
+        <Spinner />
       ) : (
         <div className={`container ${styles.container}`}>
-          <h1 className={styles["event-name"]}>Nocal Summer</h1>
+          <h1 className={styles["event-name"]}>{dataEvent?.event?.name}</h1>
           <span className={styles["event-info"]}>Sex, Ago 12 · 21:00 Pm</span>
           <span className={styles["event-info"]}>Baía de Luanda, Luanda</span>
 
           <span className={styles["select-payment-text"]}>
             Por favor,Selecione o tipo de ingresso que deseja comprar.
           </span>
+
+          <button className={styles["btn-back"]} onClick={handleBack}>
+            <MdOutlineArrowBackIos size={20} /> Voltar
+          </button>
 
           <RadioGroup.Root defaultValue="default">
             {dataTicket?.map((item: any) => {

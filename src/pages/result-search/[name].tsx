@@ -30,11 +30,8 @@ const ResultSearchPage = ({ isError }: Props) => {
 };
 
 export const getServerSideProps = withCSR(async (ctx: any) => {
-  console.log("getServerSideProps");
 
   const { name } = ctx.params;
-
-  console.log(name);
 
   const queryClient = new QueryClient();
 

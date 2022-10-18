@@ -28,6 +28,8 @@
   --grey-color-400: #939598;
 
   --whatsApp-color: #04d361;
+  --whatsApp-hover-color: #00b150;
+  --gradient-linear-whatsApp: linear-gradient(90.17deg, #28C542 1.06%, #5AEF75 104.36%);
 
   //FONT CONFIGURATION
 
@@ -190,9 +192,11 @@ body {
   &.w-40 {
     max-width: 40rem;
   }
+
+  &.ticket-modal {
+    background: transparent;
+  }
 }
-
-
 
 .react-modal-close {
   position: absolute;
@@ -228,10 +232,10 @@ body {
 }
 
 @media (max-width: 668px) {
-
   .react-modal-overlay {
     align-items: flex-start;
     justify-content: flex-start;
+    // overflow: hidden;
   }
 
   .react-modal-content {

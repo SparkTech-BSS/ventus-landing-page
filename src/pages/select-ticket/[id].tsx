@@ -20,8 +20,6 @@ const SelectTicketPage: NextPage = () => {
 export async function getServerSideProps(ctx: any) {
   const { id } = ctx.params;
 
-  console.log(id);
-
   return {
     props: {}, 
   };

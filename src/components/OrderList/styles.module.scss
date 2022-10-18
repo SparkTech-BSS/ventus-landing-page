@@ -235,3 +235,14 @@
     }
   }
 }
+
+@media (max-width: 600px) {
+  .order {
+    position: relative;
+    padding: 0;
+
+    &::before {
+      display: none;
+    }
+  }
+}
