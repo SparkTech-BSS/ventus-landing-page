@@ -52,3 +52,9 @@
 localStorage.getItem("@ventus:eventDate");
 localStorage.getItem("@ventus:cart");
 localStorage.removeItem("@ventus:cart");
+
+biro_lito@gmail.com
+
+12345678A
+
+/esquici-senha

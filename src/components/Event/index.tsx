@@ -58,7 +58,7 @@ export function Event({ data }: Props) {
           clearTimeout(timeout);
           if (mouseOver) return;
           timeout = setTimeout(() => {
-            slider.next();
+            slider?.next();
           }, 3000);
         }
         slider.on("created", () => {
@@ -104,13 +104,13 @@ export function Event({ data }: Props) {
           {loaded && instanceRef.current && (
             <div className="dots">
               {Array.from(
-                Array(instanceRef.current.track.details.slides.length).keys()
+                Array(instanceRef?.current?.track?.details?.slides?.length).keys()
               ).map((idx) => {
                 return (
                   <button
                     key={idx}
                     onClick={() => {
-                      instanceRef.current?.moveToIdx(idx);
+                      instanceRef?.current?.moveToIdx(idx);
                     }}
                     className={"dot" + (currentSlide === idx ? " active" : "")}
                   ></button>

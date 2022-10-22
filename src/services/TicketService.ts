@@ -20,11 +20,17 @@ const findByClientIdTicketId = async (id: any) => {
     return data;
 }
 
+const findByEventIdAndByDate = async (id: any, date: any) => {
+    const { data }: any = await api.get(`ticket-lot/findbyeventiddate/${id}/${date}`);
+    return data;
+}
+
 const TicketService = {
     findByEventId,
     findByTicketLotId,
     findByClientId,
-    findByClientIdTicketId
+    findByClientIdTicketId,
+    findByEventIdAndByDate
 }
 
 export default TicketService;

@@ -1,0 +1,5 @@
+- Barra de pesquisa igual do sympla []
+- Botão entrar/criar conta -> 14 pixel
+- Altura o menu sobre para evento
+- Hover dos links do fotter
+- Hover botão apple store

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import Link from "next/link";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoExitOutline } from "react-icons/io5";
 import { HiOutlineTicket } from "react-icons/hi";
@@ -17,7 +18,7 @@ export function AppMenuBottom() {
     useState(false);
 
   const activeElementOnScroll = function () {
-    if (window.scrollY >= 1000) {
+    if (window.scrollY >= 500) {
       setActiveElementOnScrollBar(true);
     } else {
       setActiveElementOnScrollBar(false);
@@ -35,17 +36,17 @@ export function AppMenuBottom() {
   return (
     <nav
       className={`${styles["app-menu-bottom"]} ${
-        activeElementOnScrollBar
-          ? styles["fade-inUp"]
-          : styles["fade-outUp"]
+        activeElementOnScrollBar ? styles["fade-inUp"] : styles["fade-outUp"]
       }`}
     >
       <ul>
         <li>
-          <a className={styles["app-menu-bottom-link"]}>
-            <HiHome size={26} />
-            Home
-          </a>
+          <Link href="/" passHref>
+            <a className={styles["app-menu-bottom-link"]}>
+              <HiHome size={26} />
+              Home
+            </a>
+          </Link>
         </li>
         <li>
           <a className={styles["app-menu-bottom-link"]}>
@@ -54,10 +55,12 @@ export function AppMenuBottom() {
           </a>
         </li>
         <li>
-          <a className={styles["app-menu-bottom-link"]}>
-            <HiOutlineTicket size={26} />
-            Ingressos
-          </a>
+          <Link href="/tickets" passHref>
+            <a className={styles["app-menu-bottom-link"]}>
+              <HiOutlineTicket size={26} />
+              Ingressos
+            </a>
+          </Link>
         </li>
         <li>
           <a className={styles["app-menu-bottom-link"]}>

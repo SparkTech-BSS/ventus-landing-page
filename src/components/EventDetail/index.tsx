@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
+
 import Link from "next/link";
+
 import { Spinner } from "components/Spinner";
+
 import { useRouter } from "next/router";
+
 import { GoCalendar } from "react-icons/go";
+
 import Image from "next/future/image";
-import ImgDetailPNG from "../../assets/png/event-detail/img-1.png";
+
 import { getHourFormatToAPI, getObjectDate, MAP_INFO } from "../../utils";
+
 import {
   ArrowEventICON,
   StarICON,
@@ -15,9 +21,13 @@ import {
   ShoppingCartICON,
   TicketIcon,
 } from "../../components/Icon";
+
 import { Avatar } from "../Avatar";
+
 import EventService from "services/EventService";
+
 import TicketService from "services/TicketService";
+
 import styles from "./styles.module.scss";
 
 export function EventDetail() {
@@ -52,21 +62,42 @@ export function EventDetail() {
       }
     }
     fetchData();
-  }, []);
+  }, [id]);
 
   function getPrice(list: any) {
     if (!list) return [];
     return list?.map((item: any) => item.price);
   }
 
+  function getFirstAndLastPrice() {
+    const array = getPrice(dataTicket);
+
+    const minValue = Math.min(...array);
+    const maxValue = Math.max(...array);
+
+    if (minValue === maxValue) {
+      return `kz${maxValue},00`;
+    } else if (maxValue > minValue) {
+      return `kz${maxValue},00 até kz${minValue},00`;
+    }
+  }
+
+  console.log(getFirstAndLastPrice());
+
   return (
     <section className={styles["event-detail"]}>
       {loading ? (
-        <Spinner/>
+        <Spinner />
       ) : (
         <>
           <div className={`${styles["event-banner"]}`}>
-            <Image src={ImgDetailPNG} alt="" className={styles["banner-img"]} />
+            <Image
+              src={dataEvent?.event?.images[0]}
+              alt=""
+              width={100}
+              height={100}
+              className={styles["banner-img"]}
+            />
 
             <div className={styles["date-multiple"]}>
               <div className={styles["date-multiple__col"]}>
@@ -85,8 +116,10 @@ export function EventDetail() {
             <div className={styles["box-row"]}>
               <div className={styles["box-row-img"]}>
                 <Image
-                  src={ImgDetailPNG}
+                  src={dataEvent?.event?.images[0]}
                   alt=""
+                  width={100}
+                  height={100}
                   className={styles["box-row-img__picture"]}
                 />
                 <div className={styles["date-multiple"]}>
@@ -109,14 +142,14 @@ export function EventDetail() {
                   >
                     {dataEvent?.event?.name}
                   </h1>
-                  <span
+                  {/* <span
                     className={
                       styles["box-row-content__heading-group-rating-container"]
                     }
                   >
                     <StarICON />
                     4.9
-                  </span>
+                  </span> */}
                 </div>
 
                 <div className={styles["tickets-content"]}>
@@ -127,7 +160,7 @@ export function EventDetail() {
                       Ingressos entre
                     </span>
                     <h2 className={styles["tickets-heading"]}>
-                      kz250.00 até kz20,000.00
+                      {getFirstAndLastPrice()}
                     </h2>
                   </div>
                 </div>
@@ -267,7 +300,7 @@ export function EventDetail() {
                     Ingressos entre
                   </span>
                   <h2 className={styles["tickets-heading"]}>
-                    kz250.00 até kz20,000.00
+                    {getFirstAndLastPrice()}
                   </h2>
                 </div>
               </div>

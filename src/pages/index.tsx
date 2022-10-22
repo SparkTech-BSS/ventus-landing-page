@@ -61,6 +61,7 @@ export const getStaticProps: GetStaticProps = withCSR(async (ctx: any) => {
     events = data;
   } catch (error) {
     isError = true;
+    console.log(error);
   }
 
   return {

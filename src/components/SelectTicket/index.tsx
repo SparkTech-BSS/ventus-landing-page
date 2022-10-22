@@ -60,6 +60,8 @@ export function SelectTicket() {
 
   const { id } = router.query;
 
+  const RATE_PRICE = 375;
+
   function getItemQuantity(id: any) {
     return (
       cart?.ticketsReservation?.find((item: any) => item?.ticketLotId === id)
@@ -86,7 +88,7 @@ export function SelectTicket() {
 
       setCart({
         ...cart,
-        total: ticket?.price,
+        total: ticket?.price + RATE_PRICE,
         ticketsReservation: [ticketReservationObject],
       });
     } else if (isNull(ticket?._id) && cart?.ticketsReservation?.length) {
@@ -99,7 +101,7 @@ export function SelectTicket() {
 
       setCart(
         produce((draft: any) => {
-          draft!.total = draft!.total + ticket?.price;
+          draft!.total = draft!.total + ticket?.price + RATE_PRICE;
           draft?.ticketsReservation.push(ticketReservationObject);
         })
       );
@@ -109,9 +111,8 @@ export function SelectTicket() {
           const newTicketReservation = draft?.ticketsReservation?.find(
             (value: any) => value?.ticketLotId === ticket?._id
           );
-          draft!.total = draft!.total + newTicketReservation.price;
-          newTicketReservation.totalTicketReserved =
-            newTicketReservation.totalTicketReserved + 1;
+          draft!.total = draft!.total + newTicketReservation.price + RATE_PRICE;
+          newTicketReservation.totalTicketReserved = newTicketReservation.totalTicketReserved + 1;
         })
       );
     }
@@ -137,7 +138,7 @@ export function SelectTicket() {
             (value: any) => value?.ticketLotId === ticket?._id
           );
 
-          draft!.total = draft!.total - newTicketReservation.price;
+          draft!.total = draft!.total - newTicketReservation.price - RATE_PRICE;
 
           draft!.ticketsReservation = draft?.ticketsReservation?.filter(
             (item: any) => item.ticketLotId !== ticket?._id
@@ -154,7 +155,7 @@ export function SelectTicket() {
             newTicketReservation != null ||
             newTicketReservation != "undefined"
           ) {
-            draft!.total = draft!.total - newTicketReservation.price;
+            draft!.total = draft!.total - newTicketReservation.price - RATE_PRICE;
             newTicketReservation.totalTicketReserved =
               newTicketReservation?.totalTicketReserved - 1;
           }
@@ -166,10 +167,16 @@ export function SelectTicket() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const eventDateSelected = localStorage.getItem("eventDate") as string;
+        const eventDateSelected = localStorage.getItem("@ventus:eventDate") as string;
+
+        let eventDateSelectedFormatted = JSON.parse(eventDateSelected);
+        
         const eventData = await EventService.findById(id);
-        const ticketData = await TicketService.findByEventId(id);
+
+        const ticketData = await TicketService.findByEventIdAndByDate(id, eventDateSelectedFormatted);
+
         setDataEvent(eventData);
+
         setDataTicket(ticketData);
       } catch (error) {
         console.log(error);
@@ -180,6 +187,7 @@ export function SelectTicket() {
     }
     fetchData();
   }, []);
+  
 
   useEffect(() => {
     localStorage.setItem("@ventus:cart", JSON.stringify(cart));
@@ -223,7 +231,7 @@ export function SelectTicket() {
                             }).format(item?.price)}
                           </h2>
                           <span className={styles["subtitle"]}>
-                            + AOA 10% Seguro
+                            + Taxa de 375,00 AOA
                           </span>
                         </div>
                         <span className={styles["subtitle"]}>
@@ -298,7 +306,7 @@ export function SelectTicket() {
               </span>
             </div>
             <Link href={`/payment-method/${id}`}>
-              <button className={styles.btn}>Próximo Passo</button>
+              <button className={styles.btn} disabled={cart?.total == 0}>Próximo Passo</button>
             </Link>
           </div>
         </div>

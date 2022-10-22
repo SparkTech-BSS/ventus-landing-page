@@ -87,9 +87,18 @@ export function PaymentMethod() {
     }
   }
 
+  function accumulateTicketNumber(object: any) {
+    return object?.ticketsReservation?.reduce(
+      (total: number, currentValue: any) =>
+        total + currentValue?.totalTicketReserved,
+      0
+    );
+  }
+
   function handleBack() {
     router.back();
   }
+
 
   return (
     <>
@@ -147,7 +156,7 @@ export function PaymentMethod() {
                 <RadioGroup.Item
                   value="pay-smart"
                   className={styles["radio-button"]}
-                  // disabled={true}
+                  disabled={true}
                 >
                   <div className={styles["payment-icon"]}>
                     <PaySmart26Icon />
@@ -188,14 +197,25 @@ export function PaymentMethod() {
                     </div>
                   );
                 })}
-                {/* <div className={styles["review-order-item"]}>
-                <span className={styles["review-order-item-heading"]}>
-                  Taxas
-                </span>
-                <span className={styles["review-order-item-heading"]}>
-                  AOA 250
-                </span>
-              </div> */}
+
+                <div className={styles["review-order-item"]}>
+                  <span className={styles["review-order-item-subheading"]}>
+                    Taxa
+                  </span>
+                  <span className={styles["review-order-item-subheading"]}>
+                    375,00 AOA
+                  </span>
+                </div>
+                
+                <div className={styles["review-order-item"]}>
+                  <span className={styles["review-order-item-subheading"]}>
+                    Ingressos
+                  </span>
+                  <span className={styles["review-order-item-subheading"]}>
+                    {accumulateTicketNumber(cart)}
+                  </span>
+                </div>
+
                 <div className={styles["review-order-item"]}>
                   <span className={styles["review-order-item-heading"]}>
                     Total
@@ -218,7 +238,7 @@ export function PaymentMethod() {
 
               <button
                 className={styles["btn-buy-ticket"]}
-                disabled={!paymentMethodValue && !loadingSubmit}
+                disabled={!paymentMethodValue ? !paymentMethodValue : loadingSubmit}
                 onClick={handleSubmit}
               >
                 {loadingSubmit ? (

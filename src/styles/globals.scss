@@ -29,7 +29,11 @@
 
   --whatsApp-color: #04d361;
   --whatsApp-hover-color: #00b150;
-  --gradient-linear-whatsApp: linear-gradient(90.17deg, #28C542 1.06%, #5AEF75 104.36%);
+  --gradient-linear-whatsApp: linear-gradient(
+    90.17deg,
+    #28c542 1.06%,
+    #5aef75 104.36%
+  );
 
   //FONT CONFIGURATION
 
@@ -93,6 +97,27 @@ body {
   line-height: 1.7;
   scroll-behavior: smooth;
   min-height: 100vh;
+}
+
+::selection {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgb(255, 175, 175);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #771f1f;
 }
 
 ::selection {
