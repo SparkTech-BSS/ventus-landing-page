@@ -19,7 +19,8 @@ export function Hero() {
             variants={titleAnimation}
             className={styles.heading}
           >
-            Encontre <span className={styles["heading-colored"]}>Festas</span> e{" "}
+            Encontre <br />
+            {/* <span className={styles["heading-colored"]}>Festas</span> e{" "} */}
             <span className={styles["heading-colored"]}>Eventos</span> em Angola
           </motion.h1>
 
@@ -34,7 +35,7 @@ export function Hero() {
               Publicar Evento
             </button>
             <button className={`${styles.btn} ${styles["btn-full"]}`}>
-              Encontrar Festa
+              Encontrar Eventos
             </button>
           </motion.div>
 
@@ -45,9 +46,7 @@ export function Hero() {
             initial="hidden"
             animate="show"
           >
-            A Ventus te mostra quais festas estão a bater na sua região com as
-            melhores pessoas que estarão no evento e as melhores atrações e
-            shows.
+            A Ventus mostra- te os melhores eventos, atrações e shows mais próximas de ti.
           </motion.p>
 
           <button className={`${styles["btn-go-down"]}`}>

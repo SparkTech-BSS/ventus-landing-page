@@ -19,22 +19,20 @@ export function StartParty() {
     >
       <div className={`container ${styles.container}`}>
         <h1 className={`section-heading ${styles["section-heading"]}`}>
-          Comece escolhendo a festa
+          Selecione o Evento
         </h1>
 
         <div className={styles["text-container"]}>
           <p className={styles.text}>
-            Os eventos nunca foram tão faceis de <span>localizar</span>. Nossa
-            base de dados e parceiros ajudam você a{" "}
-            <span>encontrar a melhor diversão</span> para a sua noite. Comece
-            escolhendo a sua cidade e veja os{" "}
-            <span>eventos mais pertos de você.</span>
+            Os <span>eventos</span> nunca foram tão fáceis de localizar. A nossa
+            base de dados e parceiros ajudam-te a selecionar/ escolher os
+            melhores <span>eventos</span>.
           </p>
 
           <p className={styles.text}>
-            Preparem-se. Vem ai um show alucinante e que vai fazer você{" "}
-            <span>pular de tanta energia</span>. Muita gente bonita e curtição.
-            Tudo isso você encontra no aplicativo da <span>Ventus</span>.
+            Prepara-te. Vem aí um evento que vai proporcionar-te um bom
+            <span>networking</span>, aprendizado e muita diversão. Tudo isso
+            encontras apenas na <span>ventus</span>.
           </p>
         </div>
 
@@ -57,11 +55,11 @@ export function StartParty() {
 
                 <div className={styles["list-item-content"]}>
                   <h3 className={styles["list-item-content__title"]}>
-                    Compra rápida e fácil
+                    Facilidade na compra
                   </h3>
                   <p className={styles["list-item-content__text"]}>
-                    Pague seu ingresso através do seu Multicaixa Reference ou
-                    Cartão de Crédito.
+                    Pague o seu ingresso por um aplicativo bancário a sua
+                    escolha ou ATM próximo de ti.
                   </p>
                 </div>
               </div>
@@ -76,8 +74,7 @@ export function StartParty() {
                     Geolocalização
                   </h3>
                   <p className={styles["list-item-content__text"]}>
-                    Veja quais festas e shows estão mais pertos de você e dos
-                    seus amigos.
+                    Localize os eventos mais próximos de ti e dos teus amigos.
                   </p>
                 </div>
               </div>
@@ -89,11 +86,11 @@ export function StartParty() {
 
                 <div className={styles["list-item-content"]}>
                   <h3 className={styles["list-item-content__title"]}>
-                    Shows diversos
+                    Variedade
                   </h3>
                   <p className={styles["list-item-content__text"]}>
-                    Aqui você encontra todo tipo de show e eventos, desde shows
-                    e festas a noite até shows de comédia e muito mais.
+                    Na ventus, tu encontras a mais vasta gama de eventos, desde
+                    festas, workshops, shows, artes e muito mais.
                   </p>
                 </div>
               </div>

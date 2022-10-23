@@ -34,13 +34,13 @@ export default function Home({ events, isError }: any) {
             <Hero />
             <Event data={events} />
             <State
-              text="Descubra festas em todas as cidades"
+              text="Descubra Eventos em Angola."
               state="1"
-              heading="Inicie"
+              heading="Primeiro"
             />
             <StartParty />
             <State
-              text="Termine curtindo com a galera"
+              text="Finalize estando com quem mais gostas."
               state="2"
               heading="Finalize"
             />

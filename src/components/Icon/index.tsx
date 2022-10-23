@@ -181,8 +181,8 @@ export function TicketICON() {
 export function MusicICON() {
   return (
     <svg
-      width="36"
-      height="45"
+      width="51"
+      height="46"
       viewBox="0 0 36 45"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -202,8 +202,8 @@ export function MusicICON() {
 export function GeoLocalizationICON() {
   return (
     <svg
-      width="34"
-      height="45"
+      width="51"
+      height="46"
       viewBox="0 0 34 45"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

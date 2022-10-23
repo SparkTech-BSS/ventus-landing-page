@@ -83,10 +83,10 @@ export function Event({ data }: Props) {
     <section className={`section ${styles.event}`} aria-label="event">
       <div className={`container ${styles.container}`}>
         <div className={styles["header-row"]}>
-          <h1 className={`section-heading`}>Explorar Eventos</h1>
+          <h1 className={`section-heading`}>Eventos</h1>
 
           <Link href="/result-search" shallow={true}>
-            <a className={styles["se-more"]}>Explore mais</a>
+            <a className={styles["se-more"]}>Ver mais</a>
           </Link>
         </div>
 

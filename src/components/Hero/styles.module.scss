@@ -4,7 +4,7 @@
   background-repeat: no-repeat;
   background-position: 0% 0%;
   background-attachment: scroll;
-  padding-block-start: calc(var(--section-padding) + 70px);
+  padding-block-start: calc(var(--section-padding) + 150px);
 
   .hero-content {
     display: flex;
@@ -150,6 +150,7 @@
     .subheading {
       width: 600px;
       margin-bottom: 10rem;
+      font-size: 2rem;
     }
   }
 }

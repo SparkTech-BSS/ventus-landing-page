@@ -9,7 +9,7 @@ export function CashBack() {
     <section className={`section ${styles["cash-back"]}`} aria-label="cashback">
       <div className={`container ${styles.container}`}>
         <h1 className={`section-heading ${styles["section-heading"]}`}>
-          Curta a festa escolhida com seus amigos
+          Aproveite o evento escolhido com os teus amigos.
         </h1>
 
         <div className={styles["row"]}>
@@ -20,18 +20,16 @@ export function CashBack() {
                   Se divirta com o melhor que o mundo das festas tem a oferecer
                 </h2>
                 <p className={styles["list-item__text"]}>
-                  Comece <span>comprando o ingresso</span> da festa que você
-                  está mais afim.
+                Comece <span>comprando</span> o ingresso do evento desejado.
                 </p>
               </div>
 
               <div className={styles["list-item"]}>
                 <h2 className={styles["list-item__title"]}>
-                  Seus dias de sexta nunca mais serão em casa
+                Adquira o seu ingresso no conforto da sua casa
                 </h2>
                 <p className={styles["list-item__text"]}>
-                  Termine sua sexta a noite dançando e se divertindo com quem
-                  você merece nos <span>lugares que voce mais gosta</span>.
+                Termine a sua semana conectado com os melhores <span>eventos</span> da Banda.
                 </p>
               </div>
             </div>
@@ -41,7 +39,7 @@ export function CashBack() {
             <div className={styles["img-box"]}>
               <Image
                 src={womanPNG}
-                className={`${styles["figure"]}`} 
+                className={`${styles["figure"]}`}
                 objectFit="cover"
                 alt=""
               />

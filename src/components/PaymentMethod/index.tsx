@@ -74,11 +74,14 @@ export function PaymentMethod() {
 
       localStorage.setItem("@ventus:cart", JSON.stringify(newCart));
 
+      console.log(newCart)
+
       try {
         const { data } = await api.post(
           `/orders/create/${dataEvent?.event?._id}`,
           newCart
         );
+        console.log(data)
         localStorage.setItem("@ventus:current", JSON.stringify(data));
         router.push(`/payment-method/reference/${data?._id}`);
       } catch (error) {

@@ -170,6 +170,8 @@ export function SelectTicket() {
         const eventDateSelected = localStorage.getItem("@ventus:eventDate") as string;
 
         let eventDateSelectedFormatted = JSON.parse(eventDateSelected);
+
+        setEventDate(eventDateSelectedFormatted);
         
         const eventData = await EventService.findById(id);
 
@@ -196,6 +198,8 @@ export function SelectTicket() {
   function handleBack() {
     router.back();
   }
+
+  console.log(eventDate)
 
   return (
     <section className={styles["select-ticket"]}>

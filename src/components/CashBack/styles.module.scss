@@ -49,6 +49,7 @@
     font-size: var(--fs-24xl);
     font-weight: var(--fw-700);
     text-align: center;
+    line-height: 1.5;
 }
 
 .list-item__text {
@@ -110,6 +111,7 @@
     .list-item__title {
         align-items: flex-start;
         text-align: left;
+        
     }
 
     .list-item__text {
