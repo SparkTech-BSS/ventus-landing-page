@@ -7,14 +7,14 @@
   padding-block: 25px;
   z-index: 999;
   transition: all 0.2s;
-  
+
   .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 30px;
   }
-  
+
   &.active {
     position: fixed;
     transform: translateY(-100%);
@@ -124,6 +124,11 @@
 
     &:hover {
       color: var(--primary-color);
+    }
+
+    &.disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
   }
 
@@ -377,6 +382,15 @@
       &:hover {
         color: var(--primary-color);
       }
+
+      &.disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      &.disabled:hover {
+        color: unset;
+      }
     }
 
     .navbar-btn-group {
@@ -394,7 +408,7 @@
     .navbar-btn {
       width: auto;
       color: var(--white-color);
-      padding: .5rem 2rem;
+      padding: 0.5rem 2rem;
       position: relative;
       transition: all 0.3s;
       z-index: 1;

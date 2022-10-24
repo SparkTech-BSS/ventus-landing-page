@@ -106,7 +106,7 @@
     display: flex;
     align-items: center;
     gap: 1.5rem;
-
+    cursor: pointer;
     padding: 1.5rem 1rem;
 
     transition: all 0.3s;
@@ -114,11 +114,7 @@
     & > * {
       color: var(--white-color);
     }
-
-    &:hover {
-      background-color: var(--black-color-hover);
-      transform: scale(1.05);
-    }
+    
   }
 
   .btn-icon {

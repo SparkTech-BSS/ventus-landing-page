@@ -74,13 +74,18 @@ export function WhatsappButton() {
           </div>
         </div>
       </div>
-      <button className={styles.button} onClick={handleToggleOpenChat}>
+      <a
+        href="https://wa.me/244923923758"
+        target="_blank"
+        rel="noreferrer"
+        className={styles.button}
+      >
         {openChat ? (
           <IoClose size={30} color="#FFF" />
         ) : (
           <BsWhatsapp size={30} color="#FFF" />
         )}
-      </button>
+      </a>
     </div>
   );
 }

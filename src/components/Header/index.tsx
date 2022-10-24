@@ -125,10 +125,10 @@ export function Header() {
               </li>
 
               <li className="navbar-item">
-                <Link href="/#promoter" scroll={false}>
+                <Link href="" scroll={false}>
                   <a
                     // href="#promoter"
-                    className={styles["navbar-link"]}
+                    className={`${styles["navbar-link"]} ${styles["disabled"]}`}
                     data-nav-link
                   >
                     Seja um promotor
@@ -140,7 +140,7 @@ export function Header() {
                 <Link href="/#contact" scroll={false}>
                   <a
                     // href="#promoter"
-                    className={styles["navbar-link"]}
+                    className={`${styles["navbar-link"]}`}
                     data-nav-link
                   >
                     Baixar
