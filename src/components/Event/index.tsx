@@ -80,7 +80,11 @@ export function Event({ data }: Props) {
   );
 
   return (
-    <section className={`section ${styles.event}`} aria-label="event">
+    <section
+      className={`section ${styles.event}`}
+      id="event"
+      aria-label="event"
+    >
       <div className={`container ${styles.container}`}>
         <div className={styles["header-row"]}>
           <h1 className={`section-heading`}>Eventos</h1>
@@ -104,7 +108,9 @@ export function Event({ data }: Props) {
           {loaded && instanceRef.current && (
             <div className="dots">
               {Array.from(
-                Array(instanceRef?.current?.track?.details?.slides?.length).keys()
+                Array(
+                  instanceRef?.current?.track?.details?.slides?.length
+                ).keys()
               ).map((idx) => {
                 return (
                   <button

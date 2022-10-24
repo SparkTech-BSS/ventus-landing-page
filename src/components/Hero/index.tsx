@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import styles from "./styles.module.scss";
 import { IoIosArrowDown } from "react-icons/io";
+import Link from "next/link";
 import {
   btnGroupHeroAnimation,
   textHeroAnimation,
@@ -20,7 +21,6 @@ export function Hero() {
             className={styles.heading}
           >
             Encontre <br />
-            {/* <span className={styles["heading-colored"]}>Festas</span> e{" "} */}
             <span className={styles["heading-colored"]}>Eventos</span> em Angola
           </motion.h1>
 
@@ -46,12 +46,15 @@ export function Hero() {
             initial="hidden"
             animate="show"
           >
-            A Ventus mostra- te os melhores eventos, atrações e shows mais próximas de ti.
+            A Ventus mostra- te os melhores eventos, atrações e shows mais
+            próximas de ti.
           </motion.p>
 
-          <button className={`${styles["btn-go-down"]}`}>
-            <IoIosArrowDown />
-          </button>
+          <Link href="/#event" scroll={false}>
+            <button className={`${styles["btn-go-down"]}`}>
+              <IoIosArrowDown />
+            </button>
+          </Link>
         </div>
       </div>
     </section>
