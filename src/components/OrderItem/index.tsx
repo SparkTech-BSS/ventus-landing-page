@@ -39,8 +39,8 @@ export function OrderItem({ data }: Props) {
   const countDownDate = new Date(data?.order?.timeToPay).getTime();
 
   const isExpiredOrder = useMemo(() => {
-        const distanceBetweenDate = countDownDate - new Date().getTime();
-        return distanceBetweenDate <= 0 ? true : false;
+    const distanceBetweenDate = countDownDate - new Date().getTime();
+    return distanceBetweenDate <= 0 ? true : false;
   }, []);
 
   useEffect(() => {
@@ -62,12 +62,15 @@ export function OrderItem({ data }: Props) {
     }, 1000);
   }, [countDownDate, minute, second]);
 
-
   const minutes = String(minute).padStart(2, "0");
   const seconds = String(second).padStart(2, "0");
 
   return (
-    <div className={`${styles["order-card"]} ${isExpiredOrder ? styles.expired : ''}`}>
+    <div
+      className={`${styles["order-card"]} ${
+        isExpiredOrder ? styles.expired : ""
+      }`}
+    >
       <span className={styles["order-title"]}>Pagamento Pendente</span>
 
       <div className={styles.row}>
@@ -138,6 +141,11 @@ export function OrderItem({ data }: Props) {
             <span className={styles["item-text"]}>
               {accumulateTicketNumber(data?.order)}
             </span>
+          </div>
+
+          <div className={styles.item}>
+            <span className={styles["item-text"]}>Entidade</span>
+            <span className={styles["item-text"]}>01125</span>
           </div>
 
           <div className={styles["payment-method-wrapper"]}>

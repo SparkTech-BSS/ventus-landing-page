@@ -162,12 +162,12 @@ export function Reference() {
                 {seconds[1]}
               </span>
 
-              <Progress.Root className={styles["progress-bar"]} value={66}>
+              {/* <Progress.Root className={styles["progress-bar"]} value={66}>
                 <Progress.Indicator
                   className={styles["progress-bar-indicator"]}
                   style={{ transform: `translateX(-${100 - progress}%)` }}
                 />
-              </Progress.Root>
+              </Progress.Root> */}
             </div>
 
             <div className={styles.item}>

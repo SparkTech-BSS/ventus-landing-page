@@ -25,6 +25,7 @@ export function Tickets() {
       //tickets/findbyclientid
       try {
         const { data } = await api.get(`tickets/findbyclientid`);
+        console.log(data)
         setTickets(data);
       } catch (error) {
         console.log(error);

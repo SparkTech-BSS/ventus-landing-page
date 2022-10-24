@@ -12,6 +12,8 @@ import {
 
 import EventImg from "../../assets/png/event/event-1.png";
 
+import { getStartDateAndEndDate } from "../../utils";
+
 import styles from "./styles.module.scss";
 
 interface Props {
@@ -21,6 +23,7 @@ interface Props {
 }
 
 export function EventCard({ width, multipleData = true, data }: Props) {
+  const dateObject = getStartDateAndEndDate(data?.dates);
 
   return (
     <Link href={`/event-detail/${data?._id}`} prefetch={false}>
@@ -34,22 +37,28 @@ export function EventCard({ width, multipleData = true, data }: Props) {
           alt=""
         />
 
-        {multipleData ? (
+        {data?.dates?.length > 1 ? (
           <div className={styles["date-multiple"]}>
             <div className={styles["date-multiple__col"]}>
-              <span className={styles["date-month"]}>Out</span>
-              <span className={styles["date-day"]}>20</span>
+              <span className={styles["date-month"]}>
+                {dateObject?.startMonth}
+              </span>
+              <span className={styles["date-day"]}>{dateObject?.startDay}</span>
             </div>
             <ArrowEventICON />
             <div className={styles["date-multiple__col"]}>
-              <span className={styles["date-month"]}>Nov</span>
-              <span className={styles["date-day"]}>01</span>
+              <span className={styles["date-month"]}>
+                {dateObject?.endMonth}
+              </span>
+              <span className={styles["date-day"]}>{dateObject?.endDay}</span>
             </div>
           </div>
         ) : (
           <div className={styles.date}>
-            <span className={styles["date-month"]}>Out</span>
-            <span className={styles["date-day"]}>20</span>
+            <span className={styles["date-month"]}>
+              {dateObject?.startMonth}
+            </span>
+            <span className={styles["date-day"]}>{dateObject?.startDay}</span>
           </div>
         )}
 

@@ -254,12 +254,12 @@ export function PaymentMethod() {
                 )}
               </button>
 
-              <div className={styles["expiration-time"]}>
+              {/* <div className={styles["expiration-time"]}>
                 <span className={styles["expiration-time-heading"]}>
                   Tempo de expiração do carrinho:
                 </span>
                 <span className={styles["expiration-time-heading"]}>10:00</span>
-              </div>
+              </div> */}
             </div>
           </>
         )}

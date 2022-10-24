@@ -266,6 +266,24 @@ export function getHourFormatToAPI(value: string): string {
   return value?.split(":")[0];
 }
 
+function getMonthTypeOne(index: number): string {
+  const month = [
+    "Jan",
+    "Fev",
+    "Mar",
+    "Abr",
+    "Mai",
+    "Jun",
+    "Jul",
+    "Ago",
+    "Set",
+    "Out",
+    "Nov",
+    "Dez",
+  ];
+  return month[index];
+}
+
 function getMonthByIndex(index: number): string {
   const month = [
     "Janeiro",
@@ -309,10 +327,59 @@ export function getObjectDate(date: string | any) {
   return dateObject;
 }
 
+export function getShortDateFormat(date: string) {
+  const weeks_days = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"];
+
+  if (!date) return "";
+
+  const convertedToDateObject = new Date(date);
+
+  const dateObject = {
+    week_day: weeks_days[convertedToDateObject.getDay()],
+    day:
+      convertedToDateObject.getDate().toString().length > 1
+        ? convertedToDateObject.getDate()
+        : `0${convertedToDateObject.getDate()}`,
+    month: getMonthTypeOne(convertedToDateObject.getMonth()),
+  };
+
+  return `${dateObject.week_day}, ${dateObject.month} ${dateObject.day}`;
+}
+
+export function getStartDateAndEndDate(dates: any) {
+  let startIndex = 0,
+    endIndex = dates?.length - 1;
+
+  if (!dates?.length) return {};
+
+  const convertedFirstDateObject = new Date(dates[startIndex]);
+
+  const convertedLastDateObject = new Date(dates[endIndex]);
+
+  return {
+    startMonth: getMonthTypeOne(convertedFirstDateObject.getMonth()),
+    startDay:
+      convertedFirstDateObject.getDate().toString().length > 1
+        ? convertedFirstDateObject.getDate()
+        : `0${convertedFirstDateObject.getDate()}`,
+    endMonth: getMonthTypeOne(convertedLastDateObject.getMonth()),
+    endDay:
+      convertedLastDateObject.getDate().toString().length > 1
+        ? convertedLastDateObject.getDate()
+        : `0${convertedLastDateObject.getDate()}`,
+  };
+}
+
 export function accumulateTicketNumber(object: any) {
   return object?.ticketsReservation?.reduce(
     (total: number, currentValue: any) =>
       total + currentValue?.totalTicketReserved,
     0
   );
+}
+
+export function getCapitalizeFirstLetter(value: string) {
+  if (!value) return "";
+  const lower = value.toLocaleLowerCase();
+  return value.charAt(0).toUpperCase() + lower.slice(1);
 }

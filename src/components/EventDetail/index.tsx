@@ -10,7 +10,12 @@ import { GoCalendar } from "react-icons/go";
 
 import Image from "next/future/image";
 
-import { getHourFormatToAPI, getObjectDate, MAP_INFO } from "../../utils";
+import {
+  getHourFormatToAPI,
+  getObjectDate,
+  getStartDateAndEndDate,
+  MAP_INFO,
+} from "../../utils";
 
 import {
   ArrowEventICON,
@@ -99,17 +104,39 @@ export function EventDetail() {
               className={styles["banner-img"]}
             />
 
-            <div className={styles["date-multiple"]}>
-              <div className={styles["date-multiple__col"]}>
-                <span className={styles["date-month"]}>Out</span>
-                <span className={styles["date-day"]}>20</span>
+            {dataEvent?.event?.dates?.length > 1 ? (
+              <div className={styles["date-multiple"]}>
+                <div className={styles["date-multiple__col"]}>
+                  <span className={styles["date-month"]}>
+                    {
+                      getStartDateAndEndDate(dataEvent?.event?.dates)
+                        ?.startMonth
+                    }
+                  </span>
+                  <span className={styles["date-day"]}>
+                    {getStartDateAndEndDate(dataEvent?.event?.dates)?.startDay}
+                  </span>
+                </div>
+                <ArrowEventICON />
+                <div className={styles["date-multiple__col"]}>
+                  <span className={styles["date-month"]}>
+                    {getStartDateAndEndDate(dataEvent?.event?.dates)?.endMonth}
+                  </span>
+                  <span className={styles["date-day"]}>
+                    {getStartDateAndEndDate(dataEvent?.event?.dates)?.endDay}
+                  </span>
+                </div>
               </div>
-              <ArrowEventICON />
-              <div className={styles["date-multiple__col"]}>
-                <span className={styles["date-month"]}>Nov</span>
-                <span className={styles["date-day"]}>01</span>
+            ) : (
+              <div className={styles.date}>
+                <span className={styles["date-month"]}>
+                  {getStartDateAndEndDate(dataEvent?.event?.dates)?.startMonth}
+                </span>
+                <span className={styles["date-day"]}>
+                  {getStartDateAndEndDate(dataEvent?.event?.dates)?.startDay}
+                </span>
               </div>
-            </div>
+            )}
           </div>
 
           <div className={`container ${styles.container}`}>
@@ -122,17 +149,55 @@ export function EventDetail() {
                   height={100}
                   className={styles["box-row-img__picture"]}
                 />
-                <div className={styles["date-multiple"]}>
-                  <div className={styles["date-multiple__col"]}>
-                    <span className={styles["date-month"]}>Out</span>
-                    <span className={styles["date-day"]}>20</span>
+
+                {dataEvent?.event?.dates?.length > 1 ? (
+                  <div className={styles["date-multiple"]}>
+                    <div className={styles["date-multiple__col"]}>
+                      <span className={styles["date-month"]}>
+                        {
+                          getStartDateAndEndDate(dataEvent?.event?.dates)
+                            ?.startMonth
+                        }
+                      </span>
+                      <span className={styles["date-day"]}>
+                        {
+                          getStartDateAndEndDate(dataEvent?.event?.dates)
+                            ?.startDay
+                        }
+                      </span>
+                    </div>
+                    <ArrowEventICON />
+                    <div className={styles["date-multiple__col"]}>
+                      <span className={styles["date-month"]}>
+                        {
+                          getStartDateAndEndDate(dataEvent?.event?.dates)
+                            ?.endMonth
+                        }
+                      </span>
+                      <span className={styles["date-day"]}>
+                        {
+                          getStartDateAndEndDate(dataEvent?.event?.dates)
+                            ?.endDay
+                        }
+                      </span>
+                    </div>
                   </div>
-                  <ArrowEventICON />
-                  <div className={styles["date-multiple__col"]}>
-                    <span className={styles["date-month"]}>Nov</span>
-                    <span className={styles["date-day"]}>01</span>
+                ) : (
+                  <div className={styles.date}>
+                    <span className={styles["date-month"]}>
+                      {
+                        getStartDateAndEndDate(dataEvent?.event?.dates)
+                          ?.startMonth
+                      }
+                    </span>
+                    <span className={styles["date-day"]}>
+                      {
+                        getStartDateAndEndDate(dataEvent?.event?.dates)
+                          ?.startDay
+                      }
+                    </span>
                   </div>
-                </div>
+                )}
               </div>
 
               <div className={styles["box-row-content"]}>
@@ -142,14 +207,14 @@ export function EventDetail() {
                   >
                     {dataEvent?.event?.name}
                   </h1>
-                  {/* <span
+                  <span
                     className={
                       styles["box-row-content__heading-group-rating-container"]
                     }
                   >
                     <StarICON />
                     4.9
-                  </span> */}
+                  </span>
                 </div>
 
                 <div className={styles["tickets-content"]}>

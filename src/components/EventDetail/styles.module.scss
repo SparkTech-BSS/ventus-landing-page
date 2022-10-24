@@ -18,6 +18,38 @@
   height: 228px;
 }
 
+.date {
+  width: 54px;
+  height: 66px;
+  border-radius: 10px;
+  background: var(--primary-color);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  right: 1.4rem;
+  top: 10rem;
+
+  .date-month,
+  .date-day {
+    line-height: 1.2;
+    color: var(--white-color);
+  }
+
+  .date-month {
+    font-size: var(--fs-md);
+    font-weight: var(--fw-700);
+  }
+
+  .date-day {
+    font-size: var(--fs-24xl);
+    font-weight: var(--fw-700);
+  }
+}
+
 .date-multiple {
   width: 150px;
   height: 73px;
@@ -234,7 +266,6 @@
   padding-bottom: 1rem;
   //-ms-overflow-style: none;
   //scrollbar-width: none;
-
 }
 
 // .select-date-button-group::-webkit-scrollbar {
@@ -242,7 +273,7 @@
 // }
 
 .select-date-button-group::-webkit-scrollbar {
-  height: .8rem;
+  height: 0.8rem;
 }
 
 .selected-button {

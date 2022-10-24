@@ -9,6 +9,7 @@ import TicketService from "services/TicketService";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import { FiPlus, FiMinus } from "react-icons/fi";
 import styles from "./styles.module.scss";
+import { getCapitalizeFirstLetter, getShortDateFormat } from "utils";
 
 interface TicketsReservation {
   ticketLotId: string;
@@ -54,7 +55,7 @@ export function SelectTicket() {
 
   const [dataTicket, setDataTicket] = useState<any>([]);
 
-  const [eventDate, setEventDate] = useState();
+  const [eventDate, setEventDate] = useState("");
 
   const [error, setError] = useState(false);
 
@@ -112,7 +113,8 @@ export function SelectTicket() {
             (value: any) => value?.ticketLotId === ticket?._id
           );
           draft!.total = draft!.total + newTicketReservation.price + RATE_PRICE;
-          newTicketReservation.totalTicketReserved = newTicketReservation.totalTicketReserved + 1;
+          newTicketReservation.totalTicketReserved =
+            newTicketReservation.totalTicketReserved + 1;
         })
       );
     }
@@ -155,7 +157,8 @@ export function SelectTicket() {
             newTicketReservation != null ||
             newTicketReservation != "undefined"
           ) {
-            draft!.total = draft!.total - newTicketReservation.price - RATE_PRICE;
+            draft!.total =
+              draft!.total - newTicketReservation.price - RATE_PRICE;
             newTicketReservation.totalTicketReserved =
               newTicketReservation?.totalTicketReserved - 1;
           }
@@ -167,15 +170,20 @@ export function SelectTicket() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const eventDateSelected = localStorage.getItem("@ventus:eventDate") as string;
+        const eventDateSelected = localStorage.getItem(
+          "@ventus:eventDate"
+        ) as string;
 
         let eventDateSelectedFormatted = JSON.parse(eventDateSelected);
 
         setEventDate(eventDateSelectedFormatted);
-        
+
         const eventData = await EventService.findById(id);
 
-        const ticketData = await TicketService.findByEventIdAndByDate(id, eventDateSelectedFormatted);
+        const ticketData = await TicketService.findByEventIdAndByDate(
+          id,
+          eventDateSelectedFormatted
+        );
 
         setDataEvent(eventData);
 
@@ -189,7 +197,6 @@ export function SelectTicket() {
     }
     fetchData();
   }, []);
-  
 
   useEffect(() => {
     localStorage.setItem("@ventus:cart", JSON.stringify(cart));
@@ -199,7 +206,9 @@ export function SelectTicket() {
     router.back();
   }
 
-  console.log(eventDate)
+  console.log(dataEvent?.event?.startTime);
+
+  console.log(getShortDateFormat(eventDate));
 
   return (
     <section className={styles["select-ticket"]}>
@@ -208,11 +217,16 @@ export function SelectTicket() {
       ) : (
         <div className={`container ${styles.container}`}>
           <h1 className={styles["event-name"]}>{dataEvent?.event?.name}</h1>
-          <span className={styles["event-info"]}>Sex, Ago 12 · 21:00 Pm</span>
-          <span className={styles["event-info"]}>Baía de Luanda, Luanda</span>
+          <span className={styles["event-info"]}>
+            {getShortDateFormat(eventDate)} · {dataEvent?.event?.startTime} -{" "}
+            {dataEvent?.event?.endTime}
+          </span>
+          <span className={styles["event-info"]}>
+            {dataEvent?.event?.location}
+          </span>
 
           <span className={styles["select-payment-text"]}>
-            Por favor,Selecione o tipo de ingresso que deseja comprar.
+            Por favor, Selecione o tipo de ingresso que deseja comprar.
           </span>
 
           <button className={styles["btn-back"]} onClick={handleBack}>
@@ -224,7 +238,9 @@ export function SelectTicket() {
               return (
                 <div className={styles.box} key={item?._id}>
                   <div className={styles.content}>
-                    <h2 className={styles.title}>{item?.type}</h2>
+                    <h2 className={styles.title}>
+                      {getCapitalizeFirstLetter(item?.type)}
+                    </h2>
                     <div className={styles["box-item"]}>
                       <div className={styles["box-item-content"]}>
                         <div className={styles["price-row"]}>
@@ -234,12 +250,16 @@ export function SelectTicket() {
                               currency: "AOA",
                             }).format(item?.price)}
                           </h2>
-                          <span className={styles["subtitle"]}>
+                          {/* <span className={styles["subtitle"]}>
                             + Taxa de 375,00 AOA
-                          </span>
+                          </span> */}
                         </div>
                         <span className={styles["subtitle"]}>
-                          Valido até: Mai 30, 2022{" "}
+                          + Taxa de 375,00 AOA
+                        </span>
+                        <span className={styles["subtitle"]}>
+                          Disponível até: {getShortDateFormat(eventDate)} ·{" "}
+                          {dataEvent?.event?.startTime}
                         </span>
                       </div>
 
@@ -310,7 +330,9 @@ export function SelectTicket() {
               </span>
             </div>
             <Link href={`/payment-method/${id}`}>
-              <button className={styles.btn} disabled={cart?.total == 0}>Próximo Passo</button>
+              <button className={styles.btn} disabled={cart?.total == 0}>
+                Próximo Passo
+              </button>
             </Link>
           </div>
         </div>
