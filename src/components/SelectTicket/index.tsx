@@ -206,9 +206,6 @@ export function SelectTicket() {
     router.back();
   }
 
-  console.log(dataEvent?.event?.startTime);
-
-  console.log(getShortDateFormat(eventDate));
 
   return (
     <section className={styles["select-ticket"]}>

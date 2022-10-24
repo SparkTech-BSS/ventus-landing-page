@@ -127,8 +127,6 @@ export function RegisterModal({ isOpen, onRequestClose }: Props) {
         phone: String(data.phone),
       });
 
-      console.log(response);
-
       addToast("Conta criada com sucesso...", {
         appearance: "success",
         autoDismiss: true,

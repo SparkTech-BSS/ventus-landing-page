@@ -87,8 +87,6 @@ export function EventDetail() {
     }
   }
 
-  console.log(getFirstAndLastPrice());
-
   return (
     <section className={styles["event-detail"]}>
       {loading ? (
