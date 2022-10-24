@@ -1,5 +1,6 @@
 import Image from "next/image";
 import mobilePNG from "../../assets/png/figure/mobile.png";
+import MobileWEBP from "../../assets/png/figure/mobile.webp";
 import mobileAppSVG from "../../assets/svg/app-mobile-1.svg";
 
 import {
@@ -39,7 +40,7 @@ export function StartParty() {
         <div className={styles["row"]}>
           <div className={styles["row-col"]}>
             <Image
-              src={mobilePNG}
+              src={MobileWEBP}
               objectFit={"cover"}
               className={styles.figure}
               alt=""

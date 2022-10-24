@@ -1,5 +1,6 @@
 import Image from "next/image";
 import womanPNG from "../../assets/png/figure/woman.png";
+import WomanWEBP from "../../assets/png/figure/woman.webp";
 import mobilePNG from "../../assets/png/figure/mobile.png";
 import womanSVG from "../../assets/svg/woman.svg";
 import styles from "./styles.module.scss";
@@ -38,7 +39,7 @@ export function CashBack() {
           <div className={styles["row-col"]}>
             <div className={styles["img-box"]}>
               <Image
-                src={womanPNG}
+                src={WomanWEBP}
                 className={`${styles["figure"]}`}
                 objectFit="cover"
                 alt=""

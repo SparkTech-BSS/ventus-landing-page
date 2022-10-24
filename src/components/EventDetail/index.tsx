@@ -10,6 +10,8 @@ import { GoCalendar } from "react-icons/go";
 
 import Image from "next/future/image";
 
+import { ServerError } from "components/ServerError";
+
 import {
   getHourFormatToAPI,
   getObjectDate,
@@ -86,6 +88,10 @@ export function EventDetail() {
       return `kz${maxValue},00 até kz${minValue},00`;
     }
   }
+
+  // return (
+  //   <ServerError/>
+  // )
 
   return (
     <section className={styles["event-detail"]}>
