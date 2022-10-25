@@ -1,4 +1,10 @@
-import { createContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useEffect,
+  useState,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import { setCookie, parseCookies, destroyCookie } from "nookies";
 import Router from "next/router";
 import { UserDTO, LoginDTO } from "../dto";
@@ -11,6 +17,8 @@ type AuthContextType = {
   signIn: (data: LoginDTO) => Promise<void>;
   logout: () => void;
   getLoginStatus: () => any;
+  openLoginModal: boolean;
+  setOpenLoginModal: Dispatch<SetStateAction<boolean>>;
 };
 
 interface AuthProviderProps {
@@ -19,13 +27,15 @@ interface AuthProviderProps {
 
 export const AuthContext = createContext({} as AuthContextType);
 
+let authChannel: BroadcastChannel
+
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<UserDTO | null>(null);
+  const [openLoginModal, setOpenLoginModal] = useState(false);
 
   const isAuthenticated = !!user;
 
   useEffect(() => {
-
     const { "ventus.token": access_token } = parseCookies();
 
     if (access_token || !(access_token === "undefined")) {
@@ -49,15 +59,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     api.defaults.headers.common.Authorization = `Bearer ${access_token}`;
 
+    console.log(getCurrentUserObject())
+
     setUser(getCurrentUserObject());
 
     // await Router.push("/");
   }
 
   async function logout() {
-    destroyCookie(null, "ventus.token");
-    await Router.push("/");
+    destroyCookie(undefined, 'ventus.token');
+    setUser(getCurrentUserObject());
     Router.reload();
+    await Router.push("/");
+    console.log('yes')
   }
 
   function getLoginStatus() {
@@ -66,7 +80,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, signIn, logout, getLoginStatus }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        isAuthenticated,
+        signIn,
+        logout,
+        getLoginStatus,
+        openLoginModal,
+        setOpenLoginModal,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

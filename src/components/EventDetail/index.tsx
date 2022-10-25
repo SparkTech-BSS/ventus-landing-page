@@ -89,9 +89,9 @@ export function EventDetail() {
     }
   }
 
-  // return (
-  //   <ServerError/>
-  // )
+  if (error) {
+    return <ServerError />;
+  }
 
   return (
     <section className={styles["event-detail"]}>

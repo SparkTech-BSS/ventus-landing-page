@@ -1,12 +1,21 @@
 import { useEffect, useState, useContext } from "react";
+
 import { useRouter } from "next/router";
-import Link from "next/link";
+
 import { MdOutlineArrowBackIos } from "react-icons/md";
+
 import { AuthContext } from "contexts/AuthContext";
+
 import * as RadioGroup from "@radix-ui/react-radio-group";
+
 import { Spinner } from "components/Spinner";
+
 import EventService from "services/EventService";
+
 import { api } from "services/api";
+
+import { ServerError } from "components/ServerError";
+
 import {
   MultiCaixaExpress26Icon,
   PaySmart26Icon,
@@ -16,7 +25,7 @@ import styles from "./styles.module.scss";
 
 export function PaymentMethod() {
   const router = useRouter();
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, setOpenLoginModal } = useContext(AuthContext);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [paymentMethodValue, setPaymentMethodValue] = useState<string>("");
   const [error, setError] = useState(false);
@@ -62,9 +71,15 @@ export function PaymentMethod() {
       }
     }
     fetchData();
-  }, []);
+  }, [id]);
 
   async function handleSubmit() {
+
+    // if (!isAuthenticated) {
+    //   setOpenLoginModal(true);
+    //   return;
+    // }
+
     setLoadingSubmit(true);
     if (paymentMethodValue) {
       const newCart = cart;
@@ -83,6 +98,9 @@ export function PaymentMethod() {
         router.push(`/payment-method/reference/${data?._id}`);
       } catch (error) {
         console.log(error);
+        setError(true);
+      } finally {
+        setLoading(false);
       }
     }
   }
@@ -97,6 +115,10 @@ export function PaymentMethod() {
 
   function handleBack() {
     router.back();
+  }
+
+  if (error) {
+    return <ServerError />;
   }
 
 
@@ -206,7 +228,7 @@ export function PaymentMethod() {
                     375,00 AOA
                   </span>
                 </div>
-                
+
                 <div className={styles["review-order-item"]}>
                   <span className={styles["review-order-item-subheading"]}>
                     Ingressos
@@ -238,7 +260,9 @@ export function PaymentMethod() {
 
               <button
                 className={styles["btn-buy-ticket"]}
-                disabled={!paymentMethodValue ? !paymentMethodValue : loadingSubmit}
+                disabled={
+                  !paymentMethodValue ? !paymentMethodValue : loadingSubmit
+                }
                 onClick={handleSubmit}
               >
                 {loadingSubmit ? (

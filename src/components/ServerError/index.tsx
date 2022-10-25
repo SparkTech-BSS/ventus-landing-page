@@ -22,12 +22,11 @@ export function ServerError() {
           Ups, parece que teve um erro no servidor interno. 
           No momento, estamos tentando corrigir o problema. Caso o erro
           persisitir por favor actualize a página ou contacte o nosso apoio ao
-          usuário no whatsApp.
+          usuário no WhatsApp.
         </p>
         <p className={styles["info"]}>
-          Illustration taken from
           <Link href="/" passHref>
-            <a>kapwing.com</a>
+            <a>Voltar na home</a>
           </Link>
         </p>
       </div>

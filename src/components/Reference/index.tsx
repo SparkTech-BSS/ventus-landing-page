@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import Modal from "react-modal";
 import Image from "next/future/image";
 import EventService from "services/EventService";
 import { api } from "services/api";
@@ -8,12 +9,15 @@ import * as Progress from "@radix-ui/react-progress";
 import { Spinner } from "components/Spinner";
 import MulticaixaReferencePNG from "../../assets/png/payment-method/multicaixa-reference.png";
 import { CopyIcon } from "../Icon";
+import { AlertModal } from "../AlertModal";
+import { ServerError } from "components/ServerError";
 import styles from "./styles.module.scss";
+
+Modal.setAppElement("#__next");
 
 export function Reference() {
   const router = useRouter();
   const { id } = router.query;
-  const [progress, setProgress] = useState(13);
   const [dataEvent, setDataEvent] = useState<any>();
   const [cart, setCart] = useState<any>();
   const [ticket, ticketData] = useState<any>([]);
@@ -23,11 +27,18 @@ export function Reference() {
   const [second, setSecond] = useState(0);
   const [countDownDate, setCountDownDate] = useState<number>(0);
   const [isCopied, setIsCopied] = useState(false);
+  const [openAlertModal, setOpenAlertModal] = useState(true);
+
+  function handleOpenAlertModal() {
+    setOpenAlertModal(true);
+  }
+
+  function handleCloseAlertModal() {
+    setOpenAlertModal(false);
+  }
 
   useEffect(() => {
     document.documentElement.style.setProperty("--overflow", `auto`);
-    const timer = setTimeout(() => setProgress(66), 500);
-    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -93,10 +104,8 @@ export function Reference() {
   }
 
   const handleCopyClick = () => {
-    // Asynchronously call copyTextToClipboard
     copyTextToClipboard(ticket?.referenceId)
       .then(() => {
-        // If successful, update the isCopied state value
         setIsCopied(true);
         setTimeout(() => {
           setIsCopied(false);
@@ -108,110 +117,122 @@ export function Reference() {
   };
 
   const isExpiredOrder = useMemo(() => {
+    if (loading) return false;
+
+    if (isNaN(countDownDate)) return true;
+
     const distanceBetweenDate = countDownDate - new Date().getTime();
     return distanceBetweenDate <= 0 ? true : false;
-  }, []);
+  }, [countDownDate, loading]);
 
   const minutes = String(minute).padStart(2, "0");
   const seconds = String(second).padStart(2, "0");
 
+  if (error) {
+    return <ServerError />;
+  }
+
   return (
-    <section className={styles["reference-page"]}>
-      {loading ? (
-        <Spinner />
-      ) : (
-        <div className={`${styles.container}`}>
-          <Image
-            src={MulticaixaReferencePNG}
-            alt=""
-            className={styles["payment-method-img"]}
-          />
+    <>
+      <section className={styles["reference-page"]}>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <div className={`${styles.container}`}>
+            <Image
+              src={MulticaixaReferencePNG}
+              alt=""
+              className={styles["payment-method-img"]}
+            />
 
-          <div className={styles.content}>
-            <h1 className={styles.heading}>Pague com Referencia</h1>
+            <div className={styles.content}>
+              <h1 className={styles.heading}>Pague com Referencia</h1>
 
-            <span className={styles.text}>
-              Copie o código abaixo para pagar via Referencia em qualquer banco
-              habilitado
-            </span>
+              <span className={styles.text}>
+                Copie o código abaixo para pagar via Referencia em qualquer
+                banco habilitado
+              </span>
 
-            <button
-              className={styles["copy-clipboard"]}
-              onClick={handleCopyClick}
-            >
-              {ticket?.referenceId}
-              <CopyIcon />
-            </button>
+              <button
+                className={styles["copy-clipboard"]}
+                onClick={handleCopyClick}
+              >
+                {ticket?.referenceId}
+                <CopyIcon />
+              </button>
 
-            {isCopied && (
-              <div className={styles["copied-text-wrapper"]}>
-                <span className={styles["copied-text-wrapper"]}>
-                  Referência Copiado!
+              {isCopied && (
+                <div className={styles["copied-text-wrapper"]}>
+                  <span className={styles["copied-text-wrapper"]}>
+                    Referência Copiado!
+                  </span>
+                </div>
+              )}
+
+              <div className={styles["time-left-container"]}>
+                <span className={styles["time-left-container-text"]}>
+                  O tempo para voce pagar acaba em:
+                </span>
+
+                <span className={styles["timer-heading"]}>
+                  {minutes[0]}
+                  {minutes[1]}:{seconds[0]}
+                  {seconds[1]}
                 </span>
               </div>
-            )}
 
-            <div className={styles["time-left-container"]}>
-              <span className={styles["time-left-container-text"]}>
-                O tempo para voce pagar acaba em:
-              </span>
+              <div className={styles.item}>
+                <span className={styles["item-heading"]}>Entidade</span>
+                <span className={styles["item-heading"]}>01125(Gesprin)</span>
+              </div>
 
-              <span className={styles["timer-heading"]}>
-                {minutes[0]}
-                {minutes[1]}:{seconds[0]}
-                {seconds[1]}
-              </span>
+              <div className={styles.item}>
+                <span className={styles["item-subheading"]}>
+                  Valor da reserva
+                </span>
+                <span className={styles["item-subheading"]}>
+                  {new Intl.NumberFormat("de-DE", {
+                    style: "currency",
+                    currency: "AOA",
+                  }).format(ticket?.total)}
+                </span>
+              </div>
+              
 
-              {/* <Progress.Root className={styles["progress-bar"]} value={66}>
-                <Progress.Indicator
-                  className={styles["progress-bar-indicator"]}
-                  style={{ transform: `translateX(-${100 - progress}%)` }}
-                />
-              </Progress.Root> */}
-            </div>
+              <div className={styles.item}>
+                <span className={styles["item-text"]}>Evento</span>
+                <span className={styles["item-text"]}>
+                  {dataEvent?.event?.name}
+                </span>
+              </div>
 
-            <div className={styles.item}>
-              <span className={styles["item-heading"]}>Entidade</span>
-              <span className={styles["item-heading"]}>01125</span>
-            </div>
+              <div className={styles.item}>
+                <span className={styles["item-text"]}>Ingressos</span>
+                <span className={styles["item-text"]}>
+                  {accumulateTicketNumber(ticket)}
+                </span>
+              </div>
 
-            <div className={styles.item}>
-              <span className={styles["item-subheading"]}>
-                Valor da reserva
-              </span>
-              <span className={styles["item-subheading"]}>
-                {new Intl.NumberFormat("de-DE", {
-                  style: "currency",
-                  currency: "AOA",
-                }).format(ticket?.total)}
-              </span>
-            </div>
-
-            <div className={styles.item}>
-              <span className={styles["item-text"]}>Evento</span>
-              <span className={styles["item-text"]}>
-                {dataEvent?.event?.name}
-              </span>
-            </div>
-
-            <div className={styles.item}>
-              <span className={styles["item-text"]}>Ingressos</span>
-              <span className={styles["item-text"]}>
-                {accumulateTicketNumber(ticket)}
-              </span>
-            </div>
-
-            <div className={styles["btn-group"]}>
-              <Link href="/">
-                <button className={styles["btn-primary"]}>
-                  Voltar para Home
-                </button>
-              </Link>
-              {/* <button className={styles["btn-secondary"]}>Compartilhar código</button> */}
+              <div className={styles["btn-group"]}>
+                <Link href="/">
+                  <button className={styles["btn-primary"]}>
+                    Voltar para Home
+                  </button>
+                </Link>
+                {/* <button className={styles["btn-secondary"]}>Compartilhar código</button> */}
+              </div>
             </div>
           </div>
-        </div>
-      )}
-    </section>
+        )}
+      </section>
+
+      <AlertModal
+        isOpen={isExpiredOrder}
+        onRequestClose={handleCloseAlertModal}
+        title="Tempo Expirou"
+        message="Isso é necessário para que uma reserva não fique presa e possa estar disponível para compra novamente"
+        submessage="Clique no botão abaixo para voltar na home."
+      />
+    </>
   );
 }

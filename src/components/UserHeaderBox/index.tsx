@@ -78,12 +78,12 @@ export function UserHeaderBox() {
           </span>
           Central de ajuda
         </a>
-        <a className={styles["menu-item"]} onClick={logout}>
+        <button className={styles["menu-item"]} onClick={logout}>
           <span className={styles["menu-item-icon"]}>
             <IoExitOutline size={24} color="#ff5555" />
           </span>
           Sair
-        </a>
+        </button>
       </div>
     </div>
   );

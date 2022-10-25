@@ -18,12 +18,12 @@ const PaymentMethodPage: NextPage = () => {
   );
 };
 
-export async function getServerSideProps(ctx: any) {
-  const { id } = ctx.params;
+// export async function getServerSideProps(ctx: any) {
+//   const { id } = ctx.params;
 
-  return {
-    props: {}, // will be passed to the page component as props
-  };
-}
+//   return {
+//     props: {}, // will be passed to the page component as props
+//   };
+// }
 
 export default PaymentMethodPage;

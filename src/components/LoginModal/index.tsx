@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import Modal from "react-modal";
 import Router from "next/router";
+import { FiAlertCircle } from "react-icons/fi";
 import { useToasts } from "react-toast-notifications";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -36,7 +37,7 @@ export function LoginModal({ isOpen, onRequestClose }: Props) {
     resolver: yupResolver(loginSchema),
   });
 
-  const { signIn, getLoginStatus } = useContext(AuthContext);
+  const { signIn, getLoginStatus, openLoginModal, setOpenLoginModal } = useContext(AuthContext);
 
   function handleInputPasswordVisible() {
     setInputPasswordType("text");
@@ -57,6 +58,13 @@ export function LoginModal({ isOpen, onRequestClose }: Props) {
           autoDismiss: true,
         });
       }
+
+      // addToast("Login Realizado com sucesso...", {
+      //   appearance: "success",
+      //   autoDismiss: true,
+      // });
+
+      // Router.reload();
     } catch (error) {
       addToast("Credenciais inválidas...", {
         appearance: "error",
@@ -71,9 +79,10 @@ export function LoginModal({ isOpen, onRequestClose }: Props) {
 
   return (
     <Modal
-      isOpen={isOpen}
+      isOpen={isOpen || openLoginModal}
       onRequestClose={() => {
         onRequestClose();
+        setOpenLoginModal(false);
         reset();
       }}
       overlayClassName="react-modal-overlay"
@@ -83,6 +92,7 @@ export function LoginModal({ isOpen, onRequestClose }: Props) {
         type="button"
         onClick={() => {
           onRequestClose();
+          setOpenLoginModal(false);
           reset();
         }}
         className="react-modal-close"
@@ -92,6 +102,15 @@ export function LoginModal({ isOpen, onRequestClose }: Props) {
 
       <div className={styles["content"]}>
         <h1 className={styles.heading}>Login</h1>
+
+        {openLoginModal && (
+          <div className={styles["info"]}>
+            <FiAlertCircle size={24} color="#FF5555" />
+            <p className={styles.text}>
+              Precisa estar logado para fazer a compra.
+            </p>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className={styles["input-group"]}>

@@ -46,8 +46,8 @@ export function Hero() {
             initial="hidden"
             animate="show"
           >
-            A Ventus mostra- te os melhores eventos, atrações e shows mais
-            próximas de ti.
+            A Ventus mostra-te os melhores eventos, atrações e shows mais
+            próximos de ti.
           </motion.p>
 
           <Link href="/#event" scroll={false}>

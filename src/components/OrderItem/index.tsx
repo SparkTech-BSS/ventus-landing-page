@@ -116,7 +116,7 @@ export function OrderItem({ data }: Props) {
         <div className={`${styles["col-right"]}`}>
           <div className={styles.item}>
             <span className={styles["item-heading"]}>Entidade</span>
-            <span className={styles["item-heading"]}>00750</span>
+            <span className={styles["item-heading"]}>01125(Gesprin)</span>
           </div>
 
           <div className={styles.item}>
@@ -143,10 +143,6 @@ export function OrderItem({ data }: Props) {
             </span>
           </div>
 
-          <div className={styles.item}>
-            <span className={styles["item-text"]}>Entidade</span>
-            <span className={styles["item-text"]}>01125</span>
-          </div>
 
           <div className={styles["payment-method-wrapper"]}>
             <span className={styles["payment-method-text"]}>
