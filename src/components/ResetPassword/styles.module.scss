@@ -1,4 +1,4 @@
-.register {
+.reset-password {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -18,19 +18,6 @@
   padding: 2rem 1rem;
 }
 
-.input-box {
-  position: relative;
-}
-
-.password-icon {
-  position: absolute;
-  right: 1rem;
-  top: 1.5rem;
-  cursor: pointer;
-}
-
-.social-btn,
-.btn-link,
 .btn {
   height: 5rem;
   border-radius: 5px;
@@ -43,111 +30,12 @@
   transition: all 0.3s;
   width: 100%;
   cursor: pointer;
-
-  &[disabled] {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-}
-
-.btn-link:hover {
-  color: var(--primary-color);
-}
-
-.social-btn {
-  background-color: #17a8fd;
-
-  font-weight: 700;
-
-  color: var(--white-color);
-
-  &:hover {
-    background-color: #1087cc;
-  }
-}
-
-.btn-register {
-  background: var(--gradient-linear);
-  font-weight: 700;
-  text-transform: uppercase;
-  color: var(--white-color);
-  &:hover {
-    opacity: 0.6;
-  }
-
-  &[disabled] {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-}
-
-.error-label {
-  color: #ff0000;
-  margin-top: 0.5rem;
-  font-size: 1.4rem;
-}
-
-.social-btn {
-  margin: 4rem 0 2rem;
-}
-
-.form {
-  width: 100%;
   margin-top: 2rem;
-}
 
-.input-group {
-  width: 100%;
-  margin-bottom: 2rem;
-}
-
-.label-row {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 0.2rem;
-
-  label {
-    font-size: 1.4rem;
+  &[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
-}
-
-.label-required-symbol {
-  color: #ff0000;
-}
-
-.input {
-  width: 100%;
-  background-color: #f6f6f6;
-  width: 100%;
-  height: 5rem;
-  border-radius: 4px;
-  border: 0.2rem solid transparent;
-  padding: 0 2rem;
-  font-size: 1.8rem;
-  outline: none;
-  transition: all 0.3s;
-
-  &:focus {
-    border: 0.2rem solid var(--primary-color);
-  }
-}
-
-.label-required-symbol {
-  color: #ff0000;
-}
-
-.link {
-  color: var(--primary-color);
-  text-decoration: underline;
-}
-
-.text {
-  display: inline-block;
-  text-align: center;
-  font-size: 1.6rem;
-  margin: 1rem 0;
-  line-height: 1.4;
 }
 
 .btn-loader {
@@ -173,4 +61,99 @@
   }
 
   animation: spin 0.6s infinite linear, grow 0.3s forwards ease-out;
+}
+
+.btn-register {
+  background: var(--gradient-linear);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--white-color);
+  &:hover {
+    opacity: 0.6;
+  }
+
+  &[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.form {
+  width: 100%;
+}
+
+.input-group {
+  margin: 1rem 0;
+}
+
+.label-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+
+  label {
+    font-size: 1.4rem;
+  }
+}
+
+.label-required-symbol {
+  color: #ff0000;
+}
+
+.input-box {
+    position: relative;
+}
+
+.password-icon {
+    position: absolute;
+    right: 1rem;
+    top: 1.5rem;
+    cursor: pointer;
+}
+
+.input {
+  width: 100%;
+  background-color: #f6f6f6;
+  width: 100%;
+  height: 5rem;
+  border-radius: 4px;
+  border: 0.2rem solid transparent;
+  padding: 0 2rem;
+  font-size: 1.8rem;
+  outline: none;
+  transition: all 0.3s;
+
+  &:focus {
+    border: 0.2rem solid var(--primary-color);
+  }
+}
+
+.error-label {
+  color: #ff0000;
+  margin-top: 0.5rem;
+  font-size: 1.4rem;
+}
+
+.text {
+  color: var(--black-900);
+  font-size: 1.6rem;
+  text-align: center;
+  line-height: 1.4;
+  margin-top: 4rem;
+}
+
+.link {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    color: var(--primary-color);
+  }
 }

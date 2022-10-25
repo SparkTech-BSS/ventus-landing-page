@@ -58,3 +58,13 @@ biro_lito@gmail.com
 12345678A
 
 /esquici-senha
+
+{
+  maradaniel__67@gmail.com
+  Fqbio0071998
+}
+
+{
+  pambo_miguel@gmail.com
+  Fqbio0071998
+}

@@ -1,10 +1,12 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useContext } from "react";
 import Modal from "react-modal";
+import { LoginDTO } from "../../dto/LoginDTO";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { UserDTO } from "../../dto/UserDTO";
 import { api } from "services/api";
 import { userSchema } from "../../validations/UserValidation";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { AuthContext } from "../../contexts/AuthContext";
 import { useToasts } from "react-toast-notifications";
 import { CgClose } from "react-icons/cg";
 import { BsEnvelope } from "react-icons/bs";
@@ -23,6 +25,7 @@ interface Props {
 }
 
 export function RegisterModal({ isOpen, onRequestClose }: Props) {
+  const { signIn, getLoginStatus } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [inputPasswordType, setInputPasswordType] = useState("password");
   const [inputConfirmPasswordType, setInputConfirmPasswordType] =
@@ -131,6 +134,13 @@ export function RegisterModal({ isOpen, onRequestClose }: Props) {
         appearance: "success",
         autoDismiss: true,
       });
+
+      const singInData: LoginDTO  = {
+        username: data.email!,
+        password: data.password!
+      }
+
+      await signIn(singInData);
 
       onRequestClose();
       reset();
@@ -327,7 +337,7 @@ export function RegisterModal({ isOpen, onRequestClose }: Props) {
             </li>
           </ul> */}
 
-          <button className={styles.btn} type="submit">
+          <button className={styles.btn} type="submit" disabled={loading}>
             {loading ? <div className={styles["btn-loader"]} /> : "Criar Conta"}
           </button>
           {/* <button className={styles["social-btn"]}>

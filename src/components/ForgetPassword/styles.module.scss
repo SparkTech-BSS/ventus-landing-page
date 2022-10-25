@@ -31,6 +31,36 @@
   width: 100%;
   cursor: pointer;
   margin-top: 2rem;
+
+  &[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.btn-loader {
+  border-radius: 100%;
+  width: 0;
+  height: 0;
+  border: 2.5px solid rgba(255, 255, 255, 0.5);
+
+  border-left-color: var(--white-color);
+  border-top-color: var(--white-color);
+
+  @keyframes spin {
+    to {
+      transform: rotate(359deg);
+    }
+  }
+
+  @keyframes grow {
+    to {
+      width: 1.8rem;
+      height: 1.8rem;
+    }
+  }
+
+  animation: spin 0.6s infinite linear, grow 0.3s forwards ease-out;
 }
 
 .btn-register {
@@ -40,6 +70,11 @@
   color: var(--white-color);
   &:hover {
     opacity: 0.6;
+  }
+
+  &[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 }
 
@@ -79,6 +114,12 @@
   }
 }
 
+.error-label {
+  color: #ff0000;
+  margin-top: 0.5rem;
+  font-size: 1.4rem;
+}
+
 .text {
   color: var(--black-900);
   font-size: 1.6rem;
@@ -95,7 +136,7 @@
   text-align: center;
   padding: 1rem;
   cursor: pointer;
-  transition: all .2s;
+  transition: all 0.2s;
 
   &:hover {
     color: var(--primary-color);

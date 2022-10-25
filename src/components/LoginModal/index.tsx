@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import Modal from "react-modal";
+import Link from "next/link";
 import Router from "next/router";
 import { FiAlertCircle } from "react-icons/fi";
 import { useToasts } from "react-toast-notifications";
@@ -37,7 +38,8 @@ export function LoginModal({ isOpen, onRequestClose }: Props) {
     resolver: yupResolver(loginSchema),
   });
 
-  const { signIn, getLoginStatus, openLoginModal, setOpenLoginModal } = useContext(AuthContext);
+  const { signIn, getLoginStatus, openLoginModal, setOpenLoginModal } =
+    useContext(AuthContext);
 
   function handleInputPasswordVisible() {
     setInputPasswordType("text");
@@ -169,9 +171,11 @@ export function LoginModal({ isOpen, onRequestClose }: Props) {
 
           <div className={styles["forget-password"]}>
             <span> Esqueceu sua senha?</span>
-            <a className={styles["link"]} href="#">
-              Clique aqui
-            </a>
+            <Link href="/esqueci-senha" passHref>
+              <a className={styles["link"]} href="#">
+                Clique aqui
+              </a>
+            </Link>
           </div>
         </form>
       </div>

@@ -1,38 +1,38 @@
-import { useState, useEffect, useContext } from "react";
-import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { UserDTO } from "../../dto/UserDTO";
-import { LoginDTO } from "../../dto/LoginDTO";
 import { api } from "services/api";
-import { AuthContext } from "../../contexts/AuthContext";
-import { userSchema } from "../../validations/UserValidation";
-import { useForm, SubmitHandler } from "react-hook-form";
 import { useToasts } from "react-toast-notifications";
-import VentusLogo from "../../assets/png/logo(4x).png";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { resetPasswordSchema } from "validations/ResetPasswordValidation";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
-import { FaFacebookF } from "react-icons/fa";
+import VentusLogo from "../../assets/png/logo(4x).png";
 import styles from "./styles.module.scss";
+import { ServerError } from "components/ServerError";
 
-export function Register() {
-  const { signIn } = useContext(AuthContext);
+export function ResetPassword() {
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const [error, setError] = useState(false);
+  const [email, setEmail] = useState("");
   const [inputPasswordType, setInputPasswordType] = useState("password");
   const [inputConfirmPasswordType, setInputConfirmPasswordType] =
     useState("password");
+  const router = useRouter();
+  const { id } = router.query;
   const { addToast } = useToasts();
+
   const {
     reset,
-    control,
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<UserDTO>({
     mode: "all",
     reValidateMode: "onChange",
-    resolver: yupResolver(userSchema),
+    resolver: yupResolver(resetPasswordSchema),
   });
 
   function handleInputPasswordVisible() {
@@ -54,46 +54,65 @@ export function Register() {
   const onSubmit: SubmitHandler<UserDTO> = async (data) => {
     setLoading(true);
     try {
-      const response = await api.post("users", {
-        email: data.email,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        password: data.password,
-        phone: String(data.phone),
+      const response = await api.put("/users/updatepassword", {
+        email: email,
+        password: data.password
       });
 
-      addToast("Conta criada com sucesso...", {
+      router.push(`/login`);
+
+      addToast("Senha ressetada com sucesso", {
         appearance: "success",
         autoDismiss: true,
       });
 
-      const singInData: LoginDTO  = {
-        username: data.email!,
-        password: data.password!
-      }
 
-      await signIn(singInData);
-
-      router.push(`/`);
-
-      reset();
     } catch (error) {
-      addToast("Erro ao criar a conta...", {
+      addToast("Houve um erro ao ressetar a senha", {
         appearance: "error",
         autoDismiss: true,
       });
+
+      console.log(error);
+
+      setError(true);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    document.documentElement.style.setProperty("--overflow", `auto`);
-  }, []);
+    async function fetchData() {
+      try {
+        const { data } = await api.get(`reset-password/${id}`);
+
+        if (!data?.uuid) {
+          addToast(
+            "O link expirou, por favor tente ressetar a senha novamente.",
+            {
+              appearance: "info",
+              autoDismiss: false,
+            }
+          );
+          router.push(`/`);
+        }
+
+        setEmail(data?.email)
+      } catch (error) {
+        setError(true);
+      }
+    }
+
+    fetchData();
+  }, [id, addToast, router]);
+
+  if (error) {
+    return <ServerError />;
+  }
 
   return (
-    <section className={styles["register"]}>
-      <div className={styles.container}>
+    <section className={styles["reset-password"]}>
+      <div className={styles["container"]}>
         <Image
           src={VentusLogo}
           alt=""
@@ -102,75 +121,15 @@ export function Register() {
           objectFit="cover"
         />
 
-        {/* <button className={styles["social-btn"]}>
-          <FaFacebookF size={24} />
-          Cadastrar com o Facebook
-        </button> */}
+        <p className={styles.text}>
+          Para iniciar o processo de criação de uma nova senha, preencha o campo
+          abaixo com o e-mail associado à sua conta Ventus.
+        </p>
 
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
           <div className={styles["input-group"]}>
             <div className={styles["label-row"]}>
-              <label>Nome</label>
-              <span className={styles["label-required-symbol"]}>*</span>
-            </div>
-            <input
-              type="text"
-              className={styles.input}
-              {...register("firstName")}
-            />
-            <span className={styles["error-label"]}>
-              {errors?.firstName?.message}
-            </span>
-          </div>
-
-          <div className={styles["input-group"]}>
-            <div className={styles["label-row"]}>
-              <label>Sobrenome</label>
-              <span className={styles["label-required-symbol"]}>*</span>
-            </div>
-            <input
-              type="text"
-              className={styles.input}
-              {...register("lastName")}
-            />
-            <span className={styles["error-label"]}>
-              {errors?.lastName?.message}
-            </span>
-          </div>
-
-          <div className={styles["input-group"]}>
-            <div className={styles["label-row"]}>
-              <label>E-mail</label>
-              <span className={styles["label-required-symbol"]}>*</span>
-            </div>
-            <input
-              type="text"
-              className={styles.input}
-              {...register("email")}
-            />
-            <span className={styles["error-label"]}>
-              {errors?.email?.message}
-            </span>
-          </div>
-
-          <div className={styles["input-group"]}>
-            <div className={styles["label-row"]}>
-              <label>Telefone</label>
-              <span className={styles["label-required-symbol"]}>*</span>
-            </div>
-            <input
-              type="number"
-              className={styles.input}
-              {...register("phone")}
-            />
-            <span className={styles["error-label"]}>
-              {errors?.phone?.message}
-            </span>
-          </div>
-
-          <div className={styles["input-group"]}>
-            <div className={styles["label-row"]}>
-              <label>Senha</label>
+              <label>Nova Senha</label>
               <span className={styles["label-required-symbol"]}>*</span>
             </div>
             <div className={styles["input-box"]}>
@@ -203,7 +162,7 @@ export function Register() {
 
           <div className={styles["input-group"]}>
             <div className={styles["label-row"]}>
-              <label>Confirmar Senha</label>
+              <label>Senha Antiga</label>
               <span className={styles["label-required-symbol"]}>*</span>
             </div>
             <div className={styles["input-box"]}>
@@ -232,22 +191,16 @@ export function Register() {
               {errors?.passwordConfirmation?.message}
             </span>
           </div>
-          
+
           <button
-            type="submit"
             className={`${styles["btn"]} ${styles["btn-register"]}`}
             disabled={loading}
           >
-            {loading ? <div className={styles["btn-loader"]} /> : "CRIAR CONTA"}
+            {loading ? <div className={styles["btn-loader"]} /> : "Salvar"}
           </button>
           <Link href="/login" passHref>
-            <a className={styles["btn-link"]}>Já sou cadastrado</a>
+            <a className={styles.link}>Voltar para o login</a>
           </Link>
-
-          <p className={styles.text}>
-            Ao clicar no botão abaixo, você declara concordar com nossos{" "}
-            <a className={styles.link}>Termos de Serviço</a>
-          </p>
         </form>
       </div>
     </section>
