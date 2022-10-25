@@ -151,6 +151,12 @@ export function Login() {
               <a className={styles["link"]}>Esqueci minha senha</a>
             </Link>
           </div>
+
+          <Link href="/">
+            <a className={`${styles["link"]} ${styles["go-back"]}`}>
+              Voltar na Home
+            </a>
+          </Link>
         </form>
       </div>
     </section>

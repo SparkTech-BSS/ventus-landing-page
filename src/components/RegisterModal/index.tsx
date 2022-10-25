@@ -18,6 +18,7 @@ import { FiUser, FiPhone } from "react-icons/fi";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 
 import styles from "./styles.module.scss";
+import Link from "next/link";
 
 interface Props {
   isOpen: boolean;
@@ -135,16 +136,15 @@ export function RegisterModal({ isOpen, onRequestClose }: Props) {
         autoDismiss: true,
       });
 
-      const singInData: LoginDTO  = {
+      const singInData: LoginDTO = {
         username: data.email!,
-        password: data.password!
-      }
+        password: data.password!,
+      };
 
       await signIn(singInData);
 
       onRequestClose();
       reset();
-
     } catch (error) {
       addToast("Credenciais inválidas...", {
         appearance: "error",
@@ -356,9 +356,11 @@ export function RegisterModal({ isOpen, onRequestClose }: Props) {
       <div className={styles["register-box"]}>
         <span>
           Já possui uma conta?{" "}
-          <a className={styles.link} href="#">
-            Faça login!
-          </a>
+          <Link href="/login">
+            <a className={styles.link} href="#">
+              Faça login!
+            </a>
+          </Link>
         </span>
       </div>
     </Modal>

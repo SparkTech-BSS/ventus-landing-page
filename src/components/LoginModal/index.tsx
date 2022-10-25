@@ -182,9 +182,11 @@ export function LoginModal({ isOpen, onRequestClose }: Props) {
       <div className={styles["register-box"]}>
         <span>
           Não possui uma conta?{" "}
-          <a className={styles.link} href="#">
-            Cadastre-se!
-          </a>
+          <Link href="/register" passHref>
+            <a className={styles.link}>
+              Cadastre-se!
+            </a>
+          </Link>
         </span>
       </div>
     </Modal>
