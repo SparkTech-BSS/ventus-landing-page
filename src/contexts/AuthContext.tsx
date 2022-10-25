@@ -27,8 +27,6 @@ interface AuthProviderProps {
 
 export const AuthContext = createContext({} as AuthContextType);
 
-let authChannel: BroadcastChannel
-
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<UserDTO | null>(null);
   const [openLoginModal, setOpenLoginModal] = useState(false);
@@ -59,19 +57,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     api.defaults.headers.common.Authorization = `Bearer ${access_token}`;
 
-    console.log(getCurrentUserObject())
-
     setUser(getCurrentUserObject());
+
+    setOpenLoginModal(false);
 
     // await Router.push("/");
   }
 
-  async function logout() {
+  function logout() {
     destroyCookie(undefined, 'ventus.token');
     setUser(getCurrentUserObject());
-    Router.reload();
-    await Router.push("/");
-    console.log('yes')
+    console.log('Logout')
+    console.log(getCurrentUserObject())
+    Router.push("/");
   }
 
   function getLoginStatus() {

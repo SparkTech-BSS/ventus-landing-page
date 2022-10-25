@@ -75,10 +75,10 @@ export function PaymentMethod() {
 
   async function handleSubmit() {
 
-    // if (!isAuthenticated) {
-    //   setOpenLoginModal(true);
-    //   return;
-    // }
+    if (!isAuthenticated) {
+      setOpenLoginModal(true);
+      return;
+    }
 
     setLoadingSubmit(true);
     if (paymentMethodValue) {
@@ -130,14 +130,14 @@ export function PaymentMethod() {
         ) : (
           <>
             <div className={`container ${styles.container}`}>
-              {!isAuthenticated && (
+              {/* {!isAuthenticated && (
                 <div className={`${styles["offline-message-wrapper"]}`}>
                   <span>
                     Por favor faça o login para poder efectuar a compra do
                     ingresso.
                   </span>
                 </div>
-              )}
+              )} */}
               <h1 className={styles["event-name"]}>{dataEvent?.event?.name}</h1>
               <span className={styles["event-info"]}>
                 Sex, Ago 12 · 21:00 Pm
