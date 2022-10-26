@@ -222,15 +222,15 @@ export function RegisterModal({ isOpen, onRequestClose }: Props) {
       overlayClassName="react-modal-overlay"
       className={`react-modal-content w-40`}
     >
-      <button
-        type="button"
-        onClick={onRequestClose}
-        className="react-modal-close"
-      >
-        <CgClose size={24} color="#1A2029" />
-      </button>
-
       <div className={styles["content"]}>
+        <button
+          type="button"
+          onClick={onRequestClose}
+          className="react-modal-close"
+        >
+          <CgClose size={24} color="#1A2029" />
+        </button>
+
         {loading && (
           <div className={styles["loading-wrapper"]}>
             <Loading />
