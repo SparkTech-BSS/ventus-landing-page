@@ -69,6 +69,6 @@ export const getStaticProps: GetStaticProps = withCSR(async (ctx: any) => {
       events: events ? events : null,
       isError,
     },
-    revalidate: 60,
+    revalidate: 10,
   };
 });

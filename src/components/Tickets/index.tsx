@@ -7,12 +7,14 @@ import { QRCodeSVG } from "qrcode.react";
 import { TicketLinearGradient } from "config";
 import { OrderList } from "components/OrderList";
 import styles from "./styles.module.scss";
+import { getTicketEventDetailDate } from "utils";
 import { TicketModal } from "components/TicketModal";
 
 export function Tickets() {
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [selectedData, setSelectedData] = useState<any>({});
   const [openTicketModal, setOpenTicketModal] = useState(false);
 
   useEffect(() => {
@@ -108,7 +110,10 @@ export function Tickets() {
                             return (
                               <a
                                 className={styles["event-item"]}
-                                onClick={handleOpenTicketModal}
+                                onClick={() => {
+                                  handleOpenTicketModal();
+                                  setSelectedData(item)
+                                }}
                                 key={item?.ticket?._id}
                                 style={{
                                   backgroundImage: `${TicketLinearGradient}, url(${item?.event?.event?.images})`,
@@ -123,21 +128,21 @@ export function Tickets() {
                                       <span
                                         className={styles["date-box-heading"]}
                                       >
-                                        31
+                                        {getTicketEventDetailDate(item?.ticket?.dateEvent)?.day}
                                       </span>
                                       <div
                                         className={
                                           styles["date-box-extra-detail"]
                                         }
                                       >
-                                        <span>OCT</span>
-                                        <span>8PM</span>
+                                        <span>{getTicketEventDetailDate(item?.ticket?.dateEvent)?.month?.toUpperCase()}</span>
+                                        <span>{getTicketEventDetailDate(item?.ticket?.dateEvent)?.week_day?.toUpperCase()}</span>
                                       </div>
                                     </div>
 
                                     <QRCodeSVG
                                       size={120}
-                                      value="https://reactjs.org/"
+                                      value={item?.ticket?.code}
                                       className={styles["qr-code-wrapper"]}
                                     />
                                   </div>
@@ -204,6 +209,7 @@ export function Tickets() {
       <TicketModal
         isOpen={openTicketModal}
         onRequestClose={handleCloseTicketModal}
+        data={selectedData}
       />
     </>
   );

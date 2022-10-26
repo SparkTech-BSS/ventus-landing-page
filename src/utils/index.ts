@@ -341,9 +341,51 @@ export function getShortDateFormat(date: string) {
         ? convertedToDateObject.getDate()
         : `0${convertedToDateObject.getDate()}`,
     month: getMonthTypeOne(convertedToDateObject.getMonth()),
+    year: convertedToDateObject.getFullYear()
   };
 
   return `${dateObject.week_day}, ${dateObject.month} ${dateObject.day}`;
+}
+
+
+export function getTicketDetailDate(date: string) {
+  const weeks_days = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"];
+
+  if (!date) return "";
+
+  const convertedToDateObject = new Date(date);
+
+  const dateObject = {
+    week_day: weeks_days[convertedToDateObject.getDay()],
+    day:
+      convertedToDateObject.getDate().toString().length > 1
+        ? convertedToDateObject.getDate()
+        : `0${convertedToDateObject.getDate()}`,
+    month: getMonthTypeOne(convertedToDateObject.getMonth()),
+    year: convertedToDateObject.getFullYear()
+  };
+
+  return `${dateObject?.week_day}, ${dateObject?.month} ${dateObject?.day} - ${dateObject?.year}`;
+}
+
+export function getTicketEventDetailDate(date: string): any {
+  const weeks_days = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"];
+
+  if (!date) return {};
+
+  const convertedToDateObject = new Date(date);
+
+  const dateObject = {
+    week_day: weeks_days[convertedToDateObject.getDay()],
+    day:
+      convertedToDateObject.getDate().toString().length > 1
+        ? convertedToDateObject.getDate()
+        : `0${convertedToDateObject.getDate()}`,
+    month: getMonthTypeOne(convertedToDateObject.getMonth()),
+    year: convertedToDateObject.getFullYear()
+  };
+
+  return dateObject;
 }
 
 export function getStartDateAndEndDate(dates: any) {
