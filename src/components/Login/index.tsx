@@ -140,7 +140,7 @@ export function Login() {
             className={`${styles["btn"]} ${styles["btn-register"]}`}
             disabled={loading}
           >
-            {loading ? <div className={styles["btn-loader"]} /> : "Salvar"}
+            {loading ? <div className={styles["btn-loader"]} /> : "Entrar"}
           </button>
 
           <div className={styles["btn-group"]}>
