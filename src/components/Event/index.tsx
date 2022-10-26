@@ -55,11 +55,11 @@ export function Event({ data }: Props) {
           clearTimeout(timeout);
         }
         function nextTimeout() {
-          clearTimeout(timeout);
-          if (mouseOver) return;
+          clearTimeout(timeout)
+          if (mouseOver) return
           timeout = setTimeout(() => {
-            slider?.next();
-          }, 3000);
+            slider.next()
+          }, 2000)
         }
         slider.on("created", () => {
           slider.container.addEventListener("mouseover", () => {
