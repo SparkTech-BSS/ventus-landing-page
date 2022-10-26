@@ -41,7 +41,7 @@ export function ForgetPassword() {
         email: data.email,
       });
 
-      router.push(`/reset-password/${response.data?.uuid}`);
+      router.push(`/confirm-email`);
     } catch (error) {
       addToast("Erro ao enviar o e-mail...", {
         appearance: "error",

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import VentusLogo from "../../assets/png/logo(4x).png";
 import styles from "./styles.module.scss";
 
@@ -16,10 +17,12 @@ export function ConfirmEmail() {
         <div className={styles.content}>
           <p className={styles.text}>Confira seu email.</p>
           <p className={styles.text}>
-            Enviamos uma mensagem com um link para você criar uma nova senha.
+            Enviamos uma mensagem com um link para você redefinir a sua senha.
           </p>
 
-          <a className={styles.link}>Voltar para o login</a>
+          <Link href="/login">
+            <a className={styles.link}>Voltar para o login</a>
+          </Link>
         </div>
       </div>
     </section>

@@ -15,8 +15,10 @@ import { ServerError } from "components/ServerError";
 
 export function ResetPassword() {
   const [loading, setLoading] = useState(false);
+  const [isChanged, setIsChanged] = useState(false);
   const [error, setError] = useState(false);
   const [email, setEmail] = useState("");
+  const [uuid, setUuid] = useState("");
   const [inputPasswordType, setInputPasswordType] = useState("password");
   const [inputConfirmPasswordType, setInputConfirmPasswordType] =
     useState("password");
@@ -56,7 +58,7 @@ export function ResetPassword() {
     try {
       const response = await api.put("/users/updatepassword", {
         email: email,
-        password: data.password
+        password: data.password,
       });
 
       router.push(`/login`);
@@ -65,8 +67,6 @@ export function ResetPassword() {
         appearance: "success",
         autoDismiss: true,
       });
-
-
     } catch (error) {
       addToast("Houve um erro ao ressetar a senha", {
         appearance: "error",
@@ -82,29 +82,43 @@ export function ResetPassword() {
   };
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const { data } = await api.get(`reset-password/${id}`);
+    let mounted = true;
 
-        if (!data?.uuid) {
-          addToast(
-            "O link expirou, por favor tente ressetar a senha novamente.",
-            {
-              appearance: "info",
-              autoDismiss: false,
-            }
-          );
-          router.push(`/`);
+    (async function fetchData() {
+      try {
+        const response = await api.get(`reset-password/${id}`);
+
+        if (response.data?.uuid) {
+          setIsChanged(true);
         }
 
-        setEmail(data?.email)
+        setEmail(response.data?.email);
+        setUuid(response.data?.uuid);
       } catch (error) {
         setError(true);
       }
-    }
+    })();
 
-    fetchData();
+    return () => {
+      mounted = false;
+    };
   }, [id, addToast, router]);
+
+  useEffect(() => {
+    if (isChanged) {
+      if (!uuid) {
+        addToast(
+          "O link expirou, por favor tente ressetar a senha novamente.",
+          {
+            appearance: "info",
+            autoDismiss: false,
+          }
+        );
+
+        router.push(`/`);
+      }
+    }
+  }, [isChanged, uuid, addToast, router]);
 
   if (error) {
     return <ServerError />;
@@ -122,8 +136,8 @@ export function ResetPassword() {
         />
 
         <p className={styles.text}>
-          Para iniciar o processo de criação de uma nova senha, preencha o campo
-          abaixo com o e-mail associado à sua conta Ventus.
+          Para iniciar o processo de redefinição da senha, preencha o campo
+          abaixo com a nova senha.
         </p>
 
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -162,7 +176,7 @@ export function ResetPassword() {
 
           <div className={styles["input-group"]}>
             <div className={styles["label-row"]}>
-              <label>Senha Antiga</label>
+              <label>Confirmar Senha Nova</label>
               <span className={styles["label-required-symbol"]}>*</span>
             </div>
             <div className={styles["input-box"]}>
