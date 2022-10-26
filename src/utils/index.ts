@@ -383,3 +383,14 @@ export function getCapitalizeFirstLetter(value: string) {
   const lower = value.toLocaleLowerCase();
   return value.charAt(0).toUpperCase() + lower.slice(1);
 }
+
+export function checkInRegistrationProcessIfValueExist(
+  value: string,
+  objectProps: any,
+  array: Array<any>
+) {
+  for (let i = 0; i < array?.length; i++) {
+    if (array[i]?.[objectProps] === value) return true;
+  }
+  return false;
+}

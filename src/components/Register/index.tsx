@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react";
+import * as Yup from "yup";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,22 +8,82 @@ import { UserDTO } from "../../dto/UserDTO";
 import { LoginDTO } from "../../dto/LoginDTO";
 import { api } from "services/api";
 import { AuthContext } from "../../contexts/AuthContext";
-import { userSchema } from "../../validations/UserValidation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useToasts } from "react-toast-notifications";
 import VentusLogo from "../../assets/png/logo(4x).png";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { FaFacebookF } from "react-icons/fa";
 import styles from "./styles.module.scss";
+import { Loading } from "components/Loading";
+import { checkInRegistrationProcessIfValueExist } from "utils";
 
 export function Register() {
   const { signIn } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
+  const [userData, setUserData] = useState([]);
   const router = useRouter();
   const [inputPasswordType, setInputPasswordType] = useState("password");
   const [inputConfirmPasswordType, setInputConfirmPasswordType] =
     useState("password");
   const { addToast } = useToasts();
+
+  useEffect(() => {
+    setLoading(true);
+    async function fetchUsers() {
+      try {
+        const { data } = await api.get(`users/findall`);
+        setUserData(data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchUsers();
+  }, []);
+
+
+  const userSchema = Yup.object().shape({
+    firstName: Yup.string().required("Primeiro nome é obrigatório"),
+    lastName: Yup.string().required("Último nome é obrigatório"),
+    email: Yup.string()
+      .required("Email é obrigatório")
+      .email("Email inválido")
+      .test(
+        "emailExist",
+        "Este E-mail já foi usado",
+        (value: any) =>
+          !checkInRegistrationProcessIfValueExist(value, "email", userData)
+      ),
+    phone: Yup.number()
+      .required("Telefone obrigatório")
+      .test(
+        "phoneExist",
+        "Este Número de telefone já foi usado",
+        (value: any) =>
+          !checkInRegistrationProcessIfValueExist(
+            `+244${value}`,
+            "phone",
+            userData
+          )
+      )
+      .typeError("Telefone inválido"),
+    password: Yup.string()
+      .required("Nenhuma senha fornecida.")
+      .min(8, "A senha é muito curta - deve ter no mínimo 8 caracteres.")
+      .matches(
+        /[a-zA-Z]/,
+        "A senha deve contar com letras maiúsculas e minúsculas."
+      ),
+    passwordConfirmation: Yup.string()
+      .required("Confirmar senha é necessária")
+      .oneOf(
+        [Yup.ref("password")],
+        "A Senha deve corresponder a confirmar senha"
+      ),
+  });
+
   const {
     reset,
     control,
@@ -67,10 +128,10 @@ export function Register() {
         autoDismiss: true,
       });
 
-      const singInData: LoginDTO  = {
+      const singInData: LoginDTO = {
         username: data.email!,
-        password: data.password!
-      }
+        password: data.password!,
+      };
 
       await signIn(singInData);
 
@@ -101,6 +162,12 @@ export function Register() {
           height={58}
           objectFit="cover"
         />
+
+        {loading && (
+          <div className={styles["loading-wrapper"]}>
+            <Loading />
+          </div>
+        )}
 
         {/* <button className={styles["social-btn"]}>
           <FaFacebookF size={24} />
@@ -232,7 +299,7 @@ export function Register() {
               {errors?.passwordConfirmation?.message}
             </span>
           </div>
-          
+
           <button
             type="submit"
             className={`${styles["btn"]} ${styles["btn-register"]}`}

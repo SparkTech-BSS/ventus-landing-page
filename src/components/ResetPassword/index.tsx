@@ -82,7 +82,7 @@ export function ResetPassword() {
   };
 
   useEffect(() => {
-    let mounted = true;
+    const abortController = new AbortController();
 
     (async function fetchData() {
       try {
@@ -100,7 +100,7 @@ export function ResetPassword() {
     })();
 
     return () => {
-      mounted = false;
+      abortController.abort();
     };
   }, [id, addToast, router]);
 

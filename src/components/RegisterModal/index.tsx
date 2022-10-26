@@ -1,10 +1,10 @@
-import { useRef, useState, useContext } from "react";
+import { useRef, useState, useContext, useEffect } from "react";
 import Modal from "react-modal";
+import * as Yup from "yup";
 import { LoginDTO } from "../../dto/LoginDTO";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { UserDTO } from "../../dto/UserDTO";
 import { api } from "services/api";
-import { userSchema } from "../../validations/UserValidation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useToasts } from "react-toast-notifications";
@@ -13,12 +13,14 @@ import { BsEnvelope } from "react-icons/bs";
 import { CgLock } from "react-icons/cg";
 import { IoReturnUpBackOutline, IoCheckboxOutline } from "react-icons/io5";
 import { FaFacebookF } from "react-icons/fa";
+import { checkInRegistrationProcessIfValueExist } from "utils";
 import { MdOutlineContacts, MdCheckBoxOutlineBlank } from "react-icons/md";
 import { FiUser, FiPhone } from "react-icons/fi";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 
 import styles from "./styles.module.scss";
 import Link from "next/link";
+import { Loading } from "components/Loading";
 
 interface Props {
   isOpen: boolean;
@@ -28,6 +30,7 @@ interface Props {
 export function RegisterModal({ isOpen, onRequestClose }: Props) {
   const { signIn, getLoginStatus } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
+  const [userData, setUserData] = useState([]);
   const [inputPasswordType, setInputPasswordType] = useState("password");
   const [inputConfirmPasswordType, setInputConfirmPasswordType] =
     useState("password");
@@ -40,6 +43,63 @@ export function RegisterModal({ isOpen, onRequestClose }: Props) {
   const [isActiveNumberRule, setIsActiveNumberRule] = useState(false);
   const [isSpecialCharRule, SetIsSpecialCharRule] = useState(false);
   const [isEightCharRule, setIsEightCharRule] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    async function fetchUsers() {
+      try {
+        const { data } = await api.get(`users/findall`);
+        setUserData(data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchUsers();
+  }, []);
+
+  const userSchema = Yup.object().shape({
+    firstName: Yup.string().required("Primeiro nome é obrigatório"),
+    lastName: Yup.string().required("Último nome é obrigatório"),
+    email: Yup.string()
+      .required("Email é obrigatório")
+      .email("Email inválido")
+      .test(
+        "emailExist",
+        "Este E-mail já foi usado",
+        (value: any) =>
+          !checkInRegistrationProcessIfValueExist(value, "email", userData)
+      ),
+    phone: Yup.number()
+      .required("Telefone obrigatório")
+      .test(
+        "phoneExist",
+        "Este Número de telefone já foi usado",
+        (value: any) =>
+          !checkInRegistrationProcessIfValueExist(
+            `+244${value}`,
+            "phone",
+            userData
+          )
+      )
+      .typeError("Telefone inválido"),
+    password: Yup.string()
+      .required("Nenhuma senha fornecida.")
+      .min(8, "A senha é muito curta - deve ter no mínimo 8 caracteres.")
+      .matches(
+        /[a-zA-Z]/,
+        "A senha deve contar com letras maiúsculas e minúsculas."
+      ),
+    passwordConfirmation: Yup.string()
+      .required("Confirmar senha é necessária")
+      .oneOf(
+        [Yup.ref("password")],
+        "A Senha deve corresponder a confirmar senha"
+      ),
+  });
+
   const {
     reset,
     control,
@@ -171,6 +231,12 @@ export function RegisterModal({ isOpen, onRequestClose }: Props) {
       </button>
 
       <div className={styles["content"]}>
+        {loading && (
+          <div className={styles["loading-wrapper"]}>
+            <Loading />
+          </div>
+        )}
+
         <h1 className={styles.heading}>Criar Conta</h1>
 
         <form onSubmit={handleSubmit(onSubmit)}>
