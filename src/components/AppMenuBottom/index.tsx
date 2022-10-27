@@ -33,6 +33,8 @@ export function AppMenuBottom() {
     };
   }, []);
 
+  return null;
+
   return (
     <nav
       className={`${styles["app-menu-bottom"]} ${

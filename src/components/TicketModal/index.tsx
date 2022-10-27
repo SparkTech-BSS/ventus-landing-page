@@ -36,8 +36,6 @@ export function TicketModal({ isOpen, onRequestClose, data }: Props) {
   const [openSocialShare, setOpenSocialShare] = useState(false);
   const { user } = useContext(AuthContext);
 
-  console.log(user?.name)
-
   const URL_TO_SHARE = `https://www.ventusao.app/event-detail/${data?.event?.event?._id}`;
 
   function handleClickOpenSocialShare() {
