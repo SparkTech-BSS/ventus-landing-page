@@ -18,11 +18,13 @@ import { RegisterModal } from "../../components/RegisterModal";
 import styles from "./styles.module.scss";
 import { UserHeaderMobileBox } from "components/UserHeaderMobileBox";
 import ClientOnly from "components/ClientOnly";
+import { useHasMounted } from "hooks/useHasMounted";
 
 Modal.setAppElement("#__next");
 
 export function Header() {
   const [showMenu, setShowMenu] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
   const [activeHeader, setActiveHeader] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [openLoginModal, setOpenLoginModal] = useState(false);
@@ -99,7 +101,9 @@ export function Header() {
 
     return () => {
       removeEventOnElem(window, "scroll", activeElementOnScroll);
+
       removeEventOnElem(navbarLinks, "click", handleCloseNavbar);
+
       window.removeEventListener("scroll", logit);
     };
   }, []);
@@ -109,6 +113,10 @@ export function Header() {
 
     document.documentElement.style.setProperty("--vh", `${vh}px`);
   }, [scrollY, windowSize.height]);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   return (
     <>
@@ -125,9 +133,11 @@ export function Header() {
           <SearchBox />
 
           <nav className={`${styles.navbar} ${showMenu ? styles.active : ""}`}>
-            <ClientOnly>
-              <UserHeaderMobileBox handleCloseMenu={handleCloseMenu} />
-            </ClientOnly>
+            {/* <ClientOnly>
+            </ClientOnly> */}
+            {/* <UserHeaderMobileBox handleCloseMenu={handleCloseMenu} /> */}
+
+            <UserHeaderMobileBox handleCloseMenu={handleCloseMenu} />
 
             <ul className={`${styles["navbar-list"]}`}>
               <li className="navbar-item">
@@ -174,31 +184,33 @@ export function Header() {
                 </Link>
               </li>
 
-              <ClientOnly>
-                {activeUserMenu && (
-                  <li className="navbar-item">
-                    <Link href="/" scroll={false}>
-                      <a
-                        // href="#promoter"
-                        className={`${styles["navbar-link"]}`}
-                        data-nav-link
-                      >
-                        <FiHelpCircle
-                          size={18}
-                          className={styles["navbar-link-icon-left"]}
-                        />
-                        Central de ajuda
-                        <IoIosArrowForward
-                          size={22}
-                          className={styles["navbar-link-icon"]}
-                        />
-                      </a>
-                    </Link>
-                  </li>
-                )}
-              </ClientOnly>
+              {/* <ClientOnly>
+                
+              </ClientOnly> */}
 
-              {isAuthenticated && activeUserMenu && (
+              {activeUserMenu && hasMounted && (
+                <li className="navbar-item">
+                  <Link href="/" scroll={false}>
+                    <a
+                      // href="#promoter"
+                      className={`${styles["navbar-link"]}`}
+                      data-nav-link
+                    >
+                      <FiHelpCircle
+                        size={18}
+                        className={styles["navbar-link-icon-left"]}
+                      />
+                      Central de ajuda
+                      <IoIosArrowForward
+                        size={22}
+                        className={styles["navbar-link-icon"]}
+                      />
+                    </a>
+                  </Link>
+                </li>
+              )}
+
+              {isAuthenticated && activeUserMenu && hasMounted && (
                 <>
                   <li className="navbar-item">
                     <Link href="/tickets" scroll={false}>

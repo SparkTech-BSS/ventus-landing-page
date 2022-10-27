@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { IoClose } from "react-icons/io5";
@@ -13,12 +13,19 @@ interface Props {
 }
 
 export function UserHeaderMobileBox({ handleCloseMenu }: Props) {
+  const [hasMounted, setHasMounted] = useState(false);
   const activeUserMenu = useMediaQuery("(max-width: 1200px");
   const { isAuthenticated, user } = useContext(AuthContext);
 
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  if (!hasMounted) return null;
+
   return (
-    <>
-      {activeUserMenu && (
+    <div>
+      {activeUserMenu && (activeUserMenu !== undefined || null) && (
         <>
           <div
             className={`${styles["navbar-top"]} container`}
@@ -65,6 +72,6 @@ export function UserHeaderMobileBox({ handleCloseMenu }: Props) {
           )}
         </>
       )}
-    </>
+    </div>
   );
 }
