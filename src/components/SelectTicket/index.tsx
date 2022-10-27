@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { IoMdHelpCircle } from "react-icons/io";
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import produce from "immer";
 import { Spinner } from "components/Spinner";
@@ -10,6 +11,8 @@ import * as RadioGroup from "@radix-ui/react-radio-group";
 import { FiPlus, FiMinus } from "react-icons/fi";
 import styles from "./styles.module.scss";
 import { getCapitalizeFirstLetter, getShortDateFormat } from "utils";
+import { AlertModal } from "components/AlertModal";
+import { RateModal } from "components/RateModal";
 
 interface TicketsReservation {
   ticketLotId: string;
@@ -47,6 +50,8 @@ export function SelectTicket() {
 
   const [ticketsReservation, setTicketsReservation] = useState([]);
 
+  const [openRateModal, setOpenRateModal] = useState(false);
+
   const [type, setType] = useState("pre-venda");
 
   const [loading, setLoading] = useState(true);
@@ -62,6 +67,14 @@ export function SelectTicket() {
   const { id } = router.query;
 
   const RATE_PRICE = 375;
+
+  function handleOpenRateModal() {
+    setOpenRateModal(true);
+  }
+
+  function handleCloseRateModal() {
+    setOpenRateModal(false);
+  }
 
   function getItemQuantity(id: any) {
     return (
@@ -206,134 +219,140 @@ export function SelectTicket() {
     router.back();
   }
 
-
   return (
-    <section className={styles["select-ticket"]}>
-      {loading ? (
-        <Spinner />
-      ) : (
-        <div className={`container ${styles.container}`}>
-          <h1 className={styles["event-name"]}>{dataEvent?.event?.name}</h1>
-          <span className={styles["event-info"]}>
-            {getShortDateFormat(eventDate)} · {dataEvent?.event?.startTime} -{" "}
-            {dataEvent?.event?.endTime}
-          </span>
-          <span className={styles["event-info"]}>
-            {dataEvent?.event?.location}
-          </span>
+    <>
+      <section className={styles["select-ticket"]}>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <div className={`container ${styles.container}`}>
+            <h1 className={styles["event-name"]}>{dataEvent?.event?.name}</h1>
+            <span className={styles["event-info"]}>
+              {getShortDateFormat(eventDate)} · {dataEvent?.event?.startTime} -{" "}
+              {dataEvent?.event?.endTime}
+            </span>
+            <span className={styles["event-info"]}>
+              {dataEvent?.event?.location}
+            </span>
 
-          <span className={styles["select-payment-text"]}>
-            Por favor, Selecione o tipo de ingresso que deseja comprar.
-          </span>
+            <span className={styles["select-payment-text"]}>
+              Por favor, Selecione o tipo de ingresso que deseja comprar.
+            </span>
 
-          <button className={styles["btn-back"]} onClick={handleBack}>
-            <MdOutlineArrowBackIos size={20} /> Voltar
-          </button>
+            <button className={styles["btn-back"]} onClick={handleBack}>
+              <MdOutlineArrowBackIos size={20} /> Voltar
+            </button>
 
-          <RadioGroup.Root defaultValue="default">
-            {dataTicket?.map((item: any) => {
-              return (
-                <div className={styles.box} key={item?._id}>
-                  <div className={styles.content}>
-                    <h2 className={styles.title}>
-                      {getCapitalizeFirstLetter(item?.type)}
-                    </h2>
-                    <div className={styles["box-item"]}>
-                      <div className={styles["box-item-content"]}>
-                        <div className={styles["price-row"]}>
-                          <h2 className={styles.price}>
-                            {new Intl.NumberFormat("de-DE", {
-                              style: "currency",
-                              currency: "AOA",
-                            }).format(item?.price)}
-                          </h2>
-                          {/* <span className={styles["subtitle"]}>
+            <RadioGroup.Root defaultValue="default">
+              {dataTicket?.map((item: any) => {
+                return (
+                  <div className={styles.box} key={item?._id}>
+                    <div className={styles.content}>
+                      <h2 className={styles.title}>
+                        {getCapitalizeFirstLetter(item?.type)}
+                      </h2>
+                      <div className={styles["box-item"]}>
+                        <div className={styles["box-item-content"]}>
+                          <div className={styles["price-row"]}>
+                            <h2 className={styles.price}>
+                              {new Intl.NumberFormat("de-DE", {
+                                style: "currency",
+                                currency: "AOA",
+                              }).format(item?.price)}
+                            </h2>
+                            {/* <span className={styles["subtitle"]}>
                             + Taxa de 375,00 AOA
                           </span> */}
-                        </div>
-                        <span className={styles["subtitle"]}>
-                          + Taxa de 375,00 AOA
-                        </span>
-                        <span className={styles["subtitle"]}>
-                          Disponível até: {getShortDateFormat(eventDate)} ·{" "}
-                          {dataEvent?.event?.startTime}
-                        </span>
-                      </div>
-
-                      {item?.qtdAvailable < 1 && (
-                        <span className={styles["sold-off"]}>Esgotado!</span>
-                      )}
-
-                      {item?.qtdAvailable > 0 && (
-                        <>
-                          {getItemQuantity(item?._id) < 1 ? (
-                            <button
-                              className={styles["btn-add"]}
-                              onClick={() => {
-                                increaseTicketLot(item);
-                              }}
-                            >
-                              Adicionar
+                          </div>
+                          <span className={styles["subtitle"]}>
+                            + Taxa de 375,00 AOA{" "}
+                            <button className={styles["btn-help"]} onClick={handleOpenRateModal}>
+                              <IoMdHelpCircle size={20} />
                             </button>
-                          ) : (
-                            <div className={styles["input-amount"]}>
+                          </span>
+                          <span className={styles["subtitle"]}>
+                            Disponível até: {getShortDateFormat(eventDate)} ·{" "}
+                            {dataEvent?.event?.startTime}
+                          </span>
+                        </div>
+
+                        {item?.qtdAvailable < 1 && (
+                          <span className={styles["sold-off"]}>Esgotado!</span>
+                        )}
+
+                        {item?.qtdAvailable > 0 && (
+                          <>
+                            {getItemQuantity(item?._id) < 1 ? (
                               <button
-                                className={`${styles["input-amount-button"]} ${styles.decrease}`}
-                                onClick={() => {
-                                  decreaseTicketLot(item);
-                                }}
-                                type="button"
-                              >
-                                <FiMinus size={20} />
-                              </button>
-                              <span className={styles["input-amount-text"]}>
-                                {getItemQuantity(item?._id)}
-                              </span>
-                              <button
+                                className={styles["btn-add"]}
                                 onClick={() => {
                                   increaseTicketLot(item);
                                 }}
-                                className={`${styles["input-amount-button"]} ${styles.increase}`}
-                                type="button"
                               >
-                                <FiPlus size={20} />
+                                Adicionar
                               </button>
-                            </div>
-                          )}
-                        </>
-                      )}
+                            ) : (
+                              <div className={styles["input-amount"]}>
+                                <button
+                                  className={`${styles["input-amount-button"]} ${styles.decrease}`}
+                                  onClick={() => {
+                                    decreaseTicketLot(item);
+                                  }}
+                                  type="button"
+                                >
+                                  <FiMinus size={20} />
+                                </button>
+                                <span className={styles["input-amount-text"]}>
+                                  {getItemQuantity(item?._id)}
+                                </span>
+                                <button
+                                  onClick={() => {
+                                    increaseTicketLot(item);
+                                  }}
+                                  className={`${styles["input-amount-button"]} ${styles.increase}`}
+                                  type="button"
+                                >
+                                  <FiPlus size={20} />
+                                </button>
+                              </div>
+                            )}
+                          </>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
-          </RadioGroup.Root>
-          <div className={styles.footer}>
-            <div className={styles["footer-content"]}>
-              <span className={styles["footer-content-heading"]}>
-                Ingressos:{" "}
-                <span className={styles["footer-content-heading__bold"]}>
-                  {accumulateTicketNumber(cart)}
+                );
+              })}
+            </RadioGroup.Root>
+            <div className={styles.footer}>
+              <div className={styles["footer-content"]}>
+                <span className={styles["footer-content-heading"]}>
+                  Ingressos:{" "}
+                  <span className={styles["footer-content-heading__bold"]}>
+                    {accumulateTicketNumber(cart)}
+                  </span>
                 </span>
-              </span>
-              <span className={styles["footer-content-heading"]}>
-                Total:{" "}
-                <span className={styles["footer-content-heading__bold"]}>
-                  {new Intl.NumberFormat("de-DE", {
-                    style: "currency",
-                    currency: "AOA",
-                  }).format(cart?.total)}
+                <span className={styles["footer-content-heading"]}>
+                  Total:{" "}
+                  <span className={styles["footer-content-heading__bold"]}>
+                    {new Intl.NumberFormat("de-DE", {
+                      style: "currency",
+                      currency: "AOA",
+                    }).format(cart?.total)}
+                  </span>
                 </span>
-              </span>
+              </div>
+              <Link href={`/payment-method/${id}`}>
+                <button className={styles.btn} disabled={cart?.total == 0}>
+                  Próximo Passo
+                </button>
+              </Link>
             </div>
-            <Link href={`/payment-method/${id}`}>
-              <button className={styles.btn} disabled={cart?.total == 0}>
-                Próximo Passo
-              </button>
-            </Link>
           </div>
-        </div>
-      )}
-    </section>
+        )}
+      </section>
+
+      <RateModal isOpen={openRateModal} onRequestClose={handleCloseRateModal}/>
+    </>
   );
 }
