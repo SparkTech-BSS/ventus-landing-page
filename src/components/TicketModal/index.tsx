@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Modal from "react-modal";
 import {
   FaFacebookF,
@@ -20,6 +20,8 @@ import { QRCodeSVG } from "qrcode.react";
 import { IoMdDownload } from "react-icons/io";
 import { TiLocation } from "react-icons/ti";
 import { FiShare2 } from "react-icons/fi";
+import { AuthContext } from "contexts/AuthContext";
+
 import styles from "./styles.module.scss";
 
 import { getCapitalizeFirstLetter, getTicketDetailDate } from "utils";
@@ -32,6 +34,9 @@ interface Props {
 
 export function TicketModal({ isOpen, onRequestClose, data }: Props) {
   const [openSocialShare, setOpenSocialShare] = useState(false);
+  const { user } = useContext(AuthContext);
+
+  console.log(user?.name)
 
   const URL_TO_SHARE = `https://www.ventusao.app/event-detail/${data?.event?.event?._id}`;
 
@@ -76,7 +81,7 @@ export function TicketModal({ isOpen, onRequestClose, data }: Props) {
           <div className={styles["item-block"]}>
             <span className={styles["item-heading"]}>Destinátario:</span>
             <span className={styles["item-subheading"]}>
-              {data?.event?.user?.firstName} {data?.event?.user?.lastName}
+              {user?.name}
             </span>
           </div>
           <div className={styles["item-block"]}>

@@ -15,6 +15,7 @@ interface Props {
 
 export function Event({ data }: Props) {
   // const { data, isLoading } = useEvents();
+
   const router = useRouter();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
