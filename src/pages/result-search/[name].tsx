@@ -7,6 +7,7 @@ import { withCSR } from "HOC/with-CSR";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Layout from "../../components/Layout";
+import { ServerError } from "components/ServerError";
 
 interface Props {
   isError: boolean;
@@ -24,7 +25,7 @@ const ResultSearchPage = ({ isError }: Props) => {
       </Head>
 
       {isError ? (
-        <Error404 />
+        <ServerError />
       ) : (
         <Layout>
           <ResultSearch search={name?.toString()}/>

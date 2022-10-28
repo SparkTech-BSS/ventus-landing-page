@@ -24,6 +24,8 @@ export function ResultSearch({ search = "" }: Props) {
       ? eventData.filter((item: any) => item?.event?.name?.includes(search))
       : eventData;
 
+  const isNotEmpty = filteredData.length ? true : false;
+
   // const { data, isLoading, isError } = useEventsByName(name);
 
   useEffect(() => {
@@ -40,7 +42,7 @@ export function ResultSearch({ search = "" }: Props) {
     }
 
     fetchEvents();
-  }, []);
+  }, [name]);
 
   useEffect(() => {
     document.documentElement.style.setProperty("--overflow", `auto`);
@@ -105,7 +107,7 @@ export function ResultSearch({ search = "" }: Props) {
           <div className={styles.content}>
             {loading ? (
               <Loading />
-            ) : (
+            ) : isNotEmpty ? (
               <>
                 {filteredData.map((item: any) => {
                   return (
@@ -113,6 +115,16 @@ export function ResultSearch({ search = "" }: Props) {
                   );
                 })}
               </>
+            ) : (
+              <div className={styles["empty-container"]}>
+                <h3 className={styles["empty-container__heading"]}>
+                  Sem resultados
+                </h3>
+                <p className={styles["empty-container__text"]}>
+                  Não encontramos eventos que corresponda à sua busca. Tente
+                  buscar outras palavras-chave
+                </p>
+              </div>
             )}
           </div>
         </div>
