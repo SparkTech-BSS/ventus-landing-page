@@ -3,9 +3,12 @@ import Link from "next/link";
 import Modal from "react-modal";
 import { IoIosArrowForward } from "react-icons/io";
 import { FiLogOut } from "react-icons/fi";
-import { MdOutlineAdminPanelSettings } from "react-icons/md";
+import {
+  MdOutlineFavoriteBorder,
+  MdOutlineEventNote,
+} from "react-icons/md";
 import { HiOutlineTicket } from "react-icons/hi";
-import { CgEventbrite } from "react-icons/cg";
+import { BiUser } from "react-icons/bi";
 import Image from "next/image";
 import { FiHelpCircle } from "react-icons/fi";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -144,7 +147,7 @@ export function Header() {
               <li className="navbar-item">
                 <Link href="/#about" scroll={false}>
                   <a className={styles["navbar-link"]} data-nav-link>
-                    <CgEventbrite
+                    <MdOutlineEventNote
                       size={18}
                       className={styles["navbar-link-icon-left"]}
                     />
@@ -158,25 +161,47 @@ export function Header() {
               </li>
 
               {isAuthenticated && (
-                <li className={`${styles["nav-item-responsive"]}`}>
-                  <Link href="/tickets" scroll={false}>
-                    <a
-                      // href="#promoter"
-                      className={`${styles["navbar-link"]}`}
-                      data-nav-link
-                    >
-                      <HiOutlineTicket
-                        size={18}
-                        className={styles["navbar-link-icon-left"]}
-                      />
-                      Ingressos
-                      <IoIosArrowForward
-                        size={22}
-                        className={styles["navbar-link-icon"]}
-                      />
-                    </a>
-                  </Link>
-                </li>
+                <>
+                  <li className={`${styles["nav-item-responsive"]}`}>
+                    <Link href="/tickets" scroll={false}>
+                      <a
+                        // href="#promoter"
+                        className={`${styles["navbar-link"]}`}
+                        data-nav-link
+                      >
+                        <HiOutlineTicket
+                          size={18}
+                          className={styles["navbar-link-icon-left"]}
+                        />
+                        Ingressos
+                        <IoIosArrowForward
+                          size={22}
+                          className={styles["navbar-link-icon"]}
+                        />
+                      </a>
+                    </Link>
+                  </li>
+                  
+                  <li className={`${styles["nav-item-responsive"]}`}>
+                    <Link href="/tickets" scroll={false}>
+                      <a
+                        // href="#promoter"
+                        className={`${styles["navbar-link"]}`}
+                        data-nav-link
+                      >
+                        <MdOutlineFavoriteBorder
+                          size={18}
+                          className={styles["navbar-link-icon-left"]}
+                        />
+                        Favoritos
+                        <IoIosArrowForward
+                          size={22}
+                          className={styles["navbar-link-icon"]}
+                        />
+                      </a>
+                    </Link>
+                  </li>
+                </>
               )}
 
               <li className="navbar-item">
@@ -186,7 +211,7 @@ export function Header() {
                     className={`${styles["navbar-link"]} ${styles["disabled"]}`}
                     data-nav-link
                   >
-                    <MdOutlineAdminPanelSettings
+                    <BiUser
                       size={18}
                       className={styles["navbar-link-icon-left"]}
                     />
@@ -198,7 +223,7 @@ export function Header() {
                   </a>
                 </Link>
               </li>
-              
+
               <li className={styles["nav-item-desktop"]}>
                 <Link href="/#contact" scroll={false}>
                   <a

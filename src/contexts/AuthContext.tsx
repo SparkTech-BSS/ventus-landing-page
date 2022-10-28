@@ -61,7 +61,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     setOpenLoginModal(false);
 
-    // await Router.push("/");
   }
 
   function logout() {
