@@ -31,12 +31,17 @@ export function Hero() {
             initial="hidden"
             animate="show"
           >
-            <button className={`${styles.btn} ${styles["btn-outline"]}`}>
-              Publicar Evento
-            </button>
-            <button className={`${styles.btn} ${styles["btn-full"]}`}>
-              Encontrar Eventos
-            </button>
+            <Link href="#" passHref>
+              <a className={`${styles.btn} ${styles["btn-outline"]}`}>
+                Publicar Evento
+              </a>
+            </Link>
+            
+            <Link href="/events" passHref>
+              <a className={`${styles.btn} ${styles["btn-full"]}`}>
+                Encontrar Eventos
+              </a>
+            </Link>
           </motion.div>
 
           <motion.p

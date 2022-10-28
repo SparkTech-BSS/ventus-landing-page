@@ -24,41 +24,36 @@ const ResultSearchPage = ({ isError }: Props) => {
         <title>Ventus | Pesquisa</title>
       </Head>
 
-      {isError ? (
-        <ServerError />
-      ) : (
-        <Layout>
-          <ResultSearch search={name?.toString()}/>
-        </Layout>
-      )}
+      <Layout>
+        <ResultSearch search={name?.toString()} />
+      </Layout>
     </>
   );
 };
 
-export const getServerSideProps = withCSR(async (ctx: any) => {
+// export const getServerSideProps = withCSR(async (ctx: any) => {
+//   const { name } = ctx.params;
 
-  const { name } = ctx.params;
+//   const queryClient = new QueryClient();
 
-  const queryClient = new QueryClient();
+//   let isError = false;
 
-  let isError = false;
+//   try {
+//     await queryClient.fetchQuery(["eventsByName", name], () =>
+//       EventService.findByName(name)
+//     );
+//   } catch (error: any) {
+//     isError = true;
+//     ctx.res.statusCode = error?.response.status;
+//   }
 
-  try {
-    await queryClient.fetchQuery(["eventsByName", name], () =>
-      EventService.findByName(name)
-    );
-  } catch (error: any) {
-    isError = true;
-    ctx.res.statusCode = error?.response.status;
-  }
-
-  return {
-    props: {
-      //also passing down isError state to show a custom error component.
-      isError,
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-});
+//   return {
+//     props: {
+//       //also passing down isError state to show a custom error component.
+//       isError,
+//       dehydratedState: dehydrate(queryClient),
+//     },
+//   };
+// });
 
 export default ResultSearchPage;

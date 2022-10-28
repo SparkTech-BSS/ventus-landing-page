@@ -37,21 +37,22 @@ export function SearchBox() {
       console.log("yes");
     }
 
-    if (typeof name === "string") {
+    if (typeof name == "string") {
       setSearch(name?.toString().trim());
+      console.log('yes')
     }
 
     addEventOnElem(window, "scroll", activeElementOnScroll);
     return () => {
       removeEventOnElem(window, "scroll", activeElementOnScroll);
     };
-  }, []);
+  }, [name]);
 
   function handleSearch(e: React.KeyboardEvent<HTMLElement>) {
     if (e.keyCode === 13 || e.key === "Enter") {
       if (isNotEmpty(search?.trim())) {
         searchSuggestionList(false);
-        router.push(`/result-search/${search?.trim()}`);
+        router.push(`/result-search/${search?.toLowerCase().trim()}`);
       }
     }
   }

@@ -21,7 +21,7 @@ export function ResultSearch({ search = "" }: Props) {
 
   const filteredData =
     search.length > 0
-      ? eventData.filter((item: any) => item?.event?.name?.includes(search))
+      ? eventData.filter((item: any) => item?.event?.name?.toLowerCase().includes(search))
       : eventData;
 
   const isNotEmpty = filteredData.length ? true : false;
