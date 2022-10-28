@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { EventCard } from "../EventCard";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -14,10 +14,9 @@ interface Props {
 }
 
 export function Event({ data }: Props) {
-  // const { data, isLoading } = useEvents();
-
   const router = useRouter();
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [mounted, setMounted] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [ref, instanceRef] = useKeenSlider<HTMLDivElement>(
     {
@@ -56,11 +55,11 @@ export function Event({ data }: Props) {
           clearTimeout(timeout);
         }
         function nextTimeout() {
-          clearTimeout(timeout)
-          if (mouseOver) return
+          clearTimeout(timeout);
+          if (mouseOver) return;
           timeout = setTimeout(() => {
-            slider.next()
-          }, 2000)
+            slider.next();
+          }, 2000);
         }
         slider.on("created", () => {
           slider.container.addEventListener("mouseover", () => {
@@ -80,6 +79,10 @@ export function Event({ data }: Props) {
     ]
   );
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <section
       className={`section ${styles.event}`}
@@ -95,37 +98,41 @@ export function Event({ data }: Props) {
           </Link>
         </div>
 
-        <div className={`${styles["carousel-wrapper"]}`}>
-          <div ref={ref} className="keen-slider">
-            {data?.map((item: any) => {
-              return (
-                <div className="keen-slider__slide" key={item?.event?._id}>
-                  <EventCard data={item?.event} />
-                </div>
-              );
-            })}
-          </div>
-
-          {loaded && instanceRef.current && (
-            <div className="dots">
-              {Array.from(
-                Array(
-                  instanceRef?.current?.track?.details?.slides?.length
-                ).keys()
-              ).map((idx) => {
+        {mounted && (
+          <div className={`${styles["carousel-wrapper"]}`}>
+            <div ref={ref} className="keen-slider">
+              {data?.map((item: any) => {
                 return (
-                  <button
-                    key={idx}
-                    onClick={() => {
-                      instanceRef?.current?.moveToIdx(idx);
-                    }}
-                    className={"dot" + (currentSlide === idx ? " active" : "")}
-                  ></button>
+                  <div className="keen-slider__slide" key={item?.event?._id}>
+                    <EventCard data={item?.event} />
+                  </div>
                 );
               })}
             </div>
-          )}
-        </div>
+
+            {loaded && instanceRef.current && (
+              <div className="dots">
+                {Array.from(
+                  Array(
+                    instanceRef?.current?.track?.details?.slides?.length
+                  ).keys()
+                ).map((idx) => {
+                  return (
+                    <button
+                      key={idx}
+                      onClick={() => {
+                        instanceRef?.current?.moveToIdx(idx);
+                      }}
+                      className={
+                        "dot" + (currentSlide === idx ? " active" : "")
+                      }
+                    ></button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
 
         <button className={styles["btn-buy-ticket"]}>Comprar ingressos</button>
       </div>

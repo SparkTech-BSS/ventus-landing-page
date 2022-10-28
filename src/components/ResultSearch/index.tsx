@@ -1,19 +1,52 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import { useRouter } from "next/router";
+import { api } from "services/api";
 import { EventCard } from "components/EventCard";
-import styles from "./styles.module.scss";
 import { useEventsByName } from "hooks/api/events";
+import styles from "./styles.module.scss";
+import { Loading } from "components/Loading";
 
-export function ResultSearch() {
+interface Props {
+  search?: string;
+}
+
+export function ResultSearch({ search = "" }: Props) {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [eventData, setEventData] = useState<any>([]);
+  // const [filteredData, setFilteredData] = useState([]);
+  // const [search, setSearch] = useState('');
   const { name } = router.query;
 
-  const { data, isLoading, isError } = useEventsByName(name);
+  const filteredData =
+    search.length > 0
+      ? eventData.filter((item: any) => item?.name?.includes(search))
+      : eventData;
+
+  // const { data, isLoading, isError } = useEventsByName(name);
+
+  useEffect(() => {
+    setLoading(true);
+    async function fetchEvents() {
+      try {
+        const { data } = await api.get(`events/findall`);
+        setEventData(data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchEvents();
+  }, []);
 
   useEffect(() => {
     document.documentElement.style.setProperty("--overflow", `auto`);
   }, []);
+
+  //value={search} onChange={e => setSearch(e.target.value)}
 
   return (
     <>
@@ -82,12 +115,17 @@ export function ResultSearch() {
           </div>
 
           <div className={styles.content}>
-            {/* <EventCard width="full" multipleData/>
-            <EventCard width="full"/>
-            <EventCard width="full"/>
-            <EventCard width="full" />
-            <EventCard width="full" multipleData/>
-            <EventCard width="full"/> */}
+            {loading ? (
+              <Loading />
+            ) : (
+              <>
+                {filteredData.map((item: any) => {
+                  return (
+                    <EventCard key={item?.event?._id} data={item?.event} />
+                  );
+                })}
+              </>
+            )}
           </div>
         </div>
       </section>
