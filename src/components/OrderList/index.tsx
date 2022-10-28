@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { api } from "services/api";
 import { Loading } from "components/Loading";
-import styles from "./styles.module.scss";
 import { OrderItem } from "components/OrderItem";
+import { ServerError } from "components/ServerError";
+import styles from "./styles.module.scss";
 
 export function OrderList() {
   const [orders, setOrders] = useState([]);
@@ -29,7 +31,9 @@ export function OrderList() {
     fetchData();
   }, []);
 
-  
+  if (error) {
+    return <ServerError />;
+  }
 
   return (
     <div className={styles.order}>
@@ -42,14 +46,14 @@ export function OrderList() {
               <span className={styles.text}>
                 Não há ingressos para próximos eventos
               </span>
-              <button>Encontrar Eventos</button>
+              <Link href="/events" passHref>
+                <button>Encontrar Eventos</button>
+              </Link>
             </div>
           ) : (
             <>
               {orders?.map((item: any) => {
-                return (
-                  <OrderItem key={item?.order?._id} data={item}/>
-                );
+                return <OrderItem key={item?.order?._id} data={item} />;
               })}
             </>
           )}

@@ -1,5 +1,5 @@
-import Image from "next/future/image";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { api } from "services/api";
 import { Loading } from "components/Loading";
 import * as Tabs from "@radix-ui/react-tabs";
@@ -9,6 +9,7 @@ import { OrderList } from "components/OrderList";
 import styles from "./styles.module.scss";
 import { getTicketEventDetailDate } from "utils";
 import { TicketModal } from "components/TicketModal";
+import { ServerError } from "components/ServerError";
 
 export function Tickets() {
   const [tickets, setTickets] = useState([]);
@@ -24,7 +25,6 @@ export function Tickets() {
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      //tickets/findbyclientid
       try {
         const { data } = await api.get(`tickets/findbyclientid`);
         setTickets(data);
@@ -44,6 +44,10 @@ export function Tickets() {
 
   function handleCloseTicketModal() {
     setOpenTicketModal(false);
+  }
+
+  if (error) {
+    return <ServerError />;
   }
 
   return (
@@ -102,7 +106,9 @@ export function Tickets() {
                           <span className={styles.text}>
                             Não há ingressos para próximos eventos
                           </span>
-                          <button>Encontrar Eventos</button>
+                          <Link href="/events" passHref>
+                            <button>Encontrar Eventos</button>
+                          </Link>
                         </div>
                       ) : (
                         <>
@@ -112,7 +118,7 @@ export function Tickets() {
                                 className={styles["event-item"]}
                                 onClick={() => {
                                   handleOpenTicketModal();
-                                  setSelectedData(item)
+                                  setSelectedData(item);
                                 }}
                                 key={item?.ticket?._id}
                                 style={{
@@ -128,15 +134,27 @@ export function Tickets() {
                                       <span
                                         className={styles["date-box-heading"]}
                                       >
-                                        {getTicketEventDetailDate(item?.ticket?.dateEvent)?.day}
+                                        {
+                                          getTicketEventDetailDate(
+                                            item?.ticket?.dateEvent
+                                          )?.day
+                                        }
                                       </span>
                                       <div
                                         className={
                                           styles["date-box-extra-detail"]
                                         }
                                       >
-                                        <span>{getTicketEventDetailDate(item?.ticket?.dateEvent)?.month?.toUpperCase()}</span>
-                                        <span>{getTicketEventDetailDate(item?.ticket?.dateEvent)?.week_day?.toUpperCase()}</span>
+                                        <span>
+                                          {getTicketEventDetailDate(
+                                            item?.ticket?.dateEvent
+                                          )?.month?.toUpperCase()}
+                                        </span>
+                                        <span>
+                                          {getTicketEventDetailDate(
+                                            item?.ticket?.dateEvent
+                                          )?.week_day?.toUpperCase()}
+                                        </span>
                                       </div>
                                     </div>
 
@@ -188,7 +206,9 @@ export function Tickets() {
                   <span className={styles.text}>
                     Não há ingressos para próximos eventos
                   </span>
-                  <button>Encontrar Eventos</button>
+                  <Link href="/events" passHref>
+                    <button>Encontrar Eventos</button>
+                  </Link>
                 </div>
               </Tabs.Content>
 

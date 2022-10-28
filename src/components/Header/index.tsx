@@ -13,7 +13,6 @@ import Image from "next/image";
 import { FiHelpCircle } from "react-icons/fi";
 import { AuthContext } from "../../contexts/AuthContext";
 import { UserICON } from "../../components/Icon";
-import { useMediaQuery } from "usehooks-ts";
 import LogoSVG from "../../assets/svg/logo(full-size).svg";
 import { ApplePlayICON, GooglePlayICON } from "../Icon";
 import { addEventOnElem, removeEventOnElem } from "../../utils";
@@ -23,22 +22,18 @@ import { LoginModal } from "../../components/LoginModal";
 import { RegisterModal } from "../../components/RegisterModal";
 import styles from "./styles.module.scss";
 import { UserHeaderMobileBox } from "components/UserHeaderMobileBox";
-import ClientOnly from "components/ClientOnly";
-// import { useHasMounted } from "hooks/useHasMounted";
 
 Modal.setAppElement("#__next");
 
 export function Header() {
   const [showMenu, setShowMenu] = useState(false);
-  const [hasMounted, setHasMounted] = useState(false);
   const [activeHeader, setActiveHeader] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [openRegisterModal, setOpenRegisterModal] = useState(false);
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
-  // const activeUserMenu = useMediaQuery("(max-width: 1200px");
 
-  const { user, isAuthenticated, logout } = useContext(AuthContext);
+  const { isAuthenticated, logout } = useContext(AuthContext);
 
   function handleOpenLoginModal() {
     setOpenLoginModal(true);
@@ -83,8 +78,6 @@ export function Header() {
     setShowMenu(false);
   };
 
-  const setVh = useCallback(() => {}, []);
-
   function logit() {
     setScrollY(window.pageYOffset);
   }
@@ -120,9 +113,6 @@ export function Header() {
     document.documentElement.style.setProperty("--vh", `${vh}px`);
   }, [scrollY, windowSize.height]);
 
-  useEffect(() => {
-    setHasMounted(true);
-  }, []);
 
   return (
     <>
@@ -207,7 +197,6 @@ export function Header() {
               <li className="navbar-item">
                 <Link href="" scroll={false}>
                   <a
-                    // href="#promoter"
                     className={`${styles["navbar-link"]} ${styles["disabled"]}`}
                     data-nav-link
                   >
@@ -227,7 +216,6 @@ export function Header() {
               <li className={styles["nav-item-desktop"]}>
                 <Link href="/#contact" scroll={false}>
                   <a
-                    // href="#promoter"
                     className={`${styles["navbar-link"]}`}
                     data-nav-link
                   >
@@ -243,7 +231,6 @@ export function Header() {
               <li className={`${styles["nav-item-responsive"]}`}>
                 <Link href="/" scroll={false}>
                   <a
-                    // href="#promoter"
                     className={`${styles["navbar-link"]}`}
                     data-nav-link
                   >
