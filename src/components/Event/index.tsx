@@ -134,7 +134,11 @@ export function Event({ data }: Props) {
           </div>
         )}
 
-        <button className={styles["btn-buy-ticket"]}>Comprar ingressos</button>
+        <Link href="/events" passHref>
+          <button className={styles["btn-buy-ticket"]}>
+            Comprar ingressos
+          </button>
+        </Link>
       </div>
     </section>
   );
