@@ -4,8 +4,8 @@ import { useRouter } from "next/router";
 import { api } from "services/api";
 import { EventCard } from "components/EventCard";
 // import { useEventsByName } from "hooks/api/events";
-import styles from "./styles.module.scss";
 import { Loading } from "components/Loading";
+import styles from "./styles.module.scss";
 
 interface Props {
   search?: string;

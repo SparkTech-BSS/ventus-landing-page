@@ -74,7 +74,7 @@ export function Tickets() {
                   Ativos
                 </Tabs.Trigger>
                 <Tabs.Trigger value="closed" className={styles["tabs-trigger"]}>
-                  Encerrados
+                  Históricos
                 </Tabs.Trigger>
                 <Tabs.Trigger
                   value="in-progress"

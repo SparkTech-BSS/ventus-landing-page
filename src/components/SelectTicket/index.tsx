@@ -219,6 +219,8 @@ export function SelectTicket() {
     router.back();
   }
 
+  console.log(dataTicket?.length > 1);
+
   return (
     <>
       <section className={styles["select-ticket"]}>
@@ -236,7 +238,9 @@ export function SelectTicket() {
             </span>
 
             <span className={styles["select-payment-text"]}>
-              Por favor, Selecione o tipo de ingresso que deseja comprar.
+              {dataTicket?.length > 1
+                ? "Por favor, Selecione o tipo de ingresso e adicione a quantidade de ingresso que deseja comprar"
+                : "Por favor adicione a quantidade de ingresso que deseja comprar"}
             </span>
 
             <button className={styles["btn-back"]} onClick={handleBack}>
@@ -266,7 +270,10 @@ export function SelectTicket() {
                           </div>
                           <span className={styles["subtitle"]}>
                             + Taxa de 375,00 AOA{" "}
-                            <button className={styles["btn-help"]} onClick={handleOpenRateModal}>
+                            <button
+                              className={styles["btn-help"]}
+                              onClick={handleOpenRateModal}
+                            >
                               <IoMdHelpCircle size={20} />
                             </button>
                           </span>
@@ -352,7 +359,7 @@ export function SelectTicket() {
         )}
       </section>
 
-      <RateModal isOpen={openRateModal} onRequestClose={handleCloseRateModal}/>
+      <RateModal isOpen={openRateModal} onRequestClose={handleCloseRateModal} />
     </>
   );
 }

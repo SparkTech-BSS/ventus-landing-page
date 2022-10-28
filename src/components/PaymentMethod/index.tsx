@@ -22,6 +22,7 @@ import {
   ShoppingCartICON,
 } from "../../components/Icon";
 import styles from "./styles.module.scss";
+import Link from "next/link";
 
 export function PaymentMethod() {
   const router = useRouter();
@@ -74,7 +75,6 @@ export function PaymentMethod() {
   }, [id]);
 
   async function handleSubmit() {
-
     if (!isAuthenticated) {
       setOpenLoginModal(true);
       return;
@@ -120,7 +120,6 @@ export function PaymentMethod() {
   if (error) {
     return <ServerError />;
   }
-
 
   return (
     <>
@@ -188,6 +187,11 @@ export function PaymentMethod() {
                     Pagar com Paysmart
                   </span>
                 </RadioGroup.Item>
+
+                <p className={styles["note-text"]}>
+                  O método de pagamento <span>&quot;Paysmart&quot;</span> ainda
+                  não está disponível, brevemente estará disponível.
+                </p>
               </RadioGroup.Root>
 
               <span className={styles.text}>Revise seu pedido</span>
@@ -253,9 +257,9 @@ export function PaymentMethod() {
 
               <span className={styles["term-text"]}>
                 Ao clicar no botão abaixo, você declara concordar com nossos{" "}
-                <a href="#" className={styles["term-text-link"]}>
-                  Termos de Serviço
-                </a>
+                <Link href="/terms-of-use" passHref >
+                  <a className={styles["term-text-link"]} target="_blank" rel="noopener noreferrer">Termos de Serviço</a>
+                </Link>
               </span>
 
               <button
@@ -273,7 +277,7 @@ export function PaymentMethod() {
                     Concluir compra
                   </>
                 )}
-              </button>
+              </button> 
 
               {/* <div className={styles["expiration-time"]}>
                 <span className={styles["expiration-time-heading"]}>

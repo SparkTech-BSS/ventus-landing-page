@@ -9,6 +9,7 @@ import { FaWhatsapp } from "react-icons/fa";
 import { ApplePlayICON, GooglePlayICON } from "../Icon";
 
 import styles from "./styles.module.scss";
+import Link from "next/link";
 
 export function Footer() {
   return (
@@ -31,9 +32,11 @@ export function Footer() {
               PARA COMPRAR
             </span>
             <li>
-              <a className={styles["footer-link-list__link"]} href="#">
-                Explorar eventos
-              </a>
+              <Link href="/events" passHref>
+                <a className={styles["footer-link-list__link"]}>
+                  Explorar eventos
+                </a>
+              </Link>
             </li>
             <li>
               <a href="#" className={styles["footer-link-list__link"]}>
@@ -63,14 +66,18 @@ export function Footer() {
               INFORMAÇÕES
             </span>
             <li>
-              <a href="#" className={styles["footer-link-list__link"]}>
-                Termos de uso
-              </a>
+              <Link href="/terms-of-use" passHref>
+                <a className={styles["footer-link-list__link"]}>
+                  Termos de uso
+                </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className={styles["footer-link-list__link"]}>
-                Politicas de privacidade
-              </a>
+              <Link href="/privacy-policies" passHref>
+                <a className={styles["footer-link-list__link"]}>
+                  Politicas de privacidade
+                </a>
+              </Link>
             </li>
           </ul>
 

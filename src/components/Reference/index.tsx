@@ -197,7 +197,6 @@ export function Reference() {
                   }).format(ticket?.total)}
                 </span>
               </div>
-              
 
               <div className={styles.item}>
                 <span className={styles["item-text"]}>Evento</span>
@@ -214,12 +213,16 @@ export function Reference() {
               </div>
 
               <div className={styles["btn-group"]}>
-                <Link href="/">
+                <Link href="/tickets">
                   <button className={styles["btn-primary"]}>
-                    Voltar para Home
+                    Ir para ingressos
                   </button>
                 </Link>
-                {/* <button className={styles["btn-secondary"]}>Compartilhar código</button> */}
+                <Link href="/">
+                  <button className={styles["btn-secondary"]}>
+                    Voltar para home
+                  </button>
+                </Link>
               </div>
             </div>
           </div>

@@ -160,6 +160,18 @@
   }
 }
 
+.note-text {
+  font-size: 1.4rem;
+  font-weight: 500;
+
+  display: inline;
+
+  span {
+    display: inline;
+    color: var(--primary-color);
+  }
+}
+
 .payment-icon {
   width: 27px;
   height: 27px;

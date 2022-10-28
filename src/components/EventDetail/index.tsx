@@ -259,7 +259,7 @@ export function EventDetail() {
                 <GoCalendar size={24} color="#FF5555" />
 
                 <h2 className={styles["select-date-box-heading"]}>
-                  Selecione a Data
+                  Selecione a Data do evento
                 </h2>
               </div>
               <div className={styles["select-date-button-group"]}>
@@ -310,7 +310,7 @@ export function EventDetail() {
                 </span>
               </div>
 
-              <div className={styles["event-item"]}>
+              {/* <div className={styles["event-item"]}>
                 <div className={styles["event-item-icon"]}>
                   <PeopleICON />
                 </div>
@@ -318,7 +318,7 @@ export function EventDetail() {
                 <span className={styles["event-item-text"]}>Pessoas:</span>
 
                 <Avatar />
-              </div>
+              </div> */}
             </div>
 
             <div className={styles.divider} />
