@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { FiSearch } from "react-icons/fi";
 import { addEventOnElem, removeEventOnElem } from "utils";
 import styles from "./styles.module.scss";
@@ -6,6 +7,11 @@ import styles from "./styles.module.scss";
 export function SearchBox() {
   const [active, searchSuggestionList] = useState(false);
   const [activeHeader, setActiveHeader] = useState(false);
+  const [search, setSearch] = useState("");
+  const router = useRouter();
+  const { name } = router.query;
+
+  console.log(typeof name);
 
   function handleInputFocus() {
     searchSuggestionList(true);
@@ -24,11 +30,21 @@ export function SearchBox() {
   };
 
   useEffect(() => {
+    if (name === undefined) {
+      console.log("yes");
+    }
+
     addEventOnElem(window, "scroll", activeElementOnScroll);
     return () => {
       removeEventOnElem(window, "scroll", activeElementOnScroll);
     };
   }, []);
+
+  function handlekeyPress(e: React.KeyboardEvent<HTMLElement>) {
+    if (e.keyCode === 13 || e.key === "Enter") {
+      console.log(e?.keyCode, e?.key);
+    }
+  }
 
   return (
     <div
@@ -45,6 +61,7 @@ export function SearchBox() {
             placeholder="Buscar Evento, show, festa ou teatro"
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
+            onKeyDown={handlekeyPress}
           />
 
           {active && (

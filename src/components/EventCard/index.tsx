@@ -85,7 +85,7 @@ export function EventCard({ width, multipleData = true, data }: Props) {
               <TimeICON />
             </div>
 
-            <span className={styles["card-item-text"]}>18h às 20h</span>
+            <span className={styles["card-item-text"]}>{data?.startTime} às {data?.endTime}</span>
           </div>
 
           <div className={styles["card-item"]}>
