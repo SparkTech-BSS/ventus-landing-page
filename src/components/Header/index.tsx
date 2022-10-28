@@ -133,8 +133,7 @@ export function Header() {
           <SearchBox />
 
           <nav className={`${styles.navbar} ${showMenu ? styles.active : ""}`}>
-            {/* <ClientOnly>
-            </ClientOnly> */}
+
             {/* <UserHeaderMobileBox handleCloseMenu={handleCloseMenu} /> */}
 
             <UserHeaderMobileBox handleCloseMenu={handleCloseMenu} />
