@@ -27,10 +27,18 @@ export function SearchBox() {
     }
   };
 
+  function isNotEmpty(value: string) {
+    return typeof value === "string" && value.trim().length !== 0;
+  }
+
   useEffect(() => {
     if (!name === undefined) {
       setSearch(name!.toString().trim());
       console.log("yes");
+    }
+
+    if (typeof name === "string") {
+      setSearch(name?.toString().trim());
     }
 
     addEventOnElem(window, "scroll", activeElementOnScroll);
@@ -39,17 +47,11 @@ export function SearchBox() {
     };
   }, []);
 
-  function isNotEmpty(value: string) {
-    return (typeof value === "string" && value.trim().length !== 0);
-  }
-
   function handleSearch(e: React.KeyboardEvent<HTMLElement>) {
     if (e.keyCode === 13 || e.key === "Enter") {
-      console.log(e?.keyCode, e?.key);
-      console.log(search);
-      if (isNotEmpty(search)) {
+      if (isNotEmpty(search?.trim())) {
         searchSuggestionList(false);
-        router.push(`/result-search/${search}`);
+        router.push(`/result-search/${search?.trim()}`);
       }
     }
   }
@@ -71,7 +73,7 @@ export function SearchBox() {
             onBlur={handleInputBlur}
             onKeyDown={handleSearch}
             value={search}
-            onChange={(e) => setSearch(e.target.value?.trim())}
+            onChange={(e) => setSearch(e.target.value)}
           />
 
           {active && (

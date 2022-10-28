@@ -2,6 +2,7 @@ import { ResultSearch } from "../../components/ResultSearch";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import EventService from "services/EventService";
 import { Error404 } from "components/Error404";
+import { useRouter } from "next/router";
 import { withCSR } from "HOC/with-CSR";
 import type { NextPage } from "next";
 import Head from "next/head";
@@ -12,6 +13,10 @@ interface Props {
 }
 
 const ResultSearchPage = ({ isError }: Props) => {
+  const router = useRouter();
+
+  const { name } = router.query;
+
   return (
     <>
       <Head>
@@ -22,7 +27,7 @@ const ResultSearchPage = ({ isError }: Props) => {
         <Error404 />
       ) : (
         <Layout>
-          <ResultSearch />
+          <ResultSearch search={name?.toString()}/>
         </Layout>
       )}
     </>

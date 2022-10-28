@@ -21,7 +21,7 @@ export function ResultSearch({ search = "" }: Props) {
 
   const filteredData =
     search.length > 0
-      ? eventData.filter((item: any) => item?.name?.includes(search))
+      ? eventData.filter((item: any) => item?.event?.name?.includes(search))
       : eventData;
 
   // const { data, isLoading, isError } = useEventsByName(name);
@@ -45,8 +45,6 @@ export function ResultSearch({ search = "" }: Props) {
   useEffect(() => {
     document.documentElement.style.setProperty("--overflow", `auto`);
   }, []);
-
-  //value={search} onChange={e => setSearch(e.target.value)}
 
   return (
     <>
@@ -89,7 +87,7 @@ export function ResultSearch({ search = "" }: Props) {
         <div className="container">
           <div className={styles["result-search-row"]}>
             <h3 className={styles["result-search-heading"]}>
-              7333 EVENTOS ENCONTRADOS
+              {filteredData?.length} EVENTOS ENCONTRADOS
             </h3>
 
             <div className={styles["filter-control"]}>
