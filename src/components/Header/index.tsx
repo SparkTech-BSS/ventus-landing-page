@@ -184,9 +184,6 @@ export function Header() {
                 </Link>
               </li>
 
-              {/* <ClientOnly>
-                
-              </ClientOnly> */}
 
               <li className={`${styles["nav-item-responsive"]}`}>
                 <Link href="/" scroll={false}>
