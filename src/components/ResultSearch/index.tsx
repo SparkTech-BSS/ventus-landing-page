@@ -15,17 +15,42 @@ export function ResultSearch({ search = "" }: Props) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [eventData, setEventData] = useState<any>([]);
-  // const [filteredData, setFilteredData] = useState([]);
+  const [filteredData, setFilteredData] = useState<any>([]);
   // const [search, setSearch] = useState('');
   const { name } = router.query;
 
-  const filteredData =
-    search.length > 0
-      ? eventData.filter((item: any) => item?.event?.name?.toLowerCase().includes(search))
-      : eventData;
+  // let filteredData =
+  //   search.length > 0
+  //     ? eventData.filter((item: any) =>
+  //         item?.event?.name?.toLowerCase().includes(search)
+  //       )
+  //     : eventData;
 
   const isNotEmpty = filteredData.length ? true : false;
 
+  function handleSortAscending() {
+    const strAscending = [...filteredData].sort((a, b) =>
+      a?.event?.name > b?.event?.name ? 1 : -1
+    );
+    setFilteredData(strAscending)
+  }
+  
+  function handleSortDescending() {
+    const strDescending = [...filteredData].sort((a, b) =>
+    a?.event?.name > b?.event?.name ? -1 : 1
+    );
+    setFilteredData(strDescending)
+  }
+
+  function handleSelectSort(event: React.ChangeEvent<HTMLSelectElement>) {
+    const sortType = event.target.value;
+    if (sortType === "Relevância") {
+    } else if (sortType === "Crescente") {
+      handleSortAscending();
+    } else {
+      handleSortDescending();
+    }
+  }
 
   useEffect(() => {
     setLoading(true);
@@ -33,6 +58,13 @@ export function ResultSearch({ search = "" }: Props) {
       try {
         const { data } = await api.get(`events/findall`);
         setEventData(data);
+        setFilteredData(
+          search.length > 0
+            ? data.filter((item: any) =>
+                item?.event?.name?.toLowerCase().includes(search)
+              )
+            : data
+        );
       } catch (error) {
         console.log(error);
       } finally {
@@ -41,7 +73,7 @@ export function ResultSearch({ search = "" }: Props) {
     }
 
     fetchEvents();
-  }, [name]);
+  }, [name, search]);
 
   useEffect(() => {
     document.documentElement.style.setProperty("--overflow", `auto`);
@@ -60,6 +92,10 @@ export function ResultSearch({ search = "" }: Props) {
             />
             <a className={styles["bread-crumb-link"]}>Encontre Eventos</a>
           </div>
+
+          {name && (
+            <h2 className={styles["result-heading"]}>Resultados para: &quot;{name}&quot;</h2>
+          )}
         </div>
 
         <div className="container">
@@ -95,10 +131,13 @@ export function ResultSearch({ search = "" }: Props) {
               <span className={styles["filter-control__text"]}>
                 Ordenar por:
               </span>
-              <select className={styles["filter-control__select"]}>
-                <option>Relevância</option>
-                <option>Crescente</option>
-                <option>Descrescente</option>
+              <select
+                className={styles["filter-control__select"]}
+                onChange={handleSelectSort}
+              >
+                <option value="Relevância">Relevância</option>
+                <option value="Crescente">Crescente</option>
+                <option value="Descrescente">Descrescente</option>
               </select>
             </div>
           </div>
