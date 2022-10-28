@@ -18,7 +18,7 @@ import { RegisterModal } from "../../components/RegisterModal";
 import styles from "./styles.module.scss";
 import { UserHeaderMobileBox } from "components/UserHeaderMobileBox";
 import ClientOnly from "components/ClientOnly";
-import { useHasMounted } from "hooks/useHasMounted";
+// import { useHasMounted } from "hooks/useHasMounted";
 
 Modal.setAppElement("#__next");
 
@@ -30,7 +30,7 @@ export function Header() {
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [openRegisterModal, setOpenRegisterModal] = useState(false);
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
-  const activeUserMenu = useMediaQuery("(max-width: 1200px");
+  // const activeUserMenu = useMediaQuery("(max-width: 1200px");
 
   const { user, isAuthenticated, logout } = useContext(AuthContext);
 
@@ -188,31 +188,29 @@ export function Header() {
                 
               </ClientOnly> */}
 
-              {activeUserMenu && hasMounted && (
-                <li className="navbar-item">
-                  <Link href="/" scroll={false}>
-                    <a
-                      // href="#promoter"
-                      className={`${styles["navbar-link"]}`}
-                      data-nav-link
-                    >
-                      <FiHelpCircle
-                        size={18}
-                        className={styles["navbar-link-icon-left"]}
-                      />
-                      Central de ajuda
-                      <IoIosArrowForward
-                        size={22}
-                        className={styles["navbar-link-icon"]}
-                      />
-                    </a>
-                  </Link>
-                </li>
-              )}
+              <li className={`${styles["nav-item-responsive"]}`}>
+                <Link href="/" scroll={false}>
+                  <a
+                    // href="#promoter"
+                    className={`${styles["navbar-link"]}`}
+                    data-nav-link
+                  >
+                    <FiHelpCircle
+                      size={18}
+                      className={styles["navbar-link-icon-left"]}
+                    />
+                    Central de ajuda
+                    <IoIosArrowForward
+                      size={22}
+                      className={styles["navbar-link-icon"]}
+                    />
+                  </a>
+                </Link>
+              </li>
 
-              {isAuthenticated && activeUserMenu && hasMounted && (
+              {isAuthenticated && (
                 <>
-                  <li className="navbar-item">
+                  <li className={`${styles["nav-item-responsive"]}`}>
                     <Link href="/tickets" scroll={false}>
                       <a
                         // href="#promoter"
@@ -228,7 +226,7 @@ export function Header() {
                     </Link>
                   </li>
 
-                  <li className="navbar-item">
+                  <li className={`${styles["nav-item-responsive"]}`}>
                     <a
                       className={`${styles["navbar-link"]}`}
                       data-nav-link

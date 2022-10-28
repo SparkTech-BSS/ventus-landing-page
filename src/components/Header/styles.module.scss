@@ -116,6 +116,12 @@
     width: 100%;
   }
 
+  .nav-item-responsive {
+    @media (min-width: 1200px) {
+      display: none;
+    }
+  }
+
   .navbar-link {
     color: var(--black-900);
     font-size: 1.4rem;
@@ -382,6 +388,12 @@
       top: 2.5rem;
       left: 50%;
       transform: translate(-50%, -50%);
+    }
+
+    .nav-item-responsive {
+      @media (min-width: 1200px) {
+        display: none;
+      }
     }
 
     .navbar-link {

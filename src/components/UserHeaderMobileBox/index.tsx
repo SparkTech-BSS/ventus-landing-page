@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { IoClose } from "react-icons/io5";
 import { AuthContext } from "../../contexts/AuthContext";
-import { useMediaQuery } from "usehooks-ts";
+// import { useMediaQuery } from "usehooks-ts";
 import { getFirstAndLastLetter, getFirstAndLastName } from "../../utils";
 import LogoSVG from "../../assets/svg/logo(full-size).svg";
 import styles from "./styles.module.scss";
@@ -14,7 +14,7 @@ interface Props {
 
 export function UserHeaderMobileBox({ handleCloseMenu }: Props) {
   const [hasMounted, setHasMounted] = useState(false);
-  const activeUserMenu = useMediaQuery("(max-width: 1200px");
+  // const activeUserMenu = useMediaQuery("(max-width: 1200px");
   const { isAuthenticated, user } = useContext(AuthContext);
 
   useEffect(() => {
@@ -24,54 +24,48 @@ export function UserHeaderMobileBox({ handleCloseMenu }: Props) {
   if (!hasMounted) return null;
 
   return (
-    <div>
-      {activeUserMenu && (activeUserMenu !== undefined || null) && (
+    <>
+      <div
+        className={`${styles["navbar-top"]} container`}
+        suppressHydrationWarning={true}
+      >
+        <Link href="/" passHref>
+          <a className={styles.logo}>
+            <Image src={LogoSVG} width={90} height={42} alt="" />
+          </a>
+        </Link>
+
+        <button
+          className={styles["close-menu-button"]}
+          onClick={handleCloseMenu}
+        >
+          <IoClose size={30} />
+        </button>
+      </div>
+
+      {isAuthenticated && (
         <>
           <div
-            className={`${styles["navbar-top"]} container`}
+            className={`${styles["user-wrapper"]} container`}
             suppressHydrationWarning={true}
           >
-            <Link href="/" passHref>
-              <a className={styles.logo}>
-                <Image src={LogoSVG} width={90} height={42} alt="" />
-              </a>
-            </Link>
+            <div className={styles["user-wrapper-content"]}>
+              <Link href="/profile" passHref>
+                <a className={styles["user-box"]}>
+                  <span className={styles["user-initials"]}>
+                    {getFirstAndLastLetter(user?.name)}
+                  </span>
+                </a>
+              </Link>
 
-            <button
-              className={styles["close-menu-button"]}
-              onClick={handleCloseMenu}
-            >
-              <IoClose size={30} />
-            </button>
+              <h4 className={styles["user-name"]}>
+                {getFirstAndLastName(user?.name)}
+              </h4>
+            </div>
+            <div className={`container ${styles["user-wrapper-divider"]}`} />
           </div>
-
-          {isAuthenticated && (
-            <>
-              <div
-                className={`${styles["user-wrapper"]} container`}
-                suppressHydrationWarning={true}
-              >
-                <div className={styles["user-wrapper-content"]}>
-                  <Link href="/profile" passHref>
-                    <a className={styles["user-box"]}>
-                      <span className={styles["user-initials"]}>
-                        {getFirstAndLastLetter(user?.name)}
-                      </span>
-                    </a>
-                  </Link>
-
-                  <h4 className={styles["user-name"]}>
-                    {getFirstAndLastName(user?.name)}
-                  </h4>
-                </div>
-                <div
-                  className={`container ${styles["user-wrapper-divider"]}`}
-                />
-              </div>
-            </>
-          )}
         </>
       )}
-    </div>
+    </>
   );
 }

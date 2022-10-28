@@ -2,6 +2,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media (min-width: 1200px) {
+    display: none;
+  }
 }
 
 .close-menu-button {
@@ -16,6 +20,10 @@
   flex-direction: column;
   position: relative;
   padding-bottom: 2rem;
+
+  @media (min-width: 1200px) {
+    display: none;
+  }
 }
 
 .user-wrapper-content {
