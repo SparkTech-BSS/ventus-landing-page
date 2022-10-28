@@ -198,8 +198,8 @@ export function Header() {
                   </a>
                 </Link>
               </li>
-
-              {/* <li className="navbar-item">
+              
+              <li className={styles["nav-item-desktop"]}>
                 <Link href="/#contact" scroll={false}>
                   <a
                     // href="#promoter"
@@ -213,7 +213,7 @@ export function Header() {
                     />
                   </a>
                 </Link>
-              </li> */}
+              </li>
 
               <li className={`${styles["nav-item-responsive"]}`}>
                 <Link href="/" scroll={false}>

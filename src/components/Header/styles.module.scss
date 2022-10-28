@@ -122,6 +122,12 @@
     }
   }
 
+  .nav-item-desktop {
+    @media (max-width: 1200px) {
+      display: none;
+    }
+  }
+
   .navbar-link {
     color: var(--black-900);
     font-size: 1.4rem;
