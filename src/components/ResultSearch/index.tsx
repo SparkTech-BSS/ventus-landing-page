@@ -3,7 +3,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { useRouter } from "next/router";
 import { api } from "services/api";
 import { EventCard } from "components/EventCard";
-import { useEventsByName } from "hooks/api/events";
+// import { useEventsByName } from "hooks/api/events";
 import styles from "./styles.module.scss";
 import { Loading } from "components/Loading";
 
@@ -26,7 +26,6 @@ export function ResultSearch({ search = "" }: Props) {
 
   const isNotEmpty = filteredData.length ? true : false;
 
-  // const { data, isLoading, isError } = useEventsByName(name);
 
   useEffect(() => {
     setLoading(true);

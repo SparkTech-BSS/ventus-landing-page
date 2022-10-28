@@ -93,7 +93,7 @@ export function Event({ data }: Props) {
         <div className={styles["header-row"]}>
           <h1 className={`section-heading`}>Eventos</h1>
 
-          <Link href="/result-search" shallow={true}>
+          <Link href="/events" shallow={true}>
             <a className={styles["se-more"]}>Ver mais</a>
           </Link>
         </div>
