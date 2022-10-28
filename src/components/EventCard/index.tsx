@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "next/future/image";
 import Link from "next/link";
 import { Avatar } from "../Avatar";
 
@@ -33,7 +33,6 @@ export function EventCard({ width, multipleData = true, data }: Props) {
           width={280}
           height={207}
           className={styles["card-img"]}
-          objectFit="cover"
           alt=""
         />
 

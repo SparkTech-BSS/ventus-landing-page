@@ -81,16 +81,6 @@ export function ResultSearch({ search = "" }: Props) {
                 <option>Teatro</option>
                 <option>Palestra</option>
               </select>
-              <select className={styles["filter-control__select"]}>
-                <option>Categorias</option>
-                <option>Música</option>
-                <option>Business</option>
-                <option>Comida {"&"} Bebida</option>
-                <option>Arte</option>
-                <option>Festa</option>
-                <option>Teatro</option>
-                <option>Palestra</option>
-              </select>
             </div>
           </div>
         </div>

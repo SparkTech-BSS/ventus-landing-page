@@ -11,8 +11,6 @@ export function SearchBox() {
   const router = useRouter();
   const { name } = router.query;
 
-  console.log(typeof name);
-
   function handleInputFocus() {
     searchSuggestionList(true);
   }
@@ -30,7 +28,8 @@ export function SearchBox() {
   };
 
   useEffect(() => {
-    if (name === undefined) {
+    if (!name === undefined) {
+      setSearch(name!.toString().trim());
       console.log("yes");
     }
 
@@ -40,9 +39,18 @@ export function SearchBox() {
     };
   }, []);
 
-  function handlekeyPress(e: React.KeyboardEvent<HTMLElement>) {
+  function isNotEmpty(value: string) {
+    return (typeof value === "string" && value.trim().length !== 0);
+  }
+
+  function handleSearch(e: React.KeyboardEvent<HTMLElement>) {
     if (e.keyCode === 13 || e.key === "Enter") {
       console.log(e?.keyCode, e?.key);
+      console.log(search);
+      if (isNotEmpty(search)) {
+        searchSuggestionList(false);
+        router.push(`/result-search/${search}`);
+      }
     }
   }
 
@@ -61,7 +69,9 @@ export function SearchBox() {
             placeholder="Buscar Evento, show, festa ou teatro"
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
-            onKeyDown={handlekeyPress}
+            onKeyDown={handleSearch}
+            value={search}
+            onChange={(e) => setSearch(e.target.value?.trim())}
           />
 
           {active && (
