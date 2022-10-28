@@ -65,10 +65,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   function logout() {
-    destroyCookie(undefined, 'ventus.token');
+    destroyCookie(undefined, "ventus.token");
     setUser(getCurrentUserObject());
-    console.log('Logout')
-    console.log(getCurrentUserObject())
     Router.push("/");
   }
 
