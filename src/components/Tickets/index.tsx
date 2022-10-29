@@ -38,6 +38,8 @@ export function Tickets() {
     fetchData();
   }, []);
 
+   
+
   function handleOpenTicketModal() {
     setOpenTicketModal(true);
   }

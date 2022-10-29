@@ -195,7 +195,7 @@ export function TermOfUse() {
 
           <p className={styles["text"]}>
             Caso você tenha qualquer dúvida sobre os Termos de Uso, por favor,
-            entre em contato pelo e-mail geral@ventus.app.
+            entre em contato pelo e-mail geral@ventusao.app.
           </p>
         </ol>
       </div>

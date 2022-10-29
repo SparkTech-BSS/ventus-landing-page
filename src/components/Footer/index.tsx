@@ -47,7 +47,7 @@ export function Footer() {
 
           <ul className={styles["footer-link-list"]}>
             <span className={styles["footer-link-list__title"]}>
-              PARA PRODUTORES
+              PARA ORGANIZADORES
             </span>
             <li>
               <a href="#" className={styles["footer-link-list__link"]}>

@@ -16,7 +16,7 @@ export function PrivacyPolicies() {
         </p>
 
         <h2 className={styles.subheading}>
-          Ventus Soluções de Entretenimento LDA
+          Ventus 
         </h2>
 
         <p className={styles["text"]}>
@@ -51,7 +51,7 @@ export function PrivacyPolicies() {
           práticas de privacidade e das escolhas que você pode fazer, bem como
           direitos que você pode exercer em relação aos Dados Pessoais tratados
           por nós. Se você tiver alguma dúvida sobre o uso de Dados Pessoais,
-          entre em contato com geral@ventus.app.
+          entre em contato com geral@ventusao.app.
         </p>
 
         <p className={styles["text"]}>
@@ -85,7 +85,7 @@ export function PrivacyPolicies() {
         <p className={styles.text}>
           &quot;Dados Pessoais&quot;: significa qualquer informação que, direta
           ou indiretamente, identifique ou possa identificar uma pessoa natural,
-          como por exemplo, nome, CPF, data de nascimento, endereço IP, dentre
+          como por exemplo, nome, NIF, data de nascimento, endereço IP, dentre
           outros; &quot;Dados Pessoais Sensíveis&quot;: significa qualquer
           informação que revele, em relação a uma pessoa natural, origem racial
           ou étnica, convicção religiosa, opinião política, filiação a sindicato
@@ -470,7 +470,7 @@ export function PrivacyPolicies() {
           retirar o seu consentimento, nesta Política de Privacidade e/ou nas
           Leis de Proteção de Dados, ou resolver quaisquer dúvidas relacionadas
           ao Tratamento de seus Dados Pessoais, favor contatar-nos em
-          geral@ventus.app.
+          geral@ventusao.app.
         </p>
       </div>
     </section>
