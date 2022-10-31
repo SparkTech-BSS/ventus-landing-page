@@ -6,10 +6,10 @@ import * as Tabs from "@radix-ui/react-tabs";
 import { QRCodeSVG } from "qrcode.react";
 import { TicketLinearGradient } from "config";
 import { OrderList } from "components/OrderList";
-import styles from "./styles.module.scss";
 import { getTicketEventDetailDate } from "utils";
 import { TicketModal } from "components/TicketModal";
 import { ServerError } from "components/ServerError";
+import styles from "./styles.module.scss";
 
 export function Tickets() {
   const [tickets, setTickets] = useState([]);

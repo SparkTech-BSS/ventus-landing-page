@@ -231,17 +231,23 @@ export const removeEventOnElem = function (
 };
 
 export function getFirstAndLastLetter(name: string) {
-  let arrFullName = name.split(" ");
+  let arrFullName = name?.split(" ");
 
-  let firstLetter = name.charAt(0).toUpperCase();
+  if (!arrFullName) return "";
 
-  let lastLetter = arrFullName[arrFullName.length - 1].charAt(0).toUpperCase();
+  let firstLetter = name?.charAt(0)?.toUpperCase();
+
+  let lastLetter = arrFullName[arrFullName?.length - 1]
+    ?.charAt(0)
+    ?.toUpperCase();
 
   return `${firstLetter}${lastLetter}`;
 }
 
 export function getFirstAndLastName(name: string) {
-  let nameSplit = name.split(" ");
+  let nameSplit = name?.split(" ");
+
+  if (!nameSplit) return "";
 
   let firstName = nameSplit[0];
   let lastName = nameSplit[nameSplit.length - 1];
@@ -341,12 +347,11 @@ export function getShortDateFormat(date: string) {
         ? convertedToDateObject.getDate()
         : `0${convertedToDateObject.getDate()}`,
     month: getMonthTypeOne(convertedToDateObject.getMonth()),
-    year: convertedToDateObject.getFullYear()
+    year: convertedToDateObject.getFullYear(),
   };
 
   return `${dateObject.week_day}, ${dateObject.month} ${dateObject.day}`;
 }
-
 
 export function getTicketDetailDate(date: string) {
   const weeks_days = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"];
@@ -362,7 +367,7 @@ export function getTicketDetailDate(date: string) {
         ? convertedToDateObject.getDate()
         : `0${convertedToDateObject.getDate()}`,
     month: getMonthTypeOne(convertedToDateObject.getMonth()),
-    year: convertedToDateObject.getFullYear()
+    year: convertedToDateObject.getFullYear(),
   };
 
   return `${dateObject?.week_day}, ${dateObject?.month} ${dateObject?.day} - ${dateObject?.year}`;
@@ -382,7 +387,35 @@ export function getTicketEventDetailDate(date: string): any {
         ? convertedToDateObject.getDate()
         : `0${convertedToDateObject.getDate()}`,
     month: getMonthTypeOne(convertedToDateObject.getMonth()),
-    year: convertedToDateObject.getFullYear()
+    year: convertedToDateObject.getFullYear(),
+  };
+
+  return dateObject;
+}
+
+export function getAllDateObject(date: string) {
+  const weeks_days = [
+    "Domingo",
+    "Segunda-feira",
+    "Terça-feira",
+    "Quarta-feira",
+    "Quinta-feira",
+    "Sexta-feira",
+    "Sábado",
+  ];
+
+  // if (!date) return {};
+
+  const convertedToDateObject = new Date(date);
+
+  const dateObject = {
+    week_day: weeks_days[convertedToDateObject.getDay()],
+    day:
+      convertedToDateObject.getDate().toString().length > 1
+        ? convertedToDateObject.getDate()
+        : `0${convertedToDateObject.getDate()}`,
+    month: getMonthTypeOne(convertedToDateObject.getMonth()),
+    year: convertedToDateObject.getFullYear(),
   };
 
   return dateObject;

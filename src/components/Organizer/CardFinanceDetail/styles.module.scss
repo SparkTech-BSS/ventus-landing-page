@@ -1,0 +1,51 @@
+.card-finance {
+  background: #ffffff;
+  border-radius: 5px;
+  padding: 2rem;
+  flex: 0.6;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.heading {
+  color: #939598;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.items {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  width: 50%;
+}
+
+.item-heading {
+  color: #1f1f1f;
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.item-price {
+  color: #939598;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.total-sale {
+  color: #00ae4e;
+}
+
+.total-pending {
+  color: #ee9547;
+}

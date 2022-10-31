@@ -3,10 +3,7 @@ import Link from "next/link";
 import Modal from "react-modal";
 import { IoIosArrowForward } from "react-icons/io";
 import { FiLogOut } from "react-icons/fi";
-import {
-  MdOutlineFavoriteBorder,
-  MdOutlineEventNote,
-} from "react-icons/md";
+import { MdOutlineFavoriteBorder, MdOutlineEventNote } from "react-icons/md";
 import { HiOutlineTicket } from "react-icons/hi";
 import { BiUser } from "react-icons/bi";
 import Image from "next/image";
@@ -20,8 +17,8 @@ import { UserHeaderBox } from "../UserHeaderBox";
 import { SearchBox } from "components/SearchBox";
 import { LoginModal } from "../../components/LoginModal";
 import { RegisterModal } from "../../components/RegisterModal";
-import styles from "./styles.module.scss";
 import { UserHeaderMobileBox } from "components/UserHeaderMobileBox";
+import styles from "./styles.module.scss";
 
 Modal.setAppElement("#__next");
 
@@ -33,7 +30,7 @@ export function Header() {
   const [openRegisterModal, setOpenRegisterModal] = useState(false);
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
 
-  const { isAuthenticated, logout } = useContext(AuthContext);
+  const { user, isAuthenticated, logout } = useContext(AuthContext);
 
   function handleOpenLoginModal() {
     setOpenLoginModal(true);
@@ -113,6 +110,7 @@ export function Header() {
     document.documentElement.style.setProperty("--vh", `${vh}px`);
   }, [scrollY, windowSize.height]);
 
+  console.log(user?.groups?.includes("manager"));
 
   return (
     <>
@@ -171,7 +169,7 @@ export function Header() {
                       </a>
                     </Link>
                   </li>
-                  
+
                   <li className={`${styles["nav-item-responsive"]}`}>
                     <Link href="/tickets" scroll={false}>
                       <a
@@ -195,30 +193,46 @@ export function Header() {
               )}
 
               <li className="navbar-item">
-                <Link href="" scroll={false}>
-                  <a
-                    className={`${styles["navbar-link"]} ${styles["disabled"]}`}
-                    data-nav-link
-                  >
-                    <BiUser
-                      size={18}
-                      className={styles["navbar-link-icon-left"]}
-                    />
-                    Seja um promotor
-                    <IoIosArrowForward
-                      size={22}
-                      className={styles["navbar-link-icon"]}
-                    />
-                  </a>
-                </Link>
+                {user?.groups?.includes("manager") ? (
+                  <Link href="/organizer/dashboard" scroll={false}>
+                    <a
+                      className={`${styles["navbar-link"]}`}
+                      data-nav-link
+                    >
+                      <BiUser
+                        size={18}
+                        className={styles["navbar-link-icon-left"]}
+                      />
+                      Área do Organizador
+                      <IoIosArrowForward
+                        size={22}
+                        className={styles["navbar-link-icon"]}
+                      />
+                    </a>
+                  </Link>
+                ) : (
+                  <Link href="" scroll={false}>
+                    <a
+                      className={`${styles["navbar-link"]} ${styles["disabled"]}`}
+                      data-nav-link
+                    >
+                      <BiUser
+                        size={18}
+                        className={styles["navbar-link-icon-left"]}
+                      />
+                      Seja um promotor
+                      <IoIosArrowForward
+                        size={22}
+                        className={styles["navbar-link-icon"]}
+                      />
+                    </a>
+                  </Link>
+                )}
               </li>
 
               <li className={styles["nav-item-desktop"]}>
                 <Link href="/#contact" scroll={false}>
-                  <a
-                    className={`${styles["navbar-link"]}`}
-                    data-nav-link
-                  >
+                  <a className={`${styles["navbar-link"]}`} data-nav-link>
                     Baixar
                     <IoIosArrowForward
                       size={22}
@@ -230,10 +244,7 @@ export function Header() {
 
               <li className={`${styles["nav-item-responsive"]}`}>
                 <Link href="/" scroll={false}>
-                  <a
-                    className={`${styles["navbar-link"]}`}
-                    data-nav-link
-                  >
+                  <a className={`${styles["navbar-link"]}`} data-nav-link>
                     <FiHelpCircle
                       size={18}
                       className={styles["navbar-link-icon-left"]}

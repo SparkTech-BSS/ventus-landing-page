@@ -1,6 +1,9 @@
 import axios from "axios";
 import { parseCookies } from "nookies";
 
+//https://dev.ventusapi.com
+//https://ventusapi.com/
+
 export function getAPIClient(ctx?: any) {
   const { 'ventus.token': access_token } = parseCookies(ctx)
 
