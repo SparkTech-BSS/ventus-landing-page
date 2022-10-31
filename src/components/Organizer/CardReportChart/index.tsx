@@ -31,7 +31,7 @@ export function CardReportChart() {
       </div>
 
       <div className={styles.wrapper}>
-        <VerticalChart />
+        {/* <VerticalChart /> */}
       </div>
 
       <div className={styles.footer}>
