@@ -1,27 +1,35 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useToasts } from "react-toast-notifications";
-import { userSchema } from "../../validations/UserValidation";
 import { UserDTO } from "../../dto/UserDTO";
 import * as Yup from "yup";
 import { api } from "services/api";
 import VentusLogo from "../../assets/png/logo(4x).png";
 import { FaFacebookF } from "react-icons/fa";
+import { checkInRegistrationProcessIfValueExist } from "utils";
 import styles from "./styles.module.scss";
-
-
 
 export function ForgetPassword() {
   const [loading, setLoading] = useState(false);
+  const [emails, setEmails] = useState<any>([]);
   const { addToast } = useToasts();
   const router = useRouter();
 
   const emailSchema = Yup.object().shape({
-    email: Yup.string().required("Email é obrigatório").email("Email inválido"),
+    email: Yup.string()
+      .required("Email é obrigatório")
+      .email("Email inválido")
+
+      .test(
+        "emailNotExist",
+        "Este E-mail não existe no nosso banco de dados",
+        (value: any) =>
+          checkInRegistrationProcessIfValueExist(value, "email", emails)
+      ),
   });
 
   const {
@@ -33,6 +41,25 @@ export function ForgetPassword() {
     reValidateMode: "onChange",
     resolver: yupResolver(emailSchema),
   });
+
+  useEffect(() => {
+    setLoading(true);
+    const controller = new AbortController();
+    async function fetchUsers() {
+      try {
+        const { data } = await api.get(`users/findall`);
+        setEmails(data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchUsers();
+
+    return () => controller.abort();
+  }, []);
 
   const onSubmit: SubmitHandler<UserDTO> = async (data) => {
     setLoading(true);

@@ -23,8 +23,6 @@ export function EventDetail() {
 
   const { id } = router.query;
 
-  console.log(id);
-
   useEffect(() => {
     async function fetchData() {
       setLoading(true);

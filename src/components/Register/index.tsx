@@ -12,7 +12,6 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useToasts } from "react-toast-notifications";
 import VentusLogo from "../../assets/png/logo(4x).png";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
-import { FaFacebookF } from "react-icons/fa";
 import styles from "./styles.module.scss";
 import { Loading } from "components/Loading";
 import { checkInRegistrationProcessIfValueExist } from "utils";
@@ -29,6 +28,7 @@ export function Register() {
 
   useEffect(() => {
     setLoading(true);
+    const controller = new AbortController();
     async function fetchUsers() {
       try {
         const { data } = await api.get(`users/findall`);
@@ -41,6 +41,8 @@ export function Register() {
     }
 
     fetchUsers();
+
+    return () => controller.abort();
   }, []);
 
 
