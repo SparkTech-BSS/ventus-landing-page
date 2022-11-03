@@ -9,7 +9,6 @@ import { UserDTO } from "../../dto/UserDTO";
 import * as Yup from "yup";
 import { api } from "services/api";
 import VentusLogo from "../../assets/png/logo(4x).png";
-import { FaFacebookF } from "react-icons/fa";
 import { checkInRegistrationProcessIfValueExist } from "utils";
 import styles from "./styles.module.scss";
 
