@@ -297,3 +297,47 @@ body {
 }
 
 //  max-width: 600px;
+/********************************
+PRINT
+********************************/
+
+@page {
+  // size: 0in;
+  // size: A4;
+  // size: 30mm 50mm;
+  size: 57mm 125mm;
+  margin: 0;
+  // width: 110mm;
+  // height: 197mm;
+}
+
+@media all {
+  .pagebreak {
+    display: none;
+  }
+}
+
+@media print {
+  .pagebreak {
+    page-break-before: always;
+    box-shadow: unset !important;
+  -webkit-box-shadow: unset !important;
+  -moz-box-shadow: unset !important;
+  }
+
+  // .ticket-to-print-title {
+  //   font-size: 4pt !important;
+  //   font-weight: 600 !important;
+  // }
+
+  // .ticket-to-print-owner {
+  //   font-size: 3pt !important;
+  //   font-weight: 600 !important;
+  //   color: rgb(134, 133, 133);
+  //   margin: 1pt !important;
+  // }
+
+  // .ticket-to-print-ticket-item-heading {
+  //   font-weight: 500;
+  // }
+}

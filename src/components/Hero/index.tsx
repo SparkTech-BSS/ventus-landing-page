@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import styles from "./styles.module.scss";
 import { IoIosArrowDown } from "react-icons/io";
 import Link from "next/link";
 import {
@@ -7,6 +6,7 @@ import {
   textHeroAnimation,
   titleAnimation,
 } from "utils";
+import styles from "./styles.module.scss";
 
 export function Hero() {
   return (

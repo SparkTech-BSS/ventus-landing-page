@@ -6,7 +6,7 @@ export default function TermsOfUsePage() {
     return (
         <>
           <Head>
-            <title>Ventus</title>
+            <title>Ventus | Termos uso</title>
           </Head>
     
           <Layout>

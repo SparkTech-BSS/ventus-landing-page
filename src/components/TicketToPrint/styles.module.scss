@@ -1,0 +1,141 @@
+.ticket-to-print {
+  width: 100%;
+  padding-block-start: calc(var(--section-padding) + 150px);
+  padding-bottom: 2rem;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.btn-back {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: var(--primary-color);
+  max-width: 400px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 1.5rem;
+  transition: all 0.3s;
+  border-radius: 5px;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--white-color);
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--primary-color-hover);
+  }
+}
+
+.btn-pdf {
+  background-color: rgb(0, 212, 109);
+  color: var(--white-color);
+  font-weight: 600;
+  padding: 0.8rem 1.5rem;
+  border-radius: 5px;
+
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 400px;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 2rem;
+  transition: all 0.3s;
+
+  &:hover {
+    background-color: rgb(0, 167, 86);
+  }
+}
+
+.ticket {
+  max-width: 400px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  background-size: cover;
+  padding: 2rem 2rem 2rem;
+  box-shadow: -3px 5px 13px -2px rgba(0, 0, 0, 0.28);
+  -webkit-box-shadow: -3px 5px 13px -2px rgba(0, 0, 0, 0.28);
+  -moz-box-shadow: -3px 5px 13px -2px rgba(0, 0, 0, 0.28);
+}
+
+.ticket-background {
+  color: rgba(0, 0, 0, 0.037);
+  font-family: "Koulen", cursive;
+  font-weight: 400;
+  font-size: 14.5rem;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(34.96deg);
+}
+
+.ticket-title {
+  font-weight: 600;
+  font-size: 2rem;
+}
+
+.ticket-owner {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-top: 0.4rem;
+  color: rgb(134, 133, 133);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.ticket-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.ticket-item-heading {
+  font-weight: 500;
+  font-size: 1.4rem;
+}
+
+.ticket-item-subheading {
+  font-weight: 500;
+  color: rgb(134, 133, 133);
+}
+
+.separator {
+  width: 100%;
+  border: 1px dashed rgb(134, 133, 133);
+  margin: 2rem 0;
+}
+
+.qr-code-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.ticket-code {
+  margin-top: 1rem;
+}
+
+.qr-code-message {
+  color: #939598;
+  font-size: 1.3rem;
+  margin: 1.5rem 0rem 0.9rem;
+}

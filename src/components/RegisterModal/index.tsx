@@ -18,9 +18,9 @@ import { MdOutlineContacts, MdCheckBoxOutlineBlank } from "react-icons/md";
 import { FiUser, FiPhone } from "react-icons/fi";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 
-import styles from "./styles.module.scss";
 import Link from "next/link";
 import { Loading } from "components/Loading";
+import styles from "./styles.module.scss";
 
 interface Props {
   isOpen: boolean;
