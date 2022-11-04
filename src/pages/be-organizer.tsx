@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { BeOrganizer } from "../components/BeOrganizer";
+import { Footer } from "components/Footer";
 
 export default function BeOrganizerPage() {
   return (
@@ -9,6 +10,8 @@ export default function BeOrganizerPage() {
       </Head>
 
       <BeOrganizer/>
+
+      <Footer/>
     </>
   );
 }

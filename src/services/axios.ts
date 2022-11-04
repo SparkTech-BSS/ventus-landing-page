@@ -8,7 +8,7 @@ export function getAPIClient(ctx?: any) {
   const { 'ventus.token': access_token } = parseCookies(ctx)
 
   const api = axios.create({
-    baseURL: 'https://ventusapi.com/'
+    baseURL: 'https://dev.ventusapi.com/'
   })
 
   api.interceptors.request.use(config => {

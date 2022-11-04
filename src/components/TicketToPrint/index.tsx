@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import { api } from "services/api";
+import LogoVentusBlack from "../../assets/png/logo-ventus-black.png";
 import { Loading } from "components/Loading";
 import {
   MdOutlinePictureAsPdf,
@@ -73,6 +74,8 @@ export function TicketToPrint() {
             />
 
             <div className={`${styles["ticket"]} pagebreak`} ref={ref}>
+                
+
               <h2 className={`${styles["ticket-title"]} ticket-to-print-title`}>
                 {ticketData?.event?.event?.name}
               </h2>
@@ -136,11 +139,11 @@ export function TicketToPrint() {
                   {ticketData?.ticket?.code}
                 </span>
 
-                <span className={`${styles["qr-code-message"]}`}>
+                {/* <span className={`${styles["qr-code-message"]}`}>
                   Mostre este código para o porteiro do evento
-                </span>
+                </span> */}
 
-                <Image src={LogoSVG} width={90} height={42} alt="" />
+                <Image src={LogoVentusBlack} width={100} height={42} alt="" />
               </div>
             </div>
           </>

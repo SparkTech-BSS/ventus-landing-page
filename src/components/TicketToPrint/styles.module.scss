@@ -89,10 +89,11 @@
 }
 
 .ticket-owner {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   font-weight: 500;
   margin-top: 0.4rem;
-  color: rgb(134, 133, 133);
+  // color: rgb(134, 133, 133);
+  color: #000;
 }
 
 .content {
@@ -114,13 +115,14 @@
 
 .ticket-item-subheading {
   font-weight: 500;
-  color: rgb(134, 133, 133);
+  // color: rgb(134, 133, 133);
+  color: #000;
 }
 
 .separator {
   width: 100%;
   border: 1px dashed rgb(134, 133, 133);
-  margin: 2rem 0;
+  margin: 1rem 0;
 }
 
 .qr-code-view {
@@ -132,10 +134,15 @@
 
 .ticket-code {
   margin-top: 1rem;
+  font-weight: 500;
+  color: #000;
+  margin-bottom: 2rem;
 }
 
 .qr-code-message {
-  color: #939598;
+  // color: #939598;
+  font-weight: 500;
+  color: #000;
   font-size: 1.3rem;
   margin: 1.5rem 0rem 0.9rem;
 }
