@@ -1,26 +1,8 @@
-import { useEffect, useState } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import { CardTableEvent } from "../CardTableEvent";
 import styles from "./styles.module.scss";
 
 export function DashboardContent() {
-  const [events, setEvents] = useState<any>([]);
-  const [loading, setLoading] = useState(true);
-
-  // async function fetchData() {
-  //   setLoading(true);
-  //   try {
-  //     const { data } = await api.get(`events/findeventsbyuserid`);
-  //     console.log(data);
-  //   } catch (error) {
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
 
   return (
     <section className={styles["dashboard-content"]}>

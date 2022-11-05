@@ -117,10 +117,10 @@ export function TicketModal({ isOpen, onRequestClose, data }: Props) {
               content={() => ref.current}
             /> */}
 
-            <Link href={`/ticket-to-print/${data?.ticket?._id}`}>
-              <button className={styles["footer-btn"]}>
+            <Link href={`/ticket-to-print/${data?.ticket?._id}`} passHref>
+              <a className={styles["footer-btn"]} target="_blank" rel="noopener noreferrer">
                 <IoMdDownload color="#000" size={24} />
-              </button>
+              </a>
             </Link>
 
             <button

@@ -104,6 +104,61 @@
   color: #7c7c7c;
 }
 
+.pagination-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.prev-button {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  font-weight: 700;
+  transition: all .3s;
+  // border: 1rem solid var(--white-color);
+  &:hover {
+    background-color: var(--primary-color-hover);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.total-ticket {
+  color: #7c7c7c;
+  font-weight: 600;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+}
+
+.next-button {
+  background-color: #7c7c7c;
+  color: var(--white-color);
+  padding: .8rem 2rem;
+  border-radius: 1rem;
+  font-weight: 700;
+  transition: all .3s;
+  // border: 1rem solid var(--white-color);
+  &:hover {
+    background-color: #494949;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.current-page {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #7c7c7c;
+}
+
 .empty-box {
   display: flex;
   align-items: center;

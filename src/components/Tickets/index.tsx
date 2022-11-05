@@ -17,6 +17,9 @@ export function Tickets() {
   const [error, setError] = useState(false);
   const [selectedData, setSelectedData] = useState<any>({});
   const [openTicketModal, setOpenTicketModal] = useState(false);
+  const [count, setCount] = useState(1);
+  const [lastPage, setLastPage] = useState(0);
+  const [totalTicket, setTotalTicket] = useState(0);
 
   useEffect(() => {
     document.documentElement.style.setProperty("--overflow", `auto`);
@@ -26,8 +29,10 @@ export function Tickets() {
     async function fetchData() {
       setLoading(true);
       try {
-        const { data } = await api.get(`tickets/findbyclientid`);
-        setTickets(data);
+        const { data } = await api.get(`tickets/findbyclientid/${count}`);
+        setTickets(data?.tickets);
+        setLastPage(data?.lastPage);
+        setTotalTicket(data?.total);
       } catch (error) {
         console.log(error);
         setError(true);
@@ -36,9 +41,17 @@ export function Tickets() {
       }
     }
     fetchData();
-  }, []);
+  }, [count]);
 
-   
+  function handleNextPages() {
+    if (count + 1 > lastPage) return;
+    setCount((state) => state + 1);
+  }
+
+  function handlePrevPages() {
+    if (count - 1 <= 0) return;
+    setCount((state) => state - 1);
+  }
 
   function handleOpenTicketModal() {
     setOpenTicketModal(true);
@@ -98,7 +111,20 @@ export function Tickets() {
                   <>
                     <div className={`container`}>
                       {tickets?.length ? (
-                        <span className={styles["list-date"]}>2022</span>
+                        <>
+                          <span className={styles["total-ticket"]}>Total ticket: {totalTicket}</span>
+
+                          <div className={styles["pagination-wrapper"]}>
+                            <button className={styles["prev-button"]} disabled={count === 1} onClick={handlePrevPages}>
+                              Anterior
+                            </button>
+                            <span className={styles["current-page"]}>{count}</span>
+                            <button className={styles["next-button"]} disabled={lastPage === count} onClick={handleNextPages}>
+                              Próximo
+                            </button>
+                            
+                          </div>
+                        </>
                       ) : (
                         ""
                       )}
@@ -176,6 +202,11 @@ export function Tickets() {
                                       >
                                         {item?.event?.event?.startTime} -{" "}
                                         {item?.event?.event?.endTime}
+                                      </h2>
+                                      <h2
+                                        className={styles["event-subheading"]}
+                                      >
+                                        {item?.ticket?.code}
                                       </h2>
                                     </div>
 
