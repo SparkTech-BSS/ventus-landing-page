@@ -12,8 +12,6 @@ export function CardTableEvent() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  console.log(events);
-
   async function fetchData() {
     setLoading(true);
     try {

@@ -47,12 +47,50 @@ export function Pagination({
 
   return (
     <div className={styles["stack"]}>
-      <div className={styles.box}>
+      {/* <div className={styles.box}>
         <strong>0</strong> - <strong>10</strong> de <strong>100</strong>
-      </div>
+      </div> */}
 
-      <div>
-        
+      <div className={styles["pagination-stack"]}>
+        {currentPage > (1 + siblingsCount) && (
+          <>
+            <PaginationItem onPageChange={onPageChange} number={1} />
+            {currentPage > (2 + siblingsCount) && (
+              <span className={styles.text}>...</span>
+            )}
+          </>
+        )}
+
+        {previousPages.length > 0 &&
+          previousPages.map((page) => (
+            <PaginationItem
+              onPageChange={onPageChange}
+              key={page}
+              number={page}
+            />
+          ))}
+
+        <PaginationItem
+          onPageChange={onPageChange}
+          number={currentPage}
+          isCurrent
+        />
+
+        {nextPages.length > 0 &&
+          nextPages.map((page) => (
+            <PaginationItem
+              onPageChange={onPageChange}
+              key={page}
+              number={page}
+            />
+          ))}
+
+        {(currentPage + siblingsCount) < lastPage && (
+          <>
+            {(currentPage + 1 + siblingsCount) < lastPage && <span>...</span>}
+            <PaginationItem onPageChange={onPageChange} number={lastPage} />
+          </>
+        )}
       </div>
     </div>
   );

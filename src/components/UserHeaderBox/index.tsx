@@ -11,7 +11,11 @@ import { useClickOutside } from "../../hooks/useClickOutside";
 import { getFirstAndLastLetter, getFirstAndLastName } from "../../utils";
 import styles from "./styles.module.scss";
 
-export function UserHeaderBox() {
+interface Props {
+  color?: string;
+}
+
+export function UserHeaderBox({ color }:Props) {
   const { user, logout } = useContext(AuthContext);
   const [openPopover, setOpenPopover] = useState(false);
   const clickRef = useRef() as React.MutableRefObject<HTMLDivElement>;
@@ -32,17 +36,15 @@ export function UserHeaderBox() {
       onClick={handleToggleOpenPopover}
     >
       <div className={styles["user-avatar"]}>
-        <span className={styles["user-avatar__heading"]}>
+        <span className={`${styles["user-avatar__heading"]}`}>
           {getFirstAndLastLetter(user?.name)}
         </span>
       </div>
-      <span className={styles["user-name"]}>
+      <span className={`${styles["user-name"]} ${color && styles["user-name-white"]}`}>
         {getFirstAndLastName(user?.name)}
       </span>
       <button
-        className={`${styles["btn-dropdown"]} ${
-          openPopover ? styles.active : ""
-        }`}
+        className={`${styles["btn-dropdown"]} ${openPopover ? styles.active : ""} ${color && styles["btn-dropdown-white"]}`}
       >
         <IoIosArrowDown size={18} />
       </button>

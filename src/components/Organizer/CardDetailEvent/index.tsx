@@ -23,8 +23,6 @@ export function CardDetailEvent({ data }: Props) {
 
   const URL_TO_SHARE = `https://www.ventusao.app/event-detail/${data?.event?._id}`;
 
-  console.log(data);
-
   function handleCopied() {
     setCopied(true);
     copy(URL_TO_SHARE);

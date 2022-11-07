@@ -5,18 +5,20 @@ import { VscCalendar } from "react-icons/vsc";
 import * as Tabs from "@radix-ui/react-tabs";
 import { Spinner } from "components/Spinner";
 import { IoLocationOutline } from "react-icons/io5";
-import styles from "./styles.module.scss";
 import { CardDetailEvent } from "../CardDetailEvent";
 import { CardFinanceDetail } from "../CardFinanceDetail";
 import { CardReportChart } from "../CardReportChart";
 import { getAllDateObject } from "utils";
 import { Loading } from "components/Loading";
 import { ServerError } from "components/ServerError";
+import { CardTicketLot } from "../CardTicketLot";
+import styles from "./styles.module.scss";
 
 export function EventDetail() {
   const [event, setEvent] = useState<any>({});
   const [totalGainByEvent, setTotalGainByEvent] = useState<any>();
   const [totalSoldByEvent, seTotalSoldByEvent] = useState<any>();
+  const [ticketLot, setTicketLot] = useState<any>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const router = useRouter();
@@ -34,6 +36,11 @@ export function EventDetail() {
         const responseTotalSoldByEvent = await api.get(
           `tickets/gettotalsoldbyevent/${id}`
         );
+        const responseTicketLot = await api.get(
+          `/ticket-lot/findbyeventid/${id}`
+        );
+        
+        setTicketLot(responseTicketLot.data);
         setEvent(responseEvent.data);
         setTotalGainByEvent(responseTotalGainByEvent?.data);
         seTotalSoldByEvent(responseTotalSoldByEvent.data);
@@ -49,7 +56,7 @@ export function EventDetail() {
   }, [id]);
 
   if (error) {
-    return <ServerError/>
+    return <ServerError />;
   }
 
   if (loading) {
@@ -113,11 +120,14 @@ export function EventDetail() {
 
         <Tabs.Content value="general" className={`${styles["tab-content"]}`}>
           <div className={styles.row}>
-            <CardDetailEvent data={event}/>
+            <CardDetailEvent data={event} />
+          </div>
+          <div className={styles.row}>
             <CardFinanceDetail
               totalGain={totalGainByEvent}
               totalSold={totalSoldByEvent}
             />
+            <CardTicketLot ticketData={ticketLot}/>
           </div>
           <CardReportChart />
         </Tabs.Content>

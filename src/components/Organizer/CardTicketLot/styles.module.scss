@@ -1,0 +1,106 @@
+.card-ticket-lot {
+//   box-shadow: 0px 4px 21px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  background-color: var(--white-color);
+  padding: 2rem;
+  width: 100%;
+}
+
+.heading {
+  color: #939598;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 1rem;
+
+  label {
+    color: var(--black-900);
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+}
+
+.filter-control {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  // width: 100%;
+  // margin-top: 2rem;
+
+  &__text {
+    color: #939598;
+    font-size: 1.4rem;
+    display: none;
+  }
+
+  &__select {
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
+    width: 100%;
+    background: url("data:image/svg+xml,<svg height='10px' width='10px' viewBox='0 0 16 16' fill='black' xmlns='http://www.w3.org/2000/svg'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>")
+      no-repeat;
+    background-position: calc(100% - 0.75rem) center !important;
+    -moz-appearance: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    color: #1f1f1f;
+    font-size: 1.6rem;
+    transition: all 0.2s;
+    outline: none;
+
+    &:focus {
+      box-shadow: 0 0 0 0.25rem #ff55555c;
+      border: 1px solid var(--primary-color);
+      background: #fff;
+    }
+
+    option {
+      //   padding: 1rem;
+      font-size: 1.6rem;
+      background-color: var(--white-color);
+    }
+  }
+}
+
+.items {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  width: 50%;
+}
+
+.item-heading {
+  color: #1f1f1f;
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.item-price {
+  color: #939598;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.total-sale {
+  color: #00ae4e;
+}
+
+.total-pending {
+  color: #ee9547;
+}

@@ -1,0 +1,39 @@
+.header {
+  background-color: var(--primary-color);
+  padding: 2rem 0;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.divider {
+  width: 1px;
+  height: 30px;
+  border-radius: 5px;
+  background-color: var(--white-color);
+  margin: 0 4rem 0 2rem;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+
+  &:hover {
+    transform: scale(1.08);
+  }
+}
+
+.logo {
+  width: 90px;
+  height: auto;
+  object-fit: cover;
+}
+
+.heading {
+  color: var(--white-color);
+  margin-right: auto;
+}

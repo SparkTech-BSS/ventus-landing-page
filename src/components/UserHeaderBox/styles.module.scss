@@ -24,10 +24,18 @@
     font-size: 1.6rem;
     color: var(--white-color);
   }
+
+  &__heading__white {
+    color: var(--white-color);
+  }
 }
 
 .user-name {
   color: var(--black-900);
+}
+
+.user-name-white {
+  color: var(--white-color);
 }
 
 .btn-dropdown {
@@ -47,6 +55,10 @@
     background-color: #f5f7f8;
     color: #4c576c;
   }
+}
+
+.btn-dropdown-white {
+  color: var(--white-color);
 }
 
 .menu {

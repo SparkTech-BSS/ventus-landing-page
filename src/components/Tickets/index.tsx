@@ -7,9 +7,12 @@ import { QRCodeSVG } from "qrcode.react";
 import { TicketLinearGradient } from "config";
 import { OrderList } from "components/OrderList";
 import { getTicketEventDetailDate } from "utils";
+import { CustomPagination } from "../CustomPagination";
 import { TicketModal } from "components/TicketModal";
 import { ServerError } from "components/ServerError";
 import styles from "./styles.module.scss";
+
+let PageSize = 10;
 
 export function Tickets() {
   const [tickets, setTickets] = useState([]);
@@ -33,6 +36,7 @@ export function Tickets() {
         setTickets(data?.tickets);
         setLastPage(data?.lastPage);
         setTotalTicket(data?.total);
+        console.log(data);
       } catch (error) {
         console.log(error);
         setError(true);
@@ -42,6 +46,10 @@ export function Tickets() {
     }
     fetchData();
   }, [count]);
+
+  function onPageChange(page: number) {
+    setCount(page);
+  }
 
   function handleNextPages() {
     if (count + 1 > lastPage) return;
@@ -112,18 +120,41 @@ export function Tickets() {
                     <div className={`container`}>
                       {tickets?.length ? (
                         <>
-                          <span className={styles["total-ticket"]}>Total ticket: {totalTicket}</span>
+                          <span className={styles["total-ticket"]}>
+                            Total de Ingresso: {totalTicket}
+                          </span>
 
-                          <div className={styles["pagination-wrapper"]}>
-                            <button className={styles["prev-button"]} disabled={count === 1} onClick={handlePrevPages}>
+                          <CustomPagination
+                            currentPage={count}
+                            totalCount={totalTicket}
+                            pageSize={10}
+                            onPageChange={onPageChange}
+                          />
+
+                          {/* <Pagination
+                            totalCountOfRegisters={lastPage}
+                            onPageChange={onPageChange}
+                          /> */}
+
+                          {/* <div className={styles["pagination-wrapper"]}>
+                            <button
+                              className={styles["prev-button"]}
+                              disabled={count === 1}
+                              onClick={handlePrevPages}
+                            >
                               Anterior
                             </button>
-                            <span className={styles["current-page"]}>{count}</span>
-                            <button className={styles["next-button"]} disabled={lastPage === count} onClick={handleNextPages}>
+                            <span className={styles["current-page"]}>
+                              {count}
+                            </span>
+                            <button
+                              className={styles["next-button"]}
+                              disabled={lastPage === count}
+                              onClick={handleNextPages}
+                            >
                               Próximo
                             </button>
-                            
-                          </div>
+                          </div> */}
                         </>
                       ) : (
                         ""
