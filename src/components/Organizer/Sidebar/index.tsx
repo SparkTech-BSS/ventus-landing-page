@@ -1,19 +1,30 @@
 import Link from "next/link";
+import { useContext } from "react";
+import { CgClose } from "react-icons/cg";
+import { Context } from "../../../contexts/AppContext";
 import { useRouter } from "next/router";
 import { EventIconSVG, TicketIconSVG } from "../SideBarIcon";
 import styles from "./styles.module.scss";
 
 export function Sidebar() {
+  const { toggleSidebar, setToggleSidebar } = useContext(Context);
   const router = useRouter();
 
   return (
-    <nav className={styles["sidebar"]}>
+    <aside className={`${styles["sidebar"]} ${toggleSidebar && styles.active}`}>
+      <button
+        className={`${styles["close-btn"]}`}
+        onClick={() => setToggleSidebar(false)}
+      >
+        <CgClose size={24} />
+      </button>
       <ul className={styles["nav-list"]}>
         <li>
           <Link href="/organizer/event-detail" passHref>
             <a
               className={`${styles["nav-link"]} ${
-                router.pathname.includes("/organizer/event-detail/") && styles.active
+                router.pathname.includes("/organizer/event-detail/") &&
+                styles.active
               }`}
             >
               <EventIconSVG
@@ -41,6 +52,6 @@ export function Sidebar() {
           </Link>
         </li> */}
       </ul>
-    </nav>
+    </aside>
   );
 }

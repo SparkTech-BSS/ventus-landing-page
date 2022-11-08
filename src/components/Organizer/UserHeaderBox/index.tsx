@@ -6,11 +6,13 @@ import { HiOutlineTicket } from "react-icons/hi";
 import { MdOutlineFavoriteBorder } from "react-icons/md";
 import { BiUser } from "react-icons/bi";
 import { FiHelpCircle } from "react-icons/fi";
+import { AuthContext } from "../../../contexts/AuthContext";
 import { useClickOutside } from "../../../hooks/useClickOutside";
 import { getFirstAndLastLetter, getFirstAndLastName } from "../../../utils";
 import styles from "./styles.module.scss";
 
 export function UserHeaderBox() {
+  const { user, logout } = useContext(AuthContext);
   const [openPopover, setOpenPopover] = useState(false);
   const clickRef = useRef() as React.MutableRefObject<HTMLDivElement>;
   useClickOutside(clickRef, handleClosePopover);
@@ -31,11 +33,11 @@ export function UserHeaderBox() {
     >
       <div className={styles["user-avatar"]}>
         <span className={styles["user-avatar__heading"]}>
-          {getFirstAndLastLetter("Fábio Baziota")}
+          {getFirstAndLastLetter(user?.name)}
         </span>
       </div>
       <span className={styles["user-name"]}>
-        {getFirstAndLastName("Fábio Baziota")}
+        {getFirstAndLastName(user?.name)}
       </span>
       <button
         className={`${styles["btn-dropdown"]} ${
@@ -76,7 +78,7 @@ export function UserHeaderBox() {
           </span>
           Central de ajuda
         </a>
-        <button className={styles["menu-item"]}>
+        <button className={styles["menu-item"]} onClick={logout}>
           <span className={styles["menu-item-icon"]}>
             <IoExitOutline size={24} color="#ff5555" />
           </span>

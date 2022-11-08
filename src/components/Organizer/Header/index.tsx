@@ -1,16 +1,25 @@
-import Image from "next/image";
+import { useContext } from "react";
+import Image from "next/future/image";
 import Link from "next/link";
 import { BiPlus } from "react-icons/bi";
+import { FiMenu } from "react-icons/fi";
+import { Context } from "../../../contexts/AppContext";
 import LogoSVG from "../../../assets/svg/logo(full-size).svg";
-import { UserHeaderBox } from "../../UserHeaderBox";
+import { UserHeaderBox } from "../UserHeaderBox";
 import styles from "./styles.module.scss";
 
 export function Header() {
+  const { handleToggleSidebar } = useContext(Context);
+
   return (
     <header className={styles["header"]}>
       <div className={styles.container}>
+        <button className={styles["toggle-menu-btn"]} onClick={handleToggleSidebar}>
+          <FiMenu size={26}/>
+        </button>
+
         <Link href="/" passHref>
-          <a className={styles.logo}>
+          <a className={styles.logo} >
             <Image src={LogoSVG} width={90} height={42} alt="" />
           </a>
         </Link>

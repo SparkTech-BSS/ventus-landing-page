@@ -154,11 +154,17 @@
   justify-content: center;
 }
 
-@media (min-width: 1200px) {
-}
-
-@media (max-width: 1200px) {
-  .container {
+@media (max-width: 1024px) {
+  .user-name {
     display: none;
   }
 }
+
+@media (min-width: 1200px) {
+}
+
+// @media (max-width: 1200px) {
+//   .container {
+//     display: none;
+//   }
+// }

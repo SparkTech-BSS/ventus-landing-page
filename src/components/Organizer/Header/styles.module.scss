@@ -16,8 +16,14 @@
   align-items: center;
   justify-content: center;
   gap: 30px;
-  max-width: 1400px;
+  // max-width: 1400px;
   margin: 0 auto;
+}
+
+.toggle-menu-btn {
+  color: var(--primary-color);
+  display: none;
+  
 }
 
 .heading {
@@ -73,4 +79,25 @@
   height: 28px;
 
   background: #636363;
+}
+
+
+@media (max-width: 1024px) {
+  .navbar, .heading, .divider {
+    display: none;
+  }
+
+  .logo {
+    margin: auto;
+
+    img {
+      width: 8rem;
+      object-fit: cover;
+      height: auto;
+    }
+  }
+
+  .toggle-menu-btn {
+    display: block;
+  }
 }

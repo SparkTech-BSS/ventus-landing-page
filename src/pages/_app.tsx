@@ -9,6 +9,7 @@ import {
 import { config } from "lib/react-query-config";
 import Devtools from "components/Devtools";
 import { AuthProvider } from "../contexts/AuthContext";
+import { AppProvider } from "../contexts/AppContext";
 import { ToastProvider } from "react-toast-notifications";
 import type { AppProps } from "next/app";
 import type { DehydratedState } from "@tanstack/react-query";
@@ -29,9 +30,11 @@ function MyApp({ Component, pageProps, err }: ExtendedAppProps<PageProps>) {
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
           <AuthProvider>
-            <ToastProvider>
-              <Component {...pageProps} />
-            </ToastProvider>
+            <AppProvider>
+              <ToastProvider>
+                <Component {...pageProps} />
+              </ToastProvider>
+            </AppProvider>
           </AuthProvider>
           <Devtools />
         </Hydrate>

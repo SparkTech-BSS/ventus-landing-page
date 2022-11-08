@@ -3,9 +3,15 @@
 }
 
 .wrapper {
-    min-height: 100vh;
-    background-color: var(--white-color);
-    flex: 1;
-    margin-left: 120px;
-    margin-top: 70.08px;
+  min-height: 100vh;
+  background-color: var(--white-color);
+  flex: 1;
+  margin-left: 120px;
+  margin-top: 70.08px;
+}
+
+@media (max-width: 1024px) {
+  .wrapper {
+    margin-left: 0;
+  }
 }

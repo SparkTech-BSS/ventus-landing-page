@@ -1,8 +1,13 @@
+import { useEffect } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import { CardTableEvent } from "../CardTableEvent";
 import styles from "./styles.module.scss";
 
 export function DashboardContent() {
+
+  useEffect(() => {
+    document.documentElement.style.setProperty("--overflow", `auto`);
+  }, []);
 
   return (
     <section className={styles["dashboard-content"]}>

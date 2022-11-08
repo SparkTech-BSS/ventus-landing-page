@@ -80,7 +80,7 @@ export function CardDetailEvent({ data }: Props) {
               </span>
               {copied && <span className={styles.copied}>Link Copiado</span>}
             </span>
-            <span className={styles["item-text"]}>{URL_TO_SHARE}</span>
+            <span className={`${styles["item-site"]}`}>{URL_TO_SHARE}</span>
           </div>
         </div>
       </div>

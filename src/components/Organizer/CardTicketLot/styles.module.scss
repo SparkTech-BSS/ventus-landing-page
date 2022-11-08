@@ -21,7 +21,7 @@
 
   label {
     color: var(--black-900);
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: 500;
     margin-bottom: 1rem;
   }
@@ -86,7 +86,7 @@
 
 .item-heading {
   color: #1f1f1f;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 500;
   margin-bottom: 0.5rem;
 }
@@ -103,4 +103,11 @@
 
 .total-pending {
   color: #ee9547;
+}
+
+@media (max-width: 768px) { 
+  .items {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
