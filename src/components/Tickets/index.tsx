@@ -36,7 +36,6 @@ export function Tickets() {
         setTickets(data?.tickets);
         setLastPage(data?.lastPage);
         setTotalTicket(data?.total);
-        console.log(data);
       } catch (error) {
         console.log(error);
         setError(true);

@@ -18,13 +18,11 @@ export function CardTicketLot({ ticketData }: Props) {
 
   async function handleSelect(event: React.ChangeEvent<HTMLSelectElement>) {
     const value = event.target.value;
-    console.log(value)
     setLoading(true);
     try {
       const responseTotal = await api.get(
         `tickets/gettotalbyticketlot/${id}/${value}`
       );
-      console.log(responseTotal?.data)
       setTotalGain(responseTotal.data.totalGain);
       setTotalSold(responseTotal.data.totalSold);
 
@@ -42,7 +40,6 @@ export function CardTicketLot({ ticketData }: Props) {
         const responseTotal = await api.get(
           `/tickets/gettotalbyticketlot/${id}/${ticketData[0]?._id}`
         );
-        console.log(responseTotal?.data.totalGain);
         setTotalGain(responseTotal.data.totalGain);
         setTotalSold(responseTotal.data.totalSold);
       } catch (error) {

@@ -34,12 +34,10 @@ export function SearchBox() {
   useEffect(() => {
     if (!name === undefined) {
       setSearch(name!.toString().trim());
-      console.log("yes");
     }
 
     if (typeof name == "string") {
       setSearch(name?.toString().trim());
-      console.log('yes')
     }
 
     addEventOnElem(window, "scroll", activeElementOnScroll);

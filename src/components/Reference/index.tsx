@@ -5,7 +5,6 @@ import Image from "next/future/image";
 import EventService from "services/EventService";
 import { api } from "services/api";
 import { useRouter } from "next/router";
-import * as Progress from "@radix-ui/react-progress";
 import { Spinner } from "components/Spinner";
 import MulticaixaReferencePNG from "../../assets/png/payment-method/multicaixa-reference.png";
 import { CopyIcon } from "../Icon";

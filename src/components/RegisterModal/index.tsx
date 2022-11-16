@@ -48,7 +48,7 @@ export function RegisterModal({ isOpen, onRequestClose }: Props) {
     setLoading(true);
     async function fetchUsers() {
       try {
-        const { data } = await api.get(`users/findall`);
+        const { data } = await api.get(`users/findallgeneric`);
         setUserData(data);
       } catch (error) {
         console.log(error);

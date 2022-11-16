@@ -1,6 +1,8 @@
 import "../styles/globals.scss";
 import { useState } from "react";
 import type { NextPageContext } from "next";
+import { ChakraProvider } from "@chakra-ui/react";
+import { theme } from "styles/theme";
 import {
   Hydrate,
   QueryClient,
@@ -29,13 +31,15 @@ function MyApp({ Component, pageProps, err }: ExtendedAppProps<PageProps>) {
     <>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
-          <AuthProvider>
-            <AppProvider>
-              <ToastProvider>
-                <Component {...pageProps} />
-              </ToastProvider>
-            </AppProvider>
-          </AuthProvider>
+          <ChakraProvider theme={theme}>
+            <AuthProvider>
+              <AppProvider>
+                <ToastProvider>
+                  <Component {...pageProps} />
+                </ToastProvider>
+              </AppProvider>
+            </AuthProvider>
+          </ChakraProvider>
           <Devtools />
         </Hydrate>
       </QueryClientProvider>

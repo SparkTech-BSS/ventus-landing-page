@@ -46,7 +46,7 @@ export function ForgetPassword() {
     const controller = new AbortController();
     async function fetchUsers() {
       try {
-        const { data } = await api.get(`users/findall`);
+        const { data } = await api.get(`users/findallgeneric`);
         setEmails(data);
       } catch (error) {
         console.log(error);

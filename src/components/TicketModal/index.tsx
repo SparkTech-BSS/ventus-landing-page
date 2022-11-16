@@ -53,8 +53,6 @@ export function TicketModal({ isOpen, onRequestClose, data }: Props) {
     setOpenSocialShare(!openSocialShare);
   }
 
-  console.log(data);
-
   return (
     <Modal
       isOpen={isOpen}

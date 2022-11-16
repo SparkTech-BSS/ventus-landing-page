@@ -13,16 +13,16 @@ export function SupportHome() {
     <section className={styles["support-home"]}>
       <div className={`container ${styles.container}`}>
         <div className={styles["navigation-bar"]}>
-          <Link href="" passHref>
+          <Link href="/support/check-user-existence" passHref>
             <a>Verificar existência de usuário</a>
           </Link>
 
-          <Link href="" passHref>
-            <a>Gerar Refência</a>
+          <Link href="/support/generate-reference" passHref>
+            <a>Gerar Referência</a>
           </Link>
 
-          <Link href="" passHref>
-            <a>Verificar existência de tickets</a>
+          <Link href="/support/check-existence-of-tickets" passHref>
+            <a>Verificar existência de Ingressos</a>
           </Link>
         </div>
 

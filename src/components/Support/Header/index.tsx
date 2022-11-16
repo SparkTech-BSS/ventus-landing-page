@@ -1,4 +1,4 @@
-import { UserHeaderBox } from "components/UserHeaderBox";
+import { UserHeaderBox } from "../UserHeaderBox";
 import Image from "next/future/image";
 import Link from "next/link";
 import Logo from "../../../assets/svg/logo-white.svg";
@@ -16,7 +16,7 @@ export function Header() {
         <div className={styles.divider} />
         <h2 className={styles.heading}>Suporte Ventus</h2>
 
-        <UserHeaderBox color="white"/>
+        <UserHeaderBox/>
       </div>
     </header>
   );

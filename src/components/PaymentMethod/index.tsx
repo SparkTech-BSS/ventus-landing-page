@@ -14,6 +14,8 @@ import EventService from "services/EventService";
 
 import { api } from "services/api";
 
+import Link from "next/link";
+
 import { ServerError } from "components/ServerError";
 
 import {
@@ -21,8 +23,8 @@ import {
   PaySmart26Icon,
   ShoppingCartICON,
 } from "../../components/Icon";
+
 import styles from "./styles.module.scss";
-import Link from "next/link";
 
 export function PaymentMethod() {
   const router = useRouter();
@@ -129,14 +131,6 @@ export function PaymentMethod() {
         ) : (
           <>
             <div className={`container ${styles.container}`}>
-              {/* {!isAuthenticated && (
-                <div className={`${styles["offline-message-wrapper"]}`}>
-                  <span>
-                    Por favor faça o login para poder efectuar a compra do
-                    ingresso.
-                  </span>
-                </div>
-              )} */}
               <h1 className={styles["event-name"]}>{dataEvent?.event?.name}</h1>
               <span className={styles["event-info"]}>
                 Sex, Ago 12 · 21:00 Pm

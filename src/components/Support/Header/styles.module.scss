@@ -37,3 +37,14 @@
   color: var(--white-color);
   margin-right: auto;
 }
+
+@media (max-width: 1024px) {
+  .heading,
+  .divider {
+    display: none;
+  }
+
+  .container {
+    justify-content: space-between;
+  }
+}

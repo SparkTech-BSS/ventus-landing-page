@@ -110,7 +110,6 @@ export function Header() {
     document.documentElement.style.setProperty("--vh", `${vh}px`);
   }, [scrollY, windowSize.height]);
 
-  console.log(user?.groups?.includes("manager"));
 
   return (
     <>
@@ -210,6 +209,23 @@ export function Header() {
                       />
                     </a>
                   </Link>
+                ) : user?.groups?.includes("support") ? (
+                  <Link href="/support" scroll={false}>
+                  <a
+                    className={`${styles["navbar-link"]}`}
+                    data-nav-link
+                  >
+                    <BiUser
+                      size={18}
+                      className={styles["navbar-link-icon-left"]}
+                    />
+                    Área do Suporte
+                    <IoIosArrowForward
+                      size={22}
+                      className={styles["navbar-link-icon"]}
+                    />
+                  </a>
+                </Link>
                 ) : (
                   <Link href="" scroll={false}>
                     <a

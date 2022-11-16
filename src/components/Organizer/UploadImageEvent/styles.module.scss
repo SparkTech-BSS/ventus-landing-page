@@ -1,0 +1,148 @@
+.upload-image-event-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  .label {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--black-700);
+  }
+}
+
+.upload-image-event-row {
+  display: flex;
+  align-items: center;
+  gap: 3.3rem;
+  margin: 2rem 0;
+}
+
+.upload-image-event-box {
+  //   width: 100%;
+}
+
+.upload-image-event-box__loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 280px;
+  height: 190px;
+}
+
+.upload-image-event-box__empty {
+  border: 1px dashed #70aedb;
+  display: flex;
+  background-color: #fbfbfb;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 280px;
+  height: 190px;
+  position: relative;
+
+  input {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+
+  &:hover,
+  &.dragover {
+    opacity: 0.6;
+  }
+}
+
+.upload-image-event-box__full {
+  width: 280px;
+  height: 190px;
+}
+
+.upload-image-event-info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.event-image {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.upload-image-event-info--text {
+  font-size: 1.2rem;
+  display: inline;
+  max-width: 442px;
+  width: 100%;
+
+  span {
+    display: inline;
+    font-weight: 700;
+  }
+}
+
+.upload-image-event-box__empty--text {
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  color: var(--black-700);
+}
+
+.upload-image-event-info-group-btn {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.upload-image-event-info-btn {
+  font-size: 1.2rem;
+  color: #17a8fd;
+  padding: 0.5rem 2rem;
+  border-radius: 25px;
+  transition: all 0.3s;
+  font-weight: 400;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  border: 1.2px solid #17a8fd;
+
+  &:hover {
+    background-color: #17a8fd;
+    color: var(--white-color);
+  }
+}
+
+.upload-image-event-info-btn-change {
+  color: #ea6b00;
+  border: 1.2px solid #ea6b00;
+  background-color: #ea6b00;
+  color: var(--white-color);
+  position: relative;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #c95b00;
+  }
+
+  input {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+}
+
+.upload-image-event-info-btn-remove {
+  border: 1.2px solid #e11505;
+  color: #ffffff;
+  background-color: #e11505;
+  &:hover {
+    background-color: #b50c00;
+  }
+}

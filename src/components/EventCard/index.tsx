@@ -20,13 +20,17 @@ interface Props {
   width?: "full";
   multipleData?: boolean;
   data: any;
+  link?: string;
 }
 
-export function EventCard({ width, multipleData = true, data }: Props) {
+// /support/generate-reference/event-detail/
+
+export function EventCard({ width, multipleData = true, data, link }: Props) {
   const dateObject = getStartDateAndEndDate(data?.dates);
+  const linkToRedirect = link ? link : `/event-detail/${data?._id}`;
 
   return (
-    <Link href={`/event-detail/${data?._id}`} prefetch={false}>
+    <Link href={linkToRedirect} prefetch={false}>
       <a className={`${styles.card} ${width === "full" ? styles.full : ""}`}>
         <Image
           src={data?.images[0]}

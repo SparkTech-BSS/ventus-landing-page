@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { IoIosArrowForward } from "react-icons/io";
 import { useRouter } from "next/router";
 import { api } from "services/api";
@@ -32,14 +33,14 @@ export function ResultSearch({ search = "" }: Props) {
     const strAscending = [...filteredData].sort((a, b) =>
       a?.event?.name > b?.event?.name ? 1 : -1
     );
-    setFilteredData(strAscending)
+    setFilteredData(strAscending);
   }
-  
+
   function handleSortDescending() {
     const strDescending = [...filteredData].sort((a, b) =>
-    a?.event?.name > b?.event?.name ? -1 : 1
+      a?.event?.name > b?.event?.name ? -1 : 1
     );
-    setFilteredData(strDescending)
+    setFilteredData(strDescending);
   }
 
   function handleSelectSort(event: React.ChangeEvent<HTMLSelectElement>) {
@@ -84,17 +85,23 @@ export function ResultSearch({ search = "" }: Props) {
       <div className={styles.header}>
         <div className="container">
           <div className={styles["bread-crumb"]}>
-            <a className={styles["bread-crumb-link"]}>Home</a>
+            <Link href="/" passHref>
+              <a className={styles["bread-crumb-link"]}>Home</a>
+            </Link>
             <IoIosArrowForward
               size={20}
               color="#939598"
               className={styles["bread-crumb-separator"]}
             />
-            <a className={styles["bread-crumb-link"]}>Encontre Eventos</a>
+            <Link href="/events" passHref>
+              <a className={styles["bread-crumb-link"]}>Encontre Eventos</a>
+            </Link>
           </div>
 
           {name && (
-            <h2 className={styles["result-heading"]}>Resultados para: &quot;{name}&quot;</h2>
+            <h2 className={styles["result-heading"]}>
+              Resultados para: &quot;{name}&quot;
+            </h2>
           )}
         </div>
 

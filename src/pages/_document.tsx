@@ -1,10 +1,11 @@
+import { ColorModeScript } from "@chakra-ui/react";
 import { Html, Head, Main, NextScript } from "next/document";
+import { theme } from "styles/theme";
 
 export default function Document() {
   return (
     <Html lang="pt-ao" style={{ scrollBehavior: "smooth" }}>
       <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
@@ -19,6 +20,7 @@ export default function Document() {
         <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml" />
       </Head>
       <body>
+        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <Main />
 
         <NextScript />

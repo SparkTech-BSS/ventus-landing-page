@@ -31,7 +31,7 @@ export function Register() {
     const controller = new AbortController();
     async function fetchUsers() {
       try {
-        const { data } = await api.get(`users/findall`);
+        const { data } = await api.get(`users/findallgeneric`);
         setUserData(data);
       } catch (error) {
         console.log(error);

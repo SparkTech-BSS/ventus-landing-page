@@ -17,7 +17,6 @@ export function CardTableEvent() {
     try {
       const { data } = await api.get(`events/findeventsbyuserid`);
       setEvents(data);
-      console.log(data);
     } catch (error) {
       console.log(error);
     } finally {

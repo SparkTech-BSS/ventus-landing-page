@@ -9,10 +9,10 @@ import EventService from "services/EventService";
 import TicketService from "services/TicketService";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import { FiPlus, FiMinus } from "react-icons/fi";
-import styles from "./styles.module.scss";
 import { getCapitalizeFirstLetter, getShortDateFormat } from "utils";
 import { AlertModal } from "components/AlertModal";
 import { RateModal } from "components/RateModal";
+import styles from "./styles.module.scss";
 
 interface TicketsReservation {
   ticketLotId: string;
@@ -181,6 +181,8 @@ export function SelectTicket() {
   }
 
   useEffect(() => {
+    document.documentElement.style.setProperty("--overflow", `auto`);
+
     async function fetchData() {
       try {
         const eventDateSelected = localStorage.getItem(
@@ -209,7 +211,7 @@ export function SelectTicket() {
       }
     }
     fetchData();
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     localStorage.setItem("@ventus:cart", JSON.stringify(cart));
@@ -218,8 +220,6 @@ export function SelectTicket() {
   function handleBack() {
     router.back();
   }
-
-  console.log(dataTicket?.length > 1);
 
   return (
     <>

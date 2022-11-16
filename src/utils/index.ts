@@ -469,3 +469,10 @@ export function checkInRegistrationProcessIfValueExist(
   }
   return false;
 }
+
+export const formatFileSize = function (file: any) {
+  const bytes = file ? file?.size : 0;
+  const sufixes = ["B", "kB", "MB", "GB", "TB"];
+  const i = Math.floor(Math.log(bytes) / Math.log(1024));
+  return `${(bytes / Math.pow(1024, i)).toFixed(2)} ${sufixes[i]}`;
+};
