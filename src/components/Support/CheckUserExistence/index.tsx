@@ -12,6 +12,7 @@ import { api } from "services/api";
 import { CgClose } from "react-icons/cg";
 import { IoIosArrowForward } from "react-icons/io";
 import styles from "./styles.module.scss";
+import { getDateFullFormat, getObjectDate } from "utils";
 
 export function CheckUserExistence() {
   const [loading, setLoading] = useState(false);
@@ -20,6 +21,7 @@ export function CheckUserExistence() {
   const [email, setEmail] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const [activeChecking, setActiveChecking] = useState(false);
+  const [userResultData, setUserResultData] = useState<any>({});
 
   function handleSelect(event: ChangeEvent<HTMLSelectElement>) {
     const value = event.target.value as typeof checkingType;
@@ -50,7 +52,9 @@ export function CheckUserExistence() {
     try {
       const { data } = await api.get(checking_type_url);
 
-      console.log(data)
+      console.log(data);
+
+      setUserResultData(data);
 
       setActiveChecking(true);
 
@@ -76,11 +80,14 @@ export function CheckUserExistence() {
     setPhone("");
     setEmail("");
     setCheckingType("phone");
+    setUserResultData({});
   }
 
   useEffect(() => {
     document.documentElement.style.setProperty("--overflow", `auto`);
   }, []);
+
+  console.log(userResultData);
 
   return (
     <section className={`${styles["check-user-existence"]}`}>
@@ -118,16 +125,33 @@ export function CheckUserExistence() {
                   </div>
                 </div>
 
-                <div className={styles["message-container"]}>
-                  <span className={`${styles["text"]}`}>
-                    O usuário foi verificado com sucesso.
-                  </span>
-                  <button
-                    className={`${styles["btn-restart"]}`}
-                    onClick={handleRestart}
-                  >
-                    Recomeçar
-                  </button>
+                <div className={`${styles["user-data"]}`}>
+                  <h2 className={styles["user-data-heading"]}>
+                    Dados do Usuário
+                  </h2>
+                  <div className={`${styles["user-data-item"]}`}>
+                    <span>
+                      Nome: {userResultData?.firstName}{" "}
+                      {userResultData?.lastName}
+                    </span>
+                    <span>Email: {userResultData?.email}</span>
+                    <span>Telefone: {userResultData?.phone}</span>
+                    <span>
+                      Data de criação:{" "}
+                      {getDateFullFormat(userResultData?.createdAt)}
+                    </span>
+                  </div>
+                  <div className={styles["message-container"]}>
+                    <span className={`${styles["text"]}`}>
+                      O usuário foi verificado com sucesso.
+                    </span>
+                    <button
+                      className={`${styles["btn-restart"]}`}
+                      onClick={handleRestart}
+                    >
+                      Recomeçar
+                    </button>
+                  </div>
                 </div>
               </div>
             </>

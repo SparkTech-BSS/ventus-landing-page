@@ -49,6 +49,8 @@ export function GenerateReferenceSelectTicket() {
 
   const [cart, setCart] = useState<any>(initialStateCart);
 
+  const [unmounted, setUnmounted] = useState(false);
+
   const [ticketsReservation, setTicketsReservation] = useState([]);
 
   const [openRateModal, setOpenRateModal] = useState(false);
@@ -183,6 +185,8 @@ export function GenerateReferenceSelectTicket() {
 
   useEffect(() => {
     async function fetchData() {
+      if (!id) return;
+
       setLoading(true);
       try {
         const eventDateSelected = localStorage.getItem(
@@ -217,8 +221,16 @@ export function GenerateReferenceSelectTicket() {
     localStorage.setItem("@ventus:cart", JSON.stringify(cart));
   }, [cart]);
 
+  useEffect(() => {
+    setUnmounted(true);
+  }, []);
+
   function handleBack() {
     router.back();
+  }
+
+  if (!unmounted) {
+    return null;
   }
 
   return (

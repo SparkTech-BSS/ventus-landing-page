@@ -116,9 +116,12 @@ export function ClientListModal({
                           className={`${styles["list-item"]}`}
                           key={item?._id}
                         >
-                          <span className={styles["list-item-heading"]}>
-                            {item?.firstName} {item?.lastName}
-                          </span>
+                          <div className={`${styles["list-item-heading-box"]}`}>
+                            <span className={styles["list-item-heading"]}>
+                              {item?.firstName} {item?.lastName}
+                            </span>
+                            <span className={styles["list-item-subheading"]}>{item?.email}</span>
+                          </div>
 
                           <button
                             className={styles.btn}

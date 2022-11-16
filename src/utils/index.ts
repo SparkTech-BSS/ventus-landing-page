@@ -333,6 +333,32 @@ export function getObjectDate(date: string | any) {
   return dateObject;
 }
 
+export function getDateFullFormat(date: string | any) {
+  const weeks_days = [
+    "Domingo",
+    "Segunda-feira",
+    "Terça-feira",
+    "Quarta-feira",
+    "Quinta-feira",
+    "Sexta-feira",
+    "Sábado",
+  ];
+
+  const convertedToDateObject = new Date(date);
+
+  const dateObject = {
+    week_day: weeks_days[convertedToDateObject.getDay()],
+    day:
+      convertedToDateObject.getDate().toString().length > 1
+        ? convertedToDateObject.getDate()
+        : `0${convertedToDateObject.getDate()}`,
+    month: convertedToDateObject.getMonth() + 1,
+    fullYear: convertedToDateObject.getFullYear(),
+  };
+
+  return `${dateObject?.week_day} de ${dateObject?.day}-${dateObject?.month}-${dateObject?.fullYear}`;
+}
+
 export function getShortDateFormat(date: string) {
   const weeks_days = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"];
 

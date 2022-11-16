@@ -31,6 +31,8 @@ import styles from "./styles.module.scss";
 export function GenerateReferenceEventDetail() {
   const router = useRouter();
 
+  const [unmounted, setUnmounted] = useState(false);
+
   const [loading, setLoading] = useState(true);
 
   const [dataEvent, setDataEvent] = useState<any>([]);
@@ -45,10 +47,14 @@ export function GenerateReferenceEventDetail() {
 
   useEffect(() => {
     document.documentElement.style.setProperty("--overflow", `auto`);
+
     async function fetchData() {
+      if (!id) return;
+
+      setLoading(true);
       try {
-        const eventData = await EventService.findById(id);
-        const ticketData = await TicketService.findByEventId(id);
+        const eventData = await EventService.findById(String(id));
+        const ticketData = await TicketService.findByEventId(String(id));
 
         setDataEvent(eventData);
         setDataTicket(ticketData);
@@ -62,12 +68,18 @@ export function GenerateReferenceEventDetail() {
     fetchData();
   }, [id]);
 
+  useEffect(() => {
+    setUnmounted(true);
+  }, []);
+
   function getPrice(list: any) {
     if (!list) return [];
     return list?.map((item: any) => item.price);
   }
 
   function getFirstAndLastPrice() {
+    if (!Array.isArray(dataTicket)) return [];
+
     const array = getPrice(dataTicket);
 
     const minValue = Math.min(...array);
@@ -84,6 +96,10 @@ export function GenerateReferenceEventDetail() {
     return <ServerError />;
   }
 
+  if (!unmounted) {
+    return null;
+  }
+
   return (
     <section className={styles["event-detail"]}>
       <div className={`container`}>
@@ -95,16 +111,15 @@ export function GenerateReferenceEventDetail() {
           <IoIosArrowForward size={16} color="#f3f3f3" />
 
           <Link href="/support/generate-reference" passHref>
-            <a
-              className={`${styles["breadcrumbs-link"]}`}
-            >
-              Gerar Referência
-            </a>
+            <a className={`${styles["breadcrumbs-link"]}`}>Gerar Referência</a>
           </Link>
 
           <IoIosArrowForward size={16} color="#f3f3f3" />
 
-          <Link href={`/support/generate-reference/event-detail/${id}`} passHref>
+          <Link
+            href={`/support/generate-reference/event-detail/${id}`}
+            passHref
+          >
             <a
               className={`${styles["breadcrumbs-link"]} ${styles["breadcrumbs-active-link"]}`}
             >
@@ -365,7 +380,10 @@ export function GenerateReferenceEventDetail() {
                   </h2>
                 </div>
               </div>
-              <Link href={`/support/generate-reference/select-ticket/${id}`} prefetch={false}>
+              <Link
+                href={`/support/generate-reference/select-ticket/${id}`}
+                prefetch={false}
+              >
                 <button
                   className={styles["btn-buy-ticket"]}
                   disabled={!selectedDate}

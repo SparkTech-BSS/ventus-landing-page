@@ -137,8 +137,23 @@
   margin-bottom: 1rem;
 }
 
+.list-item-heading-box {
+  display: flex;
+  flex-direction: column;
+}
+
 .list-item-heading {
   font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 20rem;
+  text-overflow: ellipsis;
+  font-size: 1.4rem;
+}
+
+.list-item-subheading {
+  font-weight: 500;
+  font-size: 1.2rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
