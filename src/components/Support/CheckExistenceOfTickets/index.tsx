@@ -118,6 +118,7 @@ export function CheckExistenceOfTickets() {
               </a>
             </Link>
           </div>
+          
 
           <div className={styles["card-table-event"]}>
             <span className={styles.total}>Total de clientes: {users?.length}</span>
