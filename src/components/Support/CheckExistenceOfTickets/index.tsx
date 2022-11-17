@@ -62,18 +62,17 @@ export function CheckExistenceOfTickets() {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const { data } = await api.get(`users/findall/${count}`);
+      const { data } = await api.get(`/users/findallgeneric`);
       setUsers(
-        [...data?.users].sort((a, b) => (a?.firstName > b?.firstName ? 1 : -1))
+        [...data].sort((a, b) => (a?.firstName > b?.firstName ? 1 : -1))
       );
-      setTotalUser(data?.total);
     } catch (error) {
       console.log(error);
       setError(true);
     } finally {
       setLoading(false);
     }
-  }, [count]);
+  }, []);
 
   useEffect(() => {
     setFilteredData(
@@ -121,9 +120,7 @@ export function CheckExistenceOfTickets() {
           </div>
 
           <div className={styles["card-table-event"]}>
-            <span className={styles.total}>
-              Total de clientes: {totalUser}
-            </span>
+            <span className={styles.total}>Total de clientes: {totalUser}</span>
             <div className={styles["card-table-event-header"]}>
               <div
                 className={`${styles["card-table-event-header__block"]} ${styles["card-table-event-header__block-full"]}`}
@@ -198,14 +195,6 @@ export function CheckExistenceOfTickets() {
                   </tbody>
                 </table>
               )}
-              <div className={styles.pagination}>
-                <CustomPagination
-                  currentPage={count}
-                  totalCount={totalUser}
-                  pageSize={10}
-                  onPageChange={onPageChange}
-                />
-              </div>
             </div>
           </div>
         </div>

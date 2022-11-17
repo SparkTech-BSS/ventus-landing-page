@@ -15,6 +15,7 @@ import { AppProvider } from "../contexts/AppContext";
 import { ToastProvider } from "react-toast-notifications";
 import type { AppProps } from "next/app";
 import type { DehydratedState } from "@tanstack/react-query";
+import "react-quill/dist/quill.snow.css";
 
 interface PageProps {
   dehydratedState?: DehydratedState;

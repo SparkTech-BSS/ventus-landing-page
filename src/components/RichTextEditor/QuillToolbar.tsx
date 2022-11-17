@@ -1,6 +1,5 @@
 import React from "react";
 import { Quill } from "react-quill";
-import "react-quill/dist/quill.snow.css";
 
 const CustomUndo = () => (
   <svg viewBox="0 0 18 18">
@@ -22,7 +21,7 @@ const CustomRedo = () => (
   </svg>
 );
 
-function undoChange(this: any) { 
+function undoChange(this: any) {
   this.quill.history.undo();
 }
 

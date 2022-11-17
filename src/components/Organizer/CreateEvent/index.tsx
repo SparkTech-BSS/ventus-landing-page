@@ -4,22 +4,15 @@ import { Switch } from "@chakra-ui/react";
 import { CgMathPlus } from "react-icons/cg";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
-import { useEditor, EditorContent } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
+import { useEditor, EditorContent } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
 import { Input } from "../Input";
 import { Select } from "../Select";
 import { UploadImageEvent } from "../UploadImageEvent";
-// import RichTextEditor from "components/RichTextEditor";
+import RichTextEditor from "components/RichTextEditor";
 import styles from "./styles.module.scss";
 
 export function CreateEvent() {
-  const editor = useEditor({
-    extensions: [
-      StarterKit,
-    ],
-    content: '<p>Hello World! 🌎️</p>',
-  })
-
   useEffect(() => {
     document.documentElement.style.setProperty("--overflow", `auto`);
   }, []);
@@ -83,8 +76,7 @@ export function CreateEvent() {
             diferenciais da sua produção!
           </span>
 
-          {/* <RichTextEditor/> */}
-          <EditorContent editor={editor} />
+          <RichTextEditor />
         </div>
 
         <div className={`${styles["card-box"]}`}>
@@ -199,6 +191,24 @@ export function CreateEvent() {
               </tbody>
             </table>
           </div>
+        </div>
+
+        <div className={`${styles["card-box"]}`}>
+          <h2 className={`${styles["card-box-heading"]}`}>
+            6. Sobre o produtor
+          </h2>
+          <span className={styles["card-box-subheading"]}>
+            Conte um pouco sobre você ou a sua empresa. É importante mostrar ao
+            público quem está por trás do evento, dando mais credibilidade à sua
+            produção.
+          </span>
+
+          <Input
+            label="Nome"
+            requiredSymbol
+            margin="2rem 0 2rem"
+            placeholder="Nome do evento"
+          />
         </div>
       </form>
     </section>
