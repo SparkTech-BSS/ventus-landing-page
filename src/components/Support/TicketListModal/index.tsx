@@ -89,7 +89,7 @@ export function TicketListModal({
                       Lista dos ingressos
                     </span>
                     <span className={styles.count}>
-                      {tickets?.length} Ingressos
+                      {totalTicket} Ingressos
                     </span>
 
                     <div className={styles["ticket-wrapper"]}>
