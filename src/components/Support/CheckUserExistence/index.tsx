@@ -117,7 +117,7 @@ export function CheckUserExistence() {
               <a
                 className={`${styles["breadcrumbs-link"]} ${styles["breadcrumbs-active-link"]}`}
               >
-                Verificar existência do usuário
+                Verificar existência do usuário ou do ingresso
               </a>
             </Link>
           </div>

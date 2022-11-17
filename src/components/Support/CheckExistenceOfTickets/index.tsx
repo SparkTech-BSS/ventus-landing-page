@@ -114,7 +114,7 @@ export function CheckExistenceOfTickets() {
               <a
                 className={`${styles["breadcrumbs-link"]} ${styles["breadcrumbs-active-link"]}`}
               >
-                Verificar existência de Ingressos
+                Verificar existência dos ingressos
               </a>
             </Link>
           </div>

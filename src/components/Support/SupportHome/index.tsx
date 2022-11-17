@@ -14,7 +14,7 @@ export function SupportHome() {
       <div className={`container ${styles.container}`}>
         <div className={styles["navigation-bar"]}>
           <Link href="/support/check-user-existence" passHref>
-            <a>Verificar existência de usuário</a>
+            <a>Verificar existência de usuário ou do ingresso</a>
           </Link>
 
           <Link href="/support/generate-reference" passHref>
@@ -22,7 +22,7 @@ export function SupportHome() {
           </Link>
 
           <Link href="/support/check-existence-of-tickets" passHref>
-            <a>Verificar existência de Ingressos</a>
+            <a>Verificar existência dos ingressos</a>
           </Link>
         </div>
 
