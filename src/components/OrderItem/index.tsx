@@ -41,7 +41,7 @@ export function OrderItem({ data }: Props) {
   const isExpiredOrder = useMemo(() => {
     const distanceBetweenDate = countDownDate - new Date().getTime();
     return distanceBetweenDate <= 0 ? true : false;
-  }, []);
+  }, [countDownDate]);
 
   useEffect(() => {
     let x = setInterval(() => {
