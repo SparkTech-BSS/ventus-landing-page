@@ -129,10 +129,11 @@
     -moz-appearance: none !important;
     -webkit-appearance: none !important;
     appearance: none !important;
-    color: #5d3019;
+    color: var(--black-900);
     font-size: 1.6rem;
     transition: all 0.2s;
     outline: none;
+    font-family: var(--ff-inter);
 
     &:focus {
       box-shadow: 0 0 0 0.25rem #ff55555c;

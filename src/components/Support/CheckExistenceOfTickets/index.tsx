@@ -62,7 +62,7 @@ export function CheckExistenceOfTickets() {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const { data } = await api.get(`/users/findallgeneric`);
+      const { data } = await api.get(`users/findallgeneric`);
       setUsers(
         [...data].sort((a, b) => (a?.firstName > b?.firstName ? 1 : -1))
       );
@@ -118,7 +118,7 @@ export function CheckExistenceOfTickets() {
               </a>
             </Link>
           </div>
-          
+
 
           <div className={styles["card-table-event"]}>
             <span className={styles.total}>Total de clientes: {users?.length}</span>

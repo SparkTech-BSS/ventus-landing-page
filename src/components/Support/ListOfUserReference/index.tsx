@@ -49,7 +49,7 @@ export function ListOfUserReference() {
   function handleOpenOrdersModal() {
     setOpenOrdersModal(true);
   }
-  
+
   function handleCloseOrdersModal() {
     setOpenOrdersModal(false);
   }
@@ -61,18 +61,17 @@ export function ListOfUserReference() {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const { data } = await api.get(`users/findall/${count}`);
+      const { data } = await api.get(`users/findallgeneric`);
       setUsers(
-        [...data?.users].sort((a, b) => (a?.firstName > b?.firstName ? 1 : -1))
+        [...data].sort((a, b) => (a?.firstName > b?.firstName ? 1 : -1))
       );
-      setTotalUser(data?.total);
     } catch (error) {
       console.log(error);
       setError(true);
     } finally {
       setLoading(false);
     }
-  }, [count]);
+  }, []);
 
   useEffect(() => {
     setFilteredData(
@@ -111,16 +110,17 @@ export function ListOfUserReference() {
             <IoIosArrowForward size={16} color="#AAAAAA" />
 
             <Link href="/support/generate-reference" passHref>
-              <a
-                className={`${styles["breadcrumbs-link"]}`}
-              >
+              <a className={`${styles["breadcrumbs-link"]}`}>
                 Gerar Referência
               </a>
             </Link>
-            
+
             <IoIosArrowForward size={16} color="#AAAAAA" />
 
-            <Link href="/support/generate-reference/list-of-user-reference" passHref>
+            <Link
+              href="/support/generate-reference/list-of-user-reference"
+              passHref
+            >
               <a
                 className={`${styles["breadcrumbs-link"]} ${styles["breadcrumbs-active-link"]}`}
               >
@@ -130,7 +130,7 @@ export function ListOfUserReference() {
           </div>
 
           <div className={styles["card-table-event"]}>
-            <span className={styles.total}>Total de clientes: {totalUser}</span>
+            <span className={styles.total}>Total de clientes: {users?.length}</span>
             <div className={styles["card-table-event-header"]}>
               <div
                 className={`${styles["card-table-event-header__block"]} ${styles["card-table-event-header__block-full"]}`}
@@ -202,14 +202,6 @@ export function ListOfUserReference() {
                   </tbody>
                 </table>
               )}
-              <div className={styles.pagination}>
-                <CustomPagination
-                  currentPage={count}
-                  totalCount={totalUser}
-                  pageSize={10}
-                  onPageChange={onPageChange}
-                />
-              </div>
             </div>
           </div>
         </div>
