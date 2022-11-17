@@ -120,7 +120,7 @@ export function CheckExistenceOfTickets() {
           </div>
 
           <div className={styles["card-table-event"]}>
-            <span className={styles.total}>Total de clientes: {totalUser}</span>
+            <span className={styles.total}>Total de clientes: {users?.length}</span>
             <div className={styles["card-table-event-header"]}>
               <div
                 className={`${styles["card-table-event-header__block"]} ${styles["card-table-event-header__block-full"]}`}
