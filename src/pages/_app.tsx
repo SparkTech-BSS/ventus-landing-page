@@ -63,7 +63,7 @@ function MyApp({ Component, pageProps, err }: ExtendedAppProps<PageProps>) {
         });
           `,
         }}
-      ></Script>
+      />
 
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
