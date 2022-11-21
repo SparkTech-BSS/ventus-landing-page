@@ -37,7 +37,7 @@ function MyApp({ Component, pageProps, err }: ExtendedAppProps<PageProps>) {
       />
 
       <Script
-        id='google-analytics'
+        id="google-analytics"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
@@ -51,6 +51,19 @@ function MyApp({ Component, pageProps, err }: ExtendedAppProps<PageProps>) {
       `,
         }}
       />
+
+      <Script
+        id="event-snippet"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+          gtag('event', 'conversion', {
+            'send_to': 'AW-881543199/4bM1CI6brIAYEJ-QraQD',
+            'transaction_id': ''
+        });
+          `,
+        }}
+      ></Script>
 
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
