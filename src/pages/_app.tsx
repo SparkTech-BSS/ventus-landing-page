@@ -1,5 +1,6 @@
 import "../styles/globals.scss";
 import { useState } from "react";
+import Script from "next/script";
 import type { NextPageContext } from "next";
 import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "styles/theme";
@@ -30,6 +31,27 @@ function MyApp({ Component, pageProps, err }: ExtendedAppProps<PageProps>) {
 
   return (
     <>
+      <Script
+        strategy="afterInteractive"
+        src="https://www.googletagmanager.com/gtag/js?id=AW-881543199"
+      />
+
+      <Script
+        id='google-analytics'
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+          window.dataLayer = window.dataLayer || []; 
+          function gtag(){
+          dataLayer.push(arguments);
+        } 
+        gtag('js', new Date()); gtag('config', 'AW-881543199', {
+          page_path: window.location.pathname,
+        });
+      `,
+        }}
+      />
+
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
           <ChakraProvider theme={theme}>

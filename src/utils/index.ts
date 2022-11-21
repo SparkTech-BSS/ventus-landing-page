@@ -502,3 +502,14 @@ export const formatFileSize = function (file: any) {
   const i = Math.floor(Math.log(bytes) / Math.log(1024));
   return `${(bytes / Math.pow(1024, i)).toFixed(2)} ${sufixes[i]}`;
 };
+
+export function getProvincesDate(
+  ProvinceData: Array<{ id: number; name: string }>
+) {
+  return ProvinceData.map((item) => {
+    return {
+      value: item.name,
+      label: item.name,
+    };
+  });
+}

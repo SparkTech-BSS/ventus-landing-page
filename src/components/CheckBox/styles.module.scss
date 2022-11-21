@@ -1,0 +1,24 @@
+.CheckboxRoot {
+  background-color: var(--white-color);
+  width: 25px;
+  height: 25px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--primary-color);
+
+  
+}
+
+.CheckboxRoot[data-state='checked'] {
+    background-color: var(--primary-color);
+}
+
+.CheckboxRoot:focus {
+  box-shadow: 0 0 0 2px black;
+}
+
+.CheckboxIndicator {
+  color: var(--white-color);
+}
