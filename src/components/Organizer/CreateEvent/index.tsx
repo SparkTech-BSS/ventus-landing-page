@@ -7,6 +7,7 @@ import { BsTrash } from "react-icons/bs";
 import { Input } from "../Input";
 import { Select } from "../Select";
 import MapPage from "../MapPage";
+import { addEventOnElem, removeEventOnElem } from "utils";
 import { CreateTickeModal } from "../CreateTicketModal";
 import { UploadImageEvent } from "../UploadImageEvent";
 import RichTextEditor from "components/RichTextEditor";
@@ -14,10 +15,12 @@ import { CheckBox } from "components/CheckBox";
 import { ProvinceData } from "data";
 import { getProvincesDate } from "utils";
 import styles from "./styles.module.scss";
+import { SwitchButton } from "../SwitchButton";
 
 Modal.setAppElement("#__next");
 
 export function CreateEvent() {
+  const [activeHeader, setActiveHeader] = useState(false);
   const [openCreateTicketModal, setOpenCreateTicketModal] = useState(false);
 
   function handleOpenCreateTicketModal() {
@@ -28,6 +31,22 @@ export function CreateEvent() {
     setOpenCreateTicketModal(false);
   }
 
+  const activeElementOnScroll = function () {
+    if (window.scrollY > 100) {
+      setActiveHeader(true);
+    } else {
+      setActiveHeader(false);
+    }
+  };
+
+  useEffect(() => {
+    addEventOnElem(window, "scroll", activeElementOnScroll);
+
+    return () => {
+      removeEventOnElem(window, "scroll", activeElementOnScroll);
+    };
+  }, []);
+
   useEffect(() => {
     document.documentElement.style.setProperty("--overflow", `auto`);
   }, []);
@@ -35,23 +54,45 @@ export function CreateEvent() {
   return (
     <>
       <section className={styles["create-event"]}>
-        <div className={styles["create-event-header"]}>
+        <div
+          className={`${styles["create-event-header"]} ${
+            activeHeader && styles.active
+          }`}
+        >
           <div
-            className={`container ${styles["create-event-header__wrapper"]}`}
+            className={`container ${styles["create-event-header__wrapper"]} ${
+              activeHeader && styles.active
+            }`}
           >
-            <h1 className={styles["heading"]}>
+            <h1
+              className={`${styles["heading"]} ${
+                activeHeader && styles.active
+              }`}
+            >
               Criar{" "}
               <span className={styles["heading-bold"]}>Evento Presencial</span>
             </h1>
 
             <div className={styles["btn-group"]}>
-              <a className={`${styles["btn"]} ${styles["btn-full"]}`}>
+              <a
+                className={`${styles["btn"]} ${styles["btn-full"]} ${
+                  activeHeader && styles.active
+                }`}
+              >
                 PUBLICAR EVENTO
               </a>
-              <a className={`${styles["btn"]} ${styles["btn-outline"]}`}>
+              <a
+                className={`${styles["btn"]} ${styles["btn-outline"]} ${
+                  activeHeader && styles.active
+                }`}
+              >
                 PRÉ-VISUALIZAR
               </a>
-              <a className={`${styles["btn"]} ${styles["btn-outline"]}`}>
+              <a
+                className={`${styles["btn"]} ${styles["btn-outline"]} ${
+                  activeHeader && styles.active
+                }`}
+              >
                 SALVAR RASCUNHO
               </a>
             </div>
@@ -154,7 +195,9 @@ export function CreateEvent() {
             </div>
           </div>
 
-          <div className={`${styles["card-box"]}`}>
+          <div
+            className={`${styles["card-box"]} ${styles["card-box-configuration"]}`}
+          >
             <h2 className={`${styles["card-box-heading"]}`}>5. Ingressos</h2>
             <span className={styles["card-box-subheading-center"]}>
               Que tipo de ingresso você deseja criar?
@@ -217,23 +260,40 @@ export function CreateEvent() {
                         >
                           <AiOutlineEdit size={22} />
                         </button>
-                        <Link
-                          // href={`/organizer/event-detail/${item?._id}`}
-                          href=""
-                          passHref
+                        <button
+                          className={`${styles["btn-actions"]}`}
+                          title="Visualizar"
                         >
-                          <button
-                            className={`${styles["btn-actions"]}`}
-                            title="Visualizar"
-                          >
-                            <BsTrash size={22} />
-                          </button>
-                        </Link>
+                          <BsTrash size={22} />
+                        </button>
                       </span>
                     </td>
                   </tr>
                 </tbody>
               </table>
+            </div>
+
+            <div className={`${styles["card-configuration"]}`}>
+              <h3 className={`${styles["card-configuration-heading"]}`}>
+                Configurações
+              </h3>
+
+              <div className={styles["card-configuration-row"]}>
+                <div className={styles["card-configuration-box-row"]}>
+                  <SwitchButton />
+
+                  <label>Absorver a taxa de serviço</label>
+                </div>
+
+                <div className={styles["card-configuration-box-row"]}>
+                  <label>Nomenclatura</label>
+
+                  <select className={`${styles["card-configuration-select"]}`}>
+                    <option value="Ingresso">Ingresso</option>
+                    <option value="Inscrição">Inscrição</option>
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -255,7 +315,9 @@ export function CreateEvent() {
             />
 
             <div className={`${styles["input-box"]}`}>
-              <label>Descrição do produtor (opcional)</label>
+              <label className={styles["input-box-label"]}>
+                Descrição do produtor (opcional)
+              </label>
 
               <textarea
                 className={`${styles["input-description"]}`}

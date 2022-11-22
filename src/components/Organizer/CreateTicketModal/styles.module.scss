@@ -252,10 +252,35 @@ Radio Button Styles
 .btn-group {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
+  width: 100%;
   gap: 2rem;
 }
 
 .btn {
+  padding: 0.5rem 1.5rem;
+  border-radius: 25px;
+  transition: all 0.3s;
+  font-weight: 600;
   font-size: 1.4rem;
-  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.btn-cancel {
+  color: #17a8fd;
+
+  &:hover {
+    color: #117bb8;
+  }
+}
+
+.btn-full {
+  color: var(--white-color);
+
+  background-color: #00ad4f;
+
+  &:hover {
+    background-color: #00632d;
+    color: var(--white-color);
+  }
 }

@@ -5,6 +5,22 @@
 
 .create-event-header {
   border-bottom: 1px solid #e8e8e8;
+
+  background-color: var(--white-color);
+  position: absolute;
+  position: fixed;
+  top: 5rem;
+  left: 0;
+  width: 100%;
+  z-index: 900;
+  z-index: 999;
+  transition: all 0.4s linear;
+  padding-top: 2rem;
+
+  &.active {
+    z-index: 999;
+    //  top: 0;
+  }
 }
 
 .create-event-header__wrapper {
@@ -13,13 +29,18 @@
   justify-content: space-between;
   width: 100%;
   padding: 2rem 0 3rem;
+  transition: all 0.4s linear;
+
+  &.active {
+    padding: 0.5rem 0 2rem;
+  }
 }
 
 .create-event-content {
   background-color: #fbfbfb;
   display: flex;
   flex-direction: column;
-  padding: 2rem 0;
+  padding: 10rem 0 2rem;
 }
 
 .heading {
@@ -27,9 +48,14 @@
   color: var(--black-700);
   font-size: 2.8rem;
   font-weight: 400;
+  transition: all 0.4s linear;
   span {
     display: inline;
     font-weight: 700;
+  }
+
+  &.active {
+    font-size: 2.3rem;
   }
 }
 
@@ -45,12 +71,16 @@
   font-weight: 600;
   font-size: 1.3rem;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.4s;
 
   &:hover {
     background: #136a9c;
     color: var(--white-color);
     border: 1px solid #136a9c;
+  }
+
+  &.active {
+    font-size: 1.1rem;
   }
 }
 
@@ -71,6 +101,11 @@
   border-radius: 5px;
   padding: 3rem;
   margin-bottom: 2rem;
+  position: relative;
+}
+
+.card-box-configuration {
+  padding-bottom: 16rem;
 }
 
 .card-box-heading {
@@ -115,6 +150,7 @@
   justify-content: center;
   gap: 2rem;
   margin: 2rem 0;
+  transition: all 0.4s linear;
 }
 
 .ticket-btn {
@@ -287,6 +323,11 @@
   flex-direction: column;
 }
 
+.input-box-label {
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
 .input-description {
   resize: none;
   color: var(--black-900);
@@ -325,5 +366,66 @@
   font-size: 1.2rem;
   a {
     display: inline;
+  }
+}
+
+.card-configuration {
+  margin-top: 4rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fbfbfb;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 2rem;
+  border-top: 2px solid #ebebeb;
+
+  .card-configuration-heading {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--black-700);
+  }
+
+  .card-configuration-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 3rem;
+  }
+
+  .card-configuration-box-row {
+    display: flex;
+    align-items: center;
+    width: auto;
+    gap: 1.4rem;
+    label {
+      gap: 1.4rem;
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: var(--black-700);
+    }
+  }
+
+  .card-configuration-select {
+    height: 3.5rem;
+    color: var(--black-900);
+    border-radius: 5px;
+    font-size: 1.4rem;
+    font-weight: 400;
+    transition: all 0.3s;
+    padding: 0rem 1rem;
+    border: 1px solid #d9d9d9;
+
+    &:focus {
+      outline: 0;
+      border: 1px solid var(--primary-color);
+      box-shadow: 0 0 0 0.25rem #ffcaca;
+    }
+
+    option {
+      padding: 1rem 0;
+    }
   }
 }

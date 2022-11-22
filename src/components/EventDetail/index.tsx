@@ -85,7 +85,7 @@ export function EventDetail() {
     if (minValue === maxValue) {
       return `kz${maxValue},00`;
     } else if (maxValue > minValue) {
-      return `kz${maxValue},00 até kz${minValue},00`;
+      return `kz${minValue},00 até kz${maxValue},00`;
     }
   }
 
