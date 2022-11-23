@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Modal from "react-modal";
+import { useForm, SubmitHandler, Controller  } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { EventDTO } from "../../../dto/EventDTO";
 import { CgMathPlus } from "react-icons/cg";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
 import { Input } from "../Input";
 import { Select } from "../Select";
 import MapPage from "../MapPage";
+import { eventSchema } from "../../../validations/EventValidation";
 import { addEventOnElem, removeEventOnElem } from "utils";
-import { CreateTickeModal } from "../CreateTicketModal";
+import { CreateTicketLotModal } from "../CreateTicketLotModal";
 import { UploadImageEvent } from "../UploadImageEvent";
 import RichTextEditor from "components/RichTextEditor";
 import { CheckBox } from "components/CheckBox";
@@ -16,12 +20,29 @@ import { ProvinceData } from "data";
 import { getProvincesDate } from "utils";
 import styles from "./styles.module.scss";
 import { SwitchButton } from "../SwitchButton";
+import { CheckedState } from "@radix-ui/react-checkbox";
 
 Modal.setAppElement("#__next");
 
 export function CreateEvent() {
   const [activeHeader, setActiveHeader] = useState(false);
   const [openCreateTicketModal, setOpenCreateTicketModal] = useState(false);
+  const [acceptResponsibility, setAcceptResponsibility] = useState<CheckedState>(false);
+  const [eventImage, setEventImage] = useState('');
+
+  const {
+    reset,
+    watch,
+    control,
+    setValue,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<EventDTO>({
+    mode: "all",
+    reValidateMode: "onChange",
+    resolver: yupResolver(eventSchema),
+  });
 
   function handleOpenCreateTicketModal() {
     setOpenCreateTicketModal(true);
@@ -135,7 +156,7 @@ export function CreateEvent() {
               placeholder="Nome do evento"
             />
 
-            <UploadImageEvent />
+            <UploadImageEvent setEventImage={setEventImage}/>
           </div>
 
           <div className={`${styles["card-box"]}`}>
@@ -333,7 +354,7 @@ export function CreateEvent() {
 
             <div className={styles["responsibility-wrapper"]}>
               <div>
-                <CheckBox />
+                {/* <CheckBox /> */}
               </div>
 
               <p className={styles["responsibility-text"]}>
@@ -348,10 +369,10 @@ export function CreateEvent() {
         </form>
       </section>
 
-      <CreateTickeModal
+      {/* <CreateTickeModal
         isOpen={openCreateTicketModal}
         onRequestClose={handleCloseCreateTicketModal}
-      />
+      /> */}
     </>
   );
 }

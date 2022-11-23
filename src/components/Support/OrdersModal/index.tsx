@@ -3,6 +3,7 @@ import Modal from "react-modal";
 import { api } from "services/api";
 import { Loading } from "components/Loading";
 import { CgClose } from "react-icons/cg";
+
 import { OrdersModalItem } from "../OrdersModalItem";
 import styles from "./styles.module.scss";
 

@@ -3,6 +3,19 @@
   padding-block-start: calc(var(--section-padding) + 40px);
 }
 
+.loading-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.4);
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
 .create-event-header {
   border-bottom: 1px solid #e8e8e8;
 
@@ -428,4 +441,15 @@
       padding: 1rem 0;
     }
   }
+}
+
+.error-message {
+  color: #ff0000;
+  font-size: 1.2rem;
+}
+
+.error-message-accept-responsibility {
+  color: #ff0000;
+  font-size: 1.2rem;
+  margin-top: 1rem;
 }

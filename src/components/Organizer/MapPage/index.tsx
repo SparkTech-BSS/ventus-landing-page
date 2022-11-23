@@ -20,7 +20,7 @@ const MapPage = () => {
   const [map, setMap] = useState(null);
   const [marker, setMarker] = useState<any>(null);
 
-  console.log(marker);
+  //console.log(marker);
 
   const onLoad = useCallback(function callback(map: any) {
     // This is just an example of getting and using the map instance!!! don't just blindly copy!
