@@ -126,8 +126,6 @@ export function Header() {
           <SearchBox />
 
           <nav className={`${styles.navbar} ${showMenu ? styles.active : ""}`}>
-            {/* <UserHeaderMobileBox handleCloseMenu={handleCloseMenu} /> */}
-
             <UserHeaderMobileBox handleCloseMenu={handleCloseMenu} />
 
             <ul className={`${styles["navbar-list"]}`}>

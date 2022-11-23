@@ -3,6 +3,8 @@ import Link from "next/link";
 import Modal from "react-modal";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useRouter } from "next/router";
+import { useToasts } from "react-toast-notifications";
 import { EventDTO } from "../../../dto/EventDTO";
 import { TicketLotDTO } from "dto/TicketLotDTO";
 import { CgMathPlus } from "react-icons/cg";
@@ -29,12 +31,12 @@ import styles from "./styles.module.scss";
 Modal.setAppElement("#__next");
 
 export function CreateEvent() {
+  const router = useRouter();
+  const { addToast } = useToasts();
   const [loading, setLoading] = useState(false);
   const [activeHeader, setActiveHeader] = useState(false);
   const [ticketLot, setTicketLot] = useState<TicketLotDTO[]>([]);
   const [openCreateTicketModal, setOpenCreateTicketModal] = useState(false);
-  const [acceptResponsibility, setAcceptResponsibility] =
-    useState<CheckedState>(false);
   const [eventImage, setEventImage] = useState("");
   const [categories, setCategories] = useState<any>([]);
   const [ticketLotEditedData, setTicketLotEditedData] =
@@ -97,6 +99,7 @@ export function CreateEvent() {
           })
         );
       } catch (error) {
+        console.log(error);
       } finally {
         setLoading(false);
       }
@@ -109,8 +112,43 @@ export function CreateEvent() {
     setTicketLot(ticketLot.filter((item: TicketLotDTO) => item?.id !== id));
   }
 
-  const onSubmit: SubmitHandler<EventDTO> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<EventDTO> = async (data) => {
+    if (!ticketLot.length || !eventImage.length) return;
+
+    setLoading(true);
+
+    const formattedData = {
+      about: data.about,
+      category: data.category,
+      endDate: data.endDate,
+      endTime: data.endTime,
+      location: data.location,
+      name: data.name,
+      organizerName: data.organizerName,
+      startDate: data.startDate,
+      startTime: data.startTime,
+      ticketsLot: ticketLot,
+      images: eventImage,
+    };
+
+    try {
+      const response = await api.post("events/create", formattedData);
+
+      addToast("Evento Criado com sucesso...", {
+        appearance: "success",
+        autoDismiss: true,
+      });
+
+      router.push(`/organizer/dashboard`);
+    } catch (error) {
+      addToast("Erro ao criar o evento...", {
+        appearance: "error",
+        autoDismiss: true,
+      });
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
