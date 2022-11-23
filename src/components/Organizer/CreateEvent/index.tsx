@@ -50,7 +50,7 @@ export function CreateEvent() {
     setValue,
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitted },
   } = useForm<EventDTO>({
     mode: "all",
     reValidateMode: "onChange",
@@ -88,7 +88,6 @@ export function CreateEvent() {
       setLoading(true);
       try {
         const { data } = await api.get("categories/findall");
-        console.log(data);
         setCategories(
           data.map((item: any) => {
             return {
@@ -105,6 +104,10 @@ export function CreateEvent() {
 
     fetchData();
   }, []);
+
+  function handleRemoveTicketLotItem(id: string) {
+    setTicketLot(ticketLot.filter((item: TicketLotDTO) => item?.id !== id));
+  }
 
   const onSubmit: SubmitHandler<EventDTO> = (data) => {
     console.log(data);
@@ -182,7 +185,14 @@ export function CreateEvent() {
               label="Província"
               options={getProvincesDate(ProvinceData)}
             />
-            <Input label="Local" requiredSymbol margin="2rem 0 2rem" />
+            <Input
+              label="Local"
+              placeholder="Preencha o local do evento"
+              requiredSymbol
+              margin="2rem 0 2rem"
+              {...register("location")}
+              errorMessage={errors?.location?.message}
+            />
             <MapPage />
           </div>
 
@@ -199,12 +209,25 @@ export function CreateEvent() {
                 requiredSymbol
                 margin="2rem 0 2rem"
                 placeholder="Nome do evento"
+                {...register("name")}
+                errorMessage={errors?.name?.message}
               />
 
-              <Select label="Categoria" options={categories} />
+              <Select
+                label="Categoria"
+                options={categories}
+                {...register("category")}
+                errorMessage={errors?.category?.message}
+              />
             </div>
 
             <UploadImageEvent setEventImage={setEventImage} />
+
+            {isSubmitted && !eventImage.length && (
+              <span className={styles["error-message"]}>
+                Imagem obrigatório
+              </span>
+            )}
           </div>
 
           <div className={`${styles["card-box"]}`}>
@@ -220,6 +243,7 @@ export function CreateEvent() {
               <textarea
                 className={`${styles["input-description"]}`}
                 placeholder=""
+                {...register("about")}
                 style={{ marginTop: 40 }}
               />
             </div>
@@ -238,28 +262,32 @@ export function CreateEvent() {
                 label="Data de Início"
                 requiredSymbol
                 type="date"
-                placeholder="Nome do evento"
+                {...register("startDate")}
+                errorMessage={errors?.startDate?.message}
               />
 
               <Input
                 label="Hora de Início"
                 requiredSymbol
                 type="time"
-                placeholder="Nome do evento"
+                {...register("startTime")}
+                errorMessage={errors?.startTime?.message}
               />
 
               <Input
                 label="Data de Término "
                 requiredSymbol
                 type="date"
-                placeholder="Nome do evento"
+                {...register("endDate")}
+                errorMessage={errors?.endDate?.message}
               />
 
               <Input
                 label="Hora de Término"
                 requiredSymbol
                 type="time"
-                placeholder="Nome do evento"
+                {...register("endTime")}
+                errorMessage={errors?.endTime?.message}
               />
             </div>
           </div>
@@ -301,61 +329,76 @@ export function CreateEvent() {
               </button>
             </div>
 
-            <div className={styles["table-wrapper"]}>
-              <table>
-                <thead>
-                  <tr>
-                    <th scope="col">TIPO</th>
-                    <th scope="col">VENDIDOS/TOTAL</th>
-                    <th scope="col">VALOR</th>
-                    <th scope="col">TAXA</th>
-                    <th scope="col">Ações</th>
-                  </tr>
-                </thead>
+            {ticketLot.length ? (
+              <div className={styles["table-wrapper"]}>
+                <table>
+                  <thead>
+                    <tr>
+                      <th scope="col">TIPO</th>
+                      <th scope="col">VENDIDOS/TOTAL</th>
+                      <th scope="col">VALOR</th>
+                      <th scope="col">TAXA</th>
+                      <th scope="col">Ações</th>
+                    </tr>
+                  </thead>
 
-                <tbody>
-                  {ticketLot.map((item: TicketLotDTO) => {
-                    return (
-                      <tr key={item?.id}>
-                        <td>{item?.type}</td>
-                        <td>
-                          <span className={styles["ticket"]}>
-                            <span>0</span>
-                            <span>{item?.qtdTotal}</span>
-                          </span>
-                        </td>
-                        <td>
-                          {new Intl.NumberFormat("de-DE", {
-                            style: "currency",
-                            currency: "AOA",
-                          }).format(item?.price)}
-                        </td>
-                        <td>{new Intl.NumberFormat("de-DE", {
-                          style: "currency",
-                          currency: "AOA",
-                        }).format(RATE_PRICE)}</td>
-                        <td>
-                          <span className={styles["actions"]}>
-                            <button
-                              className={`${styles["btn-actions"]}`}
-                              title="Editar"
-                            >
-                              <AiOutlineEdit size={22} />
-                            </button>
-                            <button
-                              className={`${styles["btn-actions"]}`}
-                              title="Visualizar"
-                            >
-                              <BsTrash size={22} />
-                            </button>
-                          </span>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
+                  <tbody>
+                    {ticketLot.map((item: TicketLotDTO) => {
+                      return (
+                        <tr key={item?.id}>
+                          <td>{item?.type}</td>
+                          <td>
+                            <span className={styles["ticket"]}>
+                              <span>0</span>
+                              <span>{item?.qtdTotal}</span>
+                            </span>
+                          </td>
+                          <td>
+                            {new Intl.NumberFormat("de-DE", {
+                              style: "currency",
+                              currency: "AOA",
+                            }).format(item?.price)}
+                          </td>
+                          <td>
+                            {new Intl.NumberFormat("de-DE", {
+                              style: "currency",
+                              currency: "AOA",
+                            }).format(RATE_PRICE)}
+                          </td>
+                          <td>
+                            <span className={styles["actions"]}>
+                              <button
+                                className={`${styles["btn-actions"]}`}
+                                title="Editar"
+                                onClick={() => {
+                                  setTicketLotEditedData(item);
+                                  handleOpenCreateTicketModal();
+                                  setTicketLotFormMode("Edit");
+                                }}
+                                type="button"
+                              >
+                                <AiOutlineEdit size={22} />
+                              </button>
+                              <button
+                                className={`${styles["btn-actions"]}`}
+                                title="Remover"
+                                onClick={() => {
+                                  handleRemoveTicketLotItem(item.id!);
+                                }}
+                              >
+                                <BsTrash size={22} />
+                              </button>
+                            </span>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              ""
+            )}
 
             <div className={`${styles["card-configuration"]}`}>
               <h3 className={`${styles["card-configuration-heading"]}`}>
@@ -392,10 +435,12 @@ export function CreateEvent() {
             </span>
 
             <Input
-              label="Nome"
+              label="Nome da organizadora"
               requiredSymbol
               margin="2rem 0 2rem"
-              placeholder="Nome do evento"
+              placeholder="Preencha o nome da organizadora"
+              {...register("organizerName")}
+              errorMessage={errors?.organizerName?.message}
             />
 
             <div className={`${styles["input-box"]}`}>
@@ -424,9 +469,6 @@ export function CreateEvent() {
                     <CheckBox onCheckedChange={onChange} />
                   )}
                 />
-                <span className={styles["error-message-accept-responsibility"]}>
-                  {errors?.acceptResponsibility?.message}
-                </span>
               </div>
 
               <p className={styles["responsibility-text"]}>
@@ -437,6 +479,9 @@ export function CreateEvent() {
                 da Política de Cookies e das Obrigatoriedades Legais.
               </p>
             </div>
+            <span className={styles["error-message-accept-responsibility"]}>
+              {errors?.acceptResponsibility?.message}
+            </span>
           </div>
         </form>
       </section>

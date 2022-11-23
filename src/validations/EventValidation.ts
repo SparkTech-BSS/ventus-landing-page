@@ -45,9 +45,15 @@ export const eventSchema = Yup.object().shape({
         return true;
       },
     }),
-    organizerName: Yup.string().required("Campo obrigatório"),
-    acceptResponsibility: Yup.bool().oneOf([true], 'Para continuar é necessário aceitar todos os termos e políticas.')
+  organizerName: Yup.string().required("Campo obrigatório"),
+  acceptResponsibility: Yup.boolean()
+    .required(
+      "Para continuar é necessário aceitar todos os termos e políticas."
+    )
+    .oneOf(
+      [true],
+      "Para continuar é necessário aceitar todos os termos e políticas."
+    ),
 });
-
 
 //yup.bool().oneOf([true], 'Para continuar é necessário aceitar todos os termos e políticas.')
