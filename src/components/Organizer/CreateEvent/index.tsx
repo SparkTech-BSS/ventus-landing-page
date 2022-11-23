@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Modal from "react-modal";
-import { useForm, SubmitHandler, Controller  } from "react-hook-form";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { EventDTO } from "../../../dto/EventDTO";
+import { TicketLotDTO } from "dto/TicketLotDTO";
 import { CgMathPlus } from "react-icons/cg";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
+import { api } from "services/api";
 import { Input } from "../Input";
 import { Select } from "../Select";
+import { Spinner } from "components/Spinner";
 import MapPage from "../MapPage";
 import { eventSchema } from "../../../validations/EventValidation";
 import { addEventOnElem, removeEventOnElem } from "utils";
@@ -18,17 +21,27 @@ import RichTextEditor from "components/RichTextEditor";
 import { CheckBox } from "components/CheckBox";
 import { ProvinceData } from "data";
 import { getProvincesDate } from "utils";
-import styles from "./styles.module.scss";
+import { RATE_PRICE } from "config";
 import { SwitchButton } from "../SwitchButton";
 import { CheckedState } from "@radix-ui/react-checkbox";
+import styles from "./styles.module.scss";
 
 Modal.setAppElement("#__next");
 
 export function CreateEvent() {
+  const [loading, setLoading] = useState(false);
   const [activeHeader, setActiveHeader] = useState(false);
+  const [ticketLot, setTicketLot] = useState<TicketLotDTO[]>([]);
   const [openCreateTicketModal, setOpenCreateTicketModal] = useState(false);
-  const [acceptResponsibility, setAcceptResponsibility] = useState<CheckedState>(false);
-  const [eventImage, setEventImage] = useState('');
+  const [acceptResponsibility, setAcceptResponsibility] =
+    useState<CheckedState>(false);
+  const [eventImage, setEventImage] = useState("");
+  const [categories, setCategories] = useState<any>([]);
+  const [ticketLotEditedData, setTicketLotEditedData] =
+    useState<TicketLotDTO>();
+  const [ticketLotFormMode, setTicketLotFormMode] = useState<"Create" | "Edit">(
+    "Create"
+  );
 
   const {
     reset,
@@ -70,11 +83,37 @@ export function CreateEvent() {
 
   useEffect(() => {
     document.documentElement.style.setProperty("--overflow", `auto`);
+
+    async function fetchData() {
+      setLoading(true);
+      try {
+        const { data } = await api.get("categories/findall");
+        console.log(data);
+        setCategories(
+          data.map((item: any) => {
+            return {
+              label: item?.designation,
+              value: item?._id,
+            };
+          })
+        );
+      } catch (error) {
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
   }, []);
+
+  const onSubmit: SubmitHandler<EventDTO> = (data) => {
+    console.log(data);
+  };
 
   return (
     <>
       <section className={styles["create-event"]}>
+        {loading && <Spinner />}
         <div
           className={`${styles["create-event-header"]} ${
             activeHeader && styles.active
@@ -95,13 +134,15 @@ export function CreateEvent() {
             </h1>
 
             <div className={styles["btn-group"]}>
-              <a
+              <button
                 className={`${styles["btn"]} ${styles["btn-full"]} ${
                   activeHeader && styles.active
                 }`}
+                type="submit"
+                form="form:createEvent"
               >
                 PUBLICAR EVENTO
-              </a>
+              </button>
               <a
                 className={`${styles["btn"]} ${styles["btn-outline"]} ${
                   activeHeader && styles.active
@@ -120,7 +161,11 @@ export function CreateEvent() {
           </div>
         </div>
 
-        <form className={`container ${styles["create-event-content"]}`}>
+        <form
+          id="form:createEvent"
+          onSubmit={handleSubmit(onSubmit)}
+          className={`container ${styles["create-event-content"]}`}
+        >
           <div className={`${styles["card-box"]}`}>
             <h2 className={`${styles["card-box-heading"]}`}>
               1. Onde o evento irá acontecer?
@@ -148,15 +193,18 @@ export function CreateEvent() {
             <span className={styles["card-box-subheading"]}>
               Adicione as principais informações do evento.
             </span>
+            <div className={`${styles["input-row"]}`}>
+              <Input
+                label="Nome do evento"
+                requiredSymbol
+                margin="2rem 0 2rem"
+                placeholder="Nome do evento"
+              />
 
-            <Input
-              label="Nome do evento"
-              requiredSymbol
-              margin="2rem 0 2rem"
-              placeholder="Nome do evento"
-            />
+              <Select label="Categoria" options={categories} />
+            </div>
 
-            <UploadImageEvent setEventImage={setEventImage}/>
+            <UploadImageEvent setEventImage={setEventImage} />
           </div>
 
           <div className={`${styles["card-box"]}`}>
@@ -233,7 +281,10 @@ export function CreateEvent() {
             <div className={`${styles["ticket-btn-group"]}`}>
               <button
                 className={`${styles["ticket-btn"]}`}
-                onClick={handleOpenCreateTicketModal}
+                onClick={() => {
+                  handleOpenCreateTicketModal();
+                  setTicketLotFormMode("Create");
+                }}
                 type="button"
               >
                 <CgMathPlus size={20} />
@@ -263,33 +314,45 @@ export function CreateEvent() {
                 </thead>
 
                 <tbody>
-                  <tr>
-                    <td>Lote Masculino</td>
-                    <td>
-                      <span className={styles["ticket"]}>
-                        <span>0</span>
-                        <span>200</span>
-                      </span>
-                    </td>
-                    <td>kz5,000.00</td>
-                    <td>kz350.00</td>
-                    <td>
-                      <span className={styles["actions"]}>
-                        <button
-                          className={`${styles["btn-actions"]}`}
-                          title="Editar"
-                        >
-                          <AiOutlineEdit size={22} />
-                        </button>
-                        <button
-                          className={`${styles["btn-actions"]}`}
-                          title="Visualizar"
-                        >
-                          <BsTrash size={22} />
-                        </button>
-                      </span>
-                    </td>
-                  </tr>
+                  {ticketLot.map((item: TicketLotDTO) => {
+                    return (
+                      <tr key={item?.id}>
+                        <td>{item?.type}</td>
+                        <td>
+                          <span className={styles["ticket"]}>
+                            <span>0</span>
+                            <span>{item?.qtdTotal}</span>
+                          </span>
+                        </td>
+                        <td>
+                          {new Intl.NumberFormat("de-DE", {
+                            style: "currency",
+                            currency: "AOA",
+                          }).format(item?.price)}
+                        </td>
+                        <td>{new Intl.NumberFormat("de-DE", {
+                          style: "currency",
+                          currency: "AOA",
+                        }).format(RATE_PRICE)}</td>
+                        <td>
+                          <span className={styles["actions"]}>
+                            <button
+                              className={`${styles["btn-actions"]}`}
+                              title="Editar"
+                            >
+                              <AiOutlineEdit size={22} />
+                            </button>
+                            <button
+                              className={`${styles["btn-actions"]}`}
+                              title="Visualizar"
+                            >
+                              <BsTrash size={22} />
+                            </button>
+                          </span>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -354,7 +417,16 @@ export function CreateEvent() {
 
             <div className={styles["responsibility-wrapper"]}>
               <div>
-                {/* <CheckBox /> */}
+                <Controller
+                  control={control}
+                  name="acceptResponsibility"
+                  render={({ field: { onChange, onBlur, value, ref } }) => (
+                    <CheckBox onCheckedChange={onChange} />
+                  )}
+                />
+                <span className={styles["error-message-accept-responsibility"]}>
+                  {errors?.acceptResponsibility?.message}
+                </span>
               </div>
 
               <p className={styles["responsibility-text"]}>
@@ -369,10 +441,14 @@ export function CreateEvent() {
         </form>
       </section>
 
-      {/* <CreateTickeModal
+      <CreateTicketLotModal
         isOpen={openCreateTicketModal}
         onRequestClose={handleCloseCreateTicketModal}
-      /> */}
+        ticketLotFormMode={ticketLotFormMode}
+        setTicketLot={setTicketLot}
+        ticketLotEditedData={ticketLotEditedData}
+        ticketLot={ticketLot}
+      />
     </>
   );
 }
