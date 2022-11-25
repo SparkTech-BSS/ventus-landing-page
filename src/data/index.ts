@@ -1,3 +1,7 @@
+import heroCarousel_1 from "../assets/png/hero-carousel/hero-carousel-1.png";
+import heroCarousel_2 from "../assets/png/hero-carousel/hero-carousel-2.png";
+import heroCarousel_3 from "../assets/png/hero-carousel/hero-carousel-3.png";
+
 export const EVENT_LIST = [
   {
     id: 1,
@@ -30,6 +34,21 @@ export const EVENT_LIST = [
     time: "18h às 20h",
     rating: 4.9,
     img: "../assets/png/event/event-4.png",
+  },
+];
+
+export const HERO_CAROUSEL = [
+  {
+    id: 1,
+    image: heroCarousel_1,
+  },
+  {
+    id: 2,
+    image: heroCarousel_2,
+  },
+  {
+    id: 3,
+    image: heroCarousel_3,
   },
 ];
 

@@ -10,7 +10,7 @@ import { motion } from "framer-motion";
 import { CashBack } from "../components/CashBack";
 import { Event } from "../components/Event";
 import { WhatsappButton } from "../components/WhatsAppButton";
-import { Hero } from "../components/Hero";
+import { Hero } from "../components/v2/Hero";
 import { StartParty } from "../components/StartParty";
 import { State } from "../components/State";
 import { GoUpButton } from "../components/GoUpButton";
