@@ -26,13 +26,12 @@
   left: 0;
   width: 100%;
   z-index: 900;
-  z-index: 999;
   transition: all 0.4s linear;
   padding-top: 2rem;
 
   &.active {
     z-index: 999;
-    //  top: 0;
+    top: 0;
   }
 }
 
@@ -430,6 +429,7 @@
     transition: all 0.3s;
     padding: 0rem 1rem;
     border: 1px solid #d9d9d9;
+    font-family: var(--ff-inter);
 
     &:focus {
       outline: 0;

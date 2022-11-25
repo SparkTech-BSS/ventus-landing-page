@@ -359,7 +359,7 @@ export function CreateEvent() {
 
               <button
                 className={`${styles["ticket-btn"]}`}
-                onClick={handleOpenCreateTicketModal}
+                // onClick={handleOpenCreateTicketModal}
                 type="button"
               >
                 <CgMathPlus size={20} />

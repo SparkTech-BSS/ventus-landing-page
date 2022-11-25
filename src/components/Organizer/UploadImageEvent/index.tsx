@@ -53,7 +53,7 @@ export function UploadImageEvent({ setEventImage }:Props) {
 
   const onDrop = () => wrapperRef.current.classList.remove("dragover");
 
-  const imageListRef = ref(storage, "images/");
+  const imageListRef = ref(storage, "filesStorage/");
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) {
@@ -77,7 +77,7 @@ export function UploadImageEvent({ setEventImage }:Props) {
       return;
     }
 
-    const imageRef = ref(storage, `images/${file?.name + v4()}`);
+    const imageRef = ref(storage, `filesStorage/${file?.name + v4()}`);
 
     setIsLoading(true);
 

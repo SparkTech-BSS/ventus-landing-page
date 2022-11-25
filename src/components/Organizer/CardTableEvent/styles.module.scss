@@ -39,7 +39,7 @@
   border: 1px solid #d9d9d9;
   outline: none;
   background: #5d2f230d;
-  color: #5d3019;
+  color: var(--black-900);
   font-size: 1.6rem;
   width: 100%;
   transition: all 0.3s;
@@ -76,7 +76,8 @@
     -moz-appearance: none !important;
     -webkit-appearance: none !important;
     appearance: none !important;
-    color: #5d3019;
+    color: var(--black-900);
+    font-family: var(--ff-inter);
     font-size: 1.6rem;
     transition: all 0.2s;
     outline: none;

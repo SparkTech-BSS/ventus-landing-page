@@ -37,8 +37,8 @@ export function Sidebar() {
           </Link>
         </li>
 
-        {/* <li>
-          <Link href="/organizer/tickets" passHref>
+        <li>
+          <Link href="" passHref>
             <a
               className={`${styles["nav-link"]} ${
                 router.pathname == "/organizer/tickets" && styles.active
@@ -50,7 +50,7 @@ export function Sidebar() {
               Ingressos
             </a>
           </Link>
-        </li> */}
+        </li>
       </ul>
     </aside>
   );

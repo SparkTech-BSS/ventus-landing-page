@@ -381,6 +381,7 @@ export function CreateTicketLotModal({
               <button
                 type="button"
                 className={`${styles["btn"]} ${styles["btn-cancel"]}`}
+                onClick={onRequestClose}
               >
                 CANCELAR
               </button>
