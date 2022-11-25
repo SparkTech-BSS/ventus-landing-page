@@ -6,6 +6,7 @@ import {
   SetStateAction,
 } from "react";
 import { setCookie, parseCookies, destroyCookie } from "nookies";
+import { addSeconds } from "date-fns";
 import Router from "next/router";
 import { UserDTO, LoginDTO } from "../dto";
 import { getCurrentUserObject } from "../services/auth.service";
@@ -23,6 +24,15 @@ type AuthContextType = {
 
 interface AuthProviderProps {
   children: React.ReactNode;
+}
+
+export function signOut() {
+  destroyCookie(undefined, "ventus.token");
+  destroyCookie(undefined, "ventus.refreshToken");
+  destroyCookie(undefined, "ventus.tokenDateExpiration");
+  destroyCookie(undefined, "ventus.refreshTokenDateExpiration");
+
+  Router.push("/");
 }
 
 export const AuthContext = createContext({} as AuthContextType);
@@ -46,10 +56,32 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     const access_token = data.access_token;
 
+    const refresh_token = data.refresh_token;
+
     setCookie(undefined, "ventus.token", access_token, {
       maxAge: 60 * 60 * 24 * 30, // 30 days,
       // path: '/'
     });
+
+    setCookie(undefined, "ventus.refreshToken", refresh_token, {
+      maxAge: 60 * 60 * 24 * 30, // 30 days,
+    });
+
+    const date = new Date();
+
+    const expirationTokenDate = String(addSeconds(date, data?.expires_in));
+
+    const expirationRefreshTokenDate = String(
+      addSeconds(date, data?.refresh_expires_in)
+    );
+
+    setCookie(undefined, "ventus.tokenDateExpiration", expirationTokenDate);
+
+    setCookie(
+      undefined,
+      "ventus.refreshTokenDateExpiration",
+      expirationRefreshTokenDate
+    );
 
     setCookie(undefined, "login.status", data.statusCode, {
       maxAge: 24 * 60 * 60 * 1, // 1 hour
@@ -60,12 +92,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setUser(getCurrentUserObject());
 
     setOpenLoginModal(false);
-
   }
 
   function logout() {
     destroyCookie(undefined, "ventus.token");
+    destroyCookie(undefined, "ventus.refreshToken");
+    destroyCookie(undefined, "ventus.tokenDateExpiration");
+    destroyCookie(undefined, "ventus.refreshTokenDateExpiration");
+
     setUser(getCurrentUserObject());
+
     Router.push("/");
   }
 
