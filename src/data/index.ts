@@ -2,6 +2,14 @@ import heroCarousel_1 from "../assets/png/hero-carousel/hero-carousel-1.png";
 import heroCarousel_2 from "../assets/png/hero-carousel/hero-carousel-2.png";
 import heroCarousel_3 from "../assets/png/hero-carousel/hero-carousel-3.png";
 
+import congressPNG from "../assets/png/categories/congresso.png";
+import partyPNG from "../assets/png/categories/festa.png";
+import gastronomyPNG from "../assets/png/categories/gastronomia.png";
+import childishPNG from "../assets/png/categories/infantil.png";
+import StandUpComedyPNG from "../assets/png/categories/stand-up-comedy.png";
+import theaterPNG from "../assets/png/categories/teatro.png";
+
+
 export const EVENT_LIST = [
   {
     id: 1,
@@ -71,4 +79,38 @@ export const ProvinceData = [
   { id: 16, name: "Namibe" },
   { id: 17, name: "Uíge" },
   { id: 18, name: "Zaire" },
+];
+
+
+export const CATEGORIES_DATA = [
+  {
+    id: 1,
+    image: partyPNG,
+    name: 'Festa e shows'
+  },
+  {
+    id: 2,
+    image: theaterPNG,
+    name: 'Teatro e espetaculos'
+  },
+  {
+    id: 3,
+    image: childishPNG,
+    name: 'Infantil'
+  },
+  {
+    id: 4,
+    image: congressPNG,
+    name: 'Congresso'
+  },
+  {
+    id: 5,
+    image: StandUpComedyPNG,
+    name: 'Stand up comedy'
+  },
+  {
+    id: 6,
+    image: gastronomyPNG,
+    name: 'Gastronomia'
+  },
 ];

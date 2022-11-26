@@ -129,7 +129,7 @@ export function Hero() {
                 onClick={() => {
                   instanceRef?.current?.moveToIdx(idx);
                 }}
-                className={"dot" + (currentSlide === idx ? " active" : "")}
+                className={"dot dot-hero-vertical" + (currentSlide === idx ? " active" : "")}
               ></button>
             );
           })}

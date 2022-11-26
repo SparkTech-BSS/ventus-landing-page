@@ -10,7 +10,8 @@ import { motion } from "framer-motion";
 import { CashBack } from "../components/CashBack";
 import { Event } from "../components/Event";
 import { WhatsappButton } from "../components/WhatsAppButton";
-import { Hero } from "../components/v2/Hero";
+import { Hero } from "components/v2/Hero";
+import { Categories } from "components/v2/Categories";
 import { StartParty } from "../components/StartParty";
 import { State } from "../components/State";
 import { GoUpButton } from "../components/GoUpButton";
@@ -32,6 +33,7 @@ export default function Home({ events, isError }: any) {
           <CookiesConsent />
           <Layout>
             <Hero />
+            <Categories/>
             <Event data={events} />
             <State
               text="Descubra Eventos em Angola."

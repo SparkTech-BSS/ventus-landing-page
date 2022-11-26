@@ -1,4 +1,4 @@
-  @import "./reset.scss";
+@import "./reset.scss";
 
 :root {
   // COLOR CONFIGURATION
@@ -152,7 +152,6 @@ body {
 \*-----------------------------------*/
 
 .keen-slider__slide {
-  
 }
 
 .keen-slider__slide__hero {
@@ -180,6 +179,13 @@ body {
   padding: 5px;
   cursor: pointer;
   transition: all 0.3s;
+
+  @media (max-width: 575px) {
+    &.dot-hero-vertical {
+      width: 7px;
+      height: 7px;
+    }
+  }
 }
 
 .dot:focus {
@@ -190,6 +196,13 @@ body {
   background: var(--primary-color);
   width: 17px;
   height: 17px;
+
+  @media (max-width: 575px) {
+    &.dot-hero-vertical.active {
+      width: 7px;
+      height: 7px;
+    }
+  }
 }
 
 .dots-hero-vertical {
@@ -204,8 +217,15 @@ body {
   position: absolute;
   top: 10rem;
   right: 2rem;
-}
 
+  @media (max-width: 1200px) {
+    top: 15rem;
+  }
+
+  @media (max-width: 900px) {
+    top: 21rem;
+  }
+}
 
 .react-modal-overlay {
   background: rgba(0, 0, 0, 0.5);

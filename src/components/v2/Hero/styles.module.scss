@@ -74,9 +74,11 @@
 
 .btn-outline {
   border: 0.2rem solid var(--primary-color);
+  background: transparent;
 }
 
 .btn-full {
+  border: 0.2rem solid var(--gradient-linear);
   background: var(--gradient-linear);
 }
 
@@ -109,4 +111,62 @@
   background: var(--primary-color);
   width: 17px;
   height: 17px;
+}
+
+/*-----------------------------------*\
+ MEDIA QUERIES
+\*-----------------------------------*/
+
+@media (max-width: 900px) {
+  .hero-content {
+    padding: 6rem 0;
+  }
+
+  .heading {
+    font-size: 4.4rem;
+    font-weight: 900;
+    display: inline;
+    color: var(--white-color);
+  }
+}
+
+@media (max-width: 575px) {
+  .heading {
+    font-size: 3.4rem;
+    font-weight: 900;
+    display: inline;
+    color: var(--white-color);
+  }
+
+  .btn {
+    font-size: 1.4rem;
+    padding: 1.4rem 1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    width: 100%;
+    padding: 6rem 0;
+  }
+}
+
+@media (max-width: 350px) {
+  .btn-group {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+    margin-top: 2rem;
+  }
+
+  .btn {
+    font-size: 1.3rem;
+    padding: 1.4rem 1rem;
+    width: 100%;
+  }
 }
