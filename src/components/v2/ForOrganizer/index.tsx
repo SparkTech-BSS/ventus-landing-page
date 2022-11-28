@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Image from "next/future/image";
 import { ManagementSettingICON, UsersICON, PlainTicketICON } from "../../Icon";
 import OrganizerPicture from "../../../assets/png/for-organizer/organizer-1.png";
@@ -34,9 +35,11 @@ export function ForOrganizer() {
             </p>
 
             <div className={`${styles["btn-group"]}`}>
-              <button className={`${styles["btn"]} ${styles["btn-full"]}`}>
-                Publicar Evento
-              </button>
+              <Link href="/be-organizer">
+                <button className={`${styles["btn"]} ${styles["btn-full"]}`}>
+                  Publicar Evento
+                </button>
+              </Link>
               <button className={`${styles["btn"]} ${styles["btn-outline"]}`}>
                 Fale Conosco
               </button>

@@ -26,13 +26,24 @@ interface AuthProviderProps {
   children: React.ReactNode;
 }
 
-export function signOut() {
-  destroyCookie(undefined, "ventus.token");
-  destroyCookie(undefined, "ventus.refreshToken");
-  destroyCookie(undefined, "ventus.tokenDateExpiration");
-  destroyCookie(undefined, "ventus.refreshTokenDateExpiration");
+export async function signOut() {
+  try {
+    if (typeof window !== "undefined") {
+      const { "ventus.refreshToken": refresh_token } = parseCookies();
+      const { data } = await api.post("logout", {
+        refreshToken: refresh_token,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  } finally {
+    destroyCookie(undefined, "ventus.token");
+    destroyCookie(undefined, "ventus.refreshToken");
+    destroyCookie(undefined, "ventus.tokenDateExpiration");
+    destroyCookie(undefined, "ventus.refreshTokenDateExpiration");
 
-  Router.push("/");
+    Router.push("/");
+  }
 }
 
 export const AuthContext = createContext({} as AuthContextType);
@@ -94,15 +105,26 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setOpenLoginModal(false);
   }
 
-  function logout() {
-    destroyCookie(undefined, "ventus.token");
-    destroyCookie(undefined, "ventus.refreshToken");
-    destroyCookie(undefined, "ventus.tokenDateExpiration");
-    destroyCookie(undefined, "ventus.refreshTokenDateExpiration");
+  async function logout() {
+    try {
+      if (typeof window !== "undefined") {
+        const { "ventus.refreshToken": refresh_token } = parseCookies();
+        const { data } = await api.post("logout", {
+          refreshToken: refresh_token,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      destroyCookie(undefined, "ventus.token");
+      destroyCookie(undefined, "ventus.refreshToken");
+      destroyCookie(undefined, "ventus.tokenDateExpiration");
+      destroyCookie(undefined, "ventus.refreshTokenDateExpiration");
 
-    setUser(getCurrentUserObject());
+      setUser(getCurrentUserObject());
 
-    Router.push("/");
+      Router.push("/");
+    }
   }
 
   function getLoginStatus() {

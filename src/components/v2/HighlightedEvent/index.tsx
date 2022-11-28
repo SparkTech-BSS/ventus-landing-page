@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { HighlightedCardEvent } from "../HighlightedCardEvent";
-import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
-import EmblaCarouselReact from "embla-carousel-react";
 import { HighlightedEventData } from "data";
 import useInterval from "hooks/useInterval";
 import { HighlightedEventDotButton } from "../HighlightedEventDotButton";

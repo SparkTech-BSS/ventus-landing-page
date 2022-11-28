@@ -23,8 +23,6 @@ interface Props {
   link?: string;
 }
 
-// /support/generate-reference/event-detail/
-
 export function EventCard({ width, multipleData = true, data, link }: Props) {
   const dateObject = getStartDateAndEndDate(data?.dates);
   const linkToRedirect = link ? link : `/event-detail/${data?._id}`;
@@ -66,32 +64,36 @@ export function EventCard({ width, multipleData = true, data, link }: Props) {
         )}
 
         <div className={styles["card-content"]}>
-          <div className={styles["card-title-row"]}>
-            <h3 className={styles["card-title"]}>{data?.name}</h3>
+          <div>
+            <div className={styles["card-title-row"]}>
+              <h3 className={styles["card-title"]}>{data?.name}</h3>
 
-            <span className={styles["rating-container"]}>
-              <StarICON />
-              4.9
-            </span>
-          </div>
-
-          <div className={styles["card-item"]}>
-            <div className={styles["card-item-icon"]}>
-              <LocationICON />
+              <span className={styles["rating-container"]}>
+                <StarICON />
+                4.9
+              </span>
             </div>
 
-            <span className={styles["card-item-text"]}>{data?.location}</span>
-          </div>
+            <div className={styles["card-item"]}>
+              <div className={styles["card-item-icon"]}>
+                <LocationICON />
+              </div>
 
-          <div className={styles["card-item"]}>
-            <div className={styles["card-item-icon"]}>
-              <TimeICON />
+              <span className={styles["card-item-text"]}>{data?.location}</span>
             </div>
 
-            <span className={styles["card-item-text"]}>{data?.startTime} às {data?.endTime}</span>
+            <div className={styles["card-item"]}>
+              <div className={styles["card-item-icon"]}>
+                <TimeICON />
+              </div>
+
+              <span className={styles["card-item-text"]}>
+                {data?.startTime} às {data?.endTime}
+              </span>
+            </div>
           </div>
 
-          <div className={styles["card-item"]}>
+          {/* <div className={styles["card-item"]}>
             <div className={styles["card-item-icon"]}>
               <PeopleICON />
             </div>
@@ -99,7 +101,9 @@ export function EventCard({ width, multipleData = true, data, link }: Props) {
             <span className={styles["card-item-text"]}>Pessoas:</span>
 
             <Avatar />
-          </div>
+          </div> */}
+
+          <a className={`${styles["btn-buy-ticket"]}`}>Comprar ingresso</a>
         </div>
       </a>
     </Link>

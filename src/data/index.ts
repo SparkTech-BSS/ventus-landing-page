@@ -128,15 +128,15 @@ export const HighlightedEventData = [
   {
     id: 2,
     image: HighlightedImage2,
-    date: "MERCADO DA COMIDA",
-    title: "Pérola, Venda e Sessão de Autógrafos",
+    date: "SAB, 22 DEZ - 32:00",
+    title: "Palestra Motivacional",
     location: "Porto de Luanda - Angola",
   },
   {
     id: 3,
     image: HighlightedImage3,
     date: "SAB, 22 DEZ - 32:00",
-    title: "Palestra motivacional",
+    title: "Mercado da Comida",
     location: "Porto de Luanda - Angola",
   },
 ];

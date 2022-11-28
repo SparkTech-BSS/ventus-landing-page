@@ -147,18 +147,19 @@
   }
 
   .search-container.active {
-    top: 4rem;
+    top: -2rem;
     // background-color: var(--white-color);
   }
 
   .btn-cancel {  
-    &.hide {
-      display: none;
-    }
+    display: none;
+    // &.hide {
+    //   display: none;
+    // }
   }
 
   .input-text {
-    width: 40%;
+    width: 100%;
     padding: 1.4rem 1.4rem 1.4rem 3rem;
   }
 
@@ -173,7 +174,7 @@
     display: none;
 
     box-shadow: rgb(25 31 40 / 15%) 0px 6px 24px 0px;
-    padding: 2rem 1rem 4rem;
+    padding: 2rem 2rem 4rem;
 
     &.active {
       display: block;
