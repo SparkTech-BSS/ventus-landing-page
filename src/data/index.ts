@@ -9,6 +9,9 @@ import childishPNG from "../assets/png/categories/infantil.png";
 import StandUpComedyPNG from "../assets/png/categories/stand-up-comedy.png";
 import theaterPNG from "../assets/png/categories/teatro.png";
 
+import HighlightedImage1 from "../assets/png/highlighted/image-1.png";
+import HighlightedImage2 from "../assets/png/highlighted/image-2.png";
+import HighlightedImage3 from "../assets/png/highlighted/image-3.png";
 
 export const EVENT_LIST = [
   {
@@ -81,36 +84,59 @@ export const ProvinceData = [
   { id: 18, name: "Zaire" },
 ];
 
-
 export const CATEGORIES_DATA = [
   {
     id: 1,
     image: partyPNG,
-    name: 'Festa e shows'
+    name: "Festa e shows",
   },
   {
     id: 2,
     image: theaterPNG,
-    name: 'Teatro e espetaculos'
+    name: "Teatro e espetaculos",
   },
   {
     id: 3,
     image: childishPNG,
-    name: 'Infantil'
+    name: "Infantil",
   },
   {
     id: 4,
     image: congressPNG,
-    name: 'Congresso'
+    name: "Congresso",
   },
   {
     id: 5,
     image: StandUpComedyPNG,
-    name: 'Stand up comedy'
+    name: "Stand up comedy",
   },
   {
     id: 6,
     image: gastronomyPNG,
-    name: 'Gastronomia'
+    name: "Gastronomia",
+  },
+];
+
+export const HighlightedEventData = [
+  {
+    id: 1,
+    image: HighlightedImage1,
+    date: "SAB, 22 DEZ - 32:00",
+    title: "Pérola, Venda e Sessão de Autógrafos",
+    location: "Porto de Luanda - Angola",
+  },
+  {
+    id: 2,
+    image: HighlightedImage2,
+    date: "MERCADO DA COMIDA",
+    title: "Pérola, Venda e Sessão de Autógrafos",
+    location: "Porto de Luanda - Angola",
+  },
+  {
+    id: 3,
+    image: HighlightedImage3,
+    date: "SAB, 22 DEZ - 32:00",
+    title: "Palestra motivacional",
+    location: "Porto de Luanda - Angola",
   },
 ];

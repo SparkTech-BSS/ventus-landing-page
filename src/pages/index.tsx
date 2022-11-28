@@ -18,6 +18,8 @@ import { GoUpButton } from "../components/GoUpButton";
 import { CookiesConsent } from "../components/CookiesConsent";
 import { Rainbow } from "components/Rainbow";
 import Layout from "../components/Layout";
+import { HighlightedEvent } from "components/v2/HighlightedEvent";
+import { ForOrganizer } from "components/v2/ForOrganizer";
 
 export default function Home({ events, isError }: any) {
   return (
@@ -34,7 +36,9 @@ export default function Home({ events, isError }: any) {
           <Layout>
             <Hero />
             <Categories/>
+            <HighlightedEvent/>
             <Event data={events} />
+            <ForOrganizer/>
             <State
               text="Descubra Eventos em Angola."
               state="1"

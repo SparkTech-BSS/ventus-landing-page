@@ -2,6 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import Image from "next/future/image";
 import partyPNG from "../../../assets/png/categories/festa.png";
 import styles from "./styles.module.scss";
+import { CATEGORIES_DATA } from "data";
 
 export function Categories() {
   const [position, setPosition] = useState({ top: 0, left: 0, x: 0, y: 0 });
@@ -33,7 +34,7 @@ export function Categories() {
   };
 
   const mouseDownHandler = function (e: any) {
-    categoriesCarouselRef.current.style.cursor = "grabbing";
+    // categoriesCarouselRef.current.style.cursor = "grabbing";
     categoriesCarouselRef.current.style.userSelect = "none";
 
     setPosition({
@@ -62,36 +63,15 @@ export function Categories() {
           className={`${styles["categories-carousel"]}`}
           onMouseDown={mouseDownHandler}
         >
-          <a className={`${styles["category-card"]}`}>
-            <div className={`${styles["category-card-title"]}`}>
-              <span>Festas e shows</span>
-            </div>
-          </a>
-          <a className={`${styles["category-card"]}`}>
-            <div className={`${styles["category-card-title"]}`}>
-              <span>Festas e shows</span>
-            </div>
-          </a>
-          <a className={`${styles["category-card"]}`}>
-            <div className={`${styles["category-card-title"]}`}>
-              <span>Festas e shows</span>
-            </div>
-          </a>
-          <a className={`${styles["category-card"]}`}>
-            <div className={`${styles["category-card-title"]}`}>
-              <span>Festas e shows</span>
-            </div>
-          </a>
-          <a className={`${styles["category-card"]}`}>
-            <div className={`${styles["category-card-title"]}`}>
-              <span>Festas e shows</span>
-            </div>
-          </a>
-          <a className={`${styles["category-card"]}`}>
-            <div className={`${styles["category-card-title"]}`}>
-              <span>Festas e shows</span>
-            </div>
-          </a>
+          {CATEGORIES_DATA.map((item: any) => {
+            return (
+              <a key={item.id} className={`${styles["category-card"]} ${styles[`image-${item.id}`]}`}>
+                <div className={`${styles["category-card-title"]}`}>
+                  <span>{item.name}</span>
+                </div>
+              </a>
+            );
+          })}
         </div>
       </div>
     </section>

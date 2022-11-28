@@ -1,0 +1,14 @@
+.dot-button {
+  width: 12px;
+  height: 12px;
+  transition: all 0.3s;
+  border-radius: 12px;
+
+  background-color: #939598;
+
+  &.dot-button-selected {
+    background-color: var(--primary-color);
+    width: 17px;
+    height: 17px;
+  }
+}

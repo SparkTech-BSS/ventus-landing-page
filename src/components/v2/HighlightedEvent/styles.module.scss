@@ -1,0 +1,35 @@
+.highlighted-event {
+  background-color: #f4f4f4;
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4rem;
+}
+
+.se-more {
+  display: block;
+  font-size: 1.6rem;
+  font-weight: var(--fw-500);
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+.carousel-wrapper {
+  position: relative;
+  margin-bottom: 8rem;
+}
+
+.highlighted-event-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 4rem 0;
+  height: 20px;
+}
+
+@media (min-width: 768px) {
+}
