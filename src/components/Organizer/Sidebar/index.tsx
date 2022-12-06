@@ -10,6 +10,8 @@ export function Sidebar() {
   const { toggleSidebar, setToggleSidebar } = useContext(Context);
   const router = useRouter();
 
+  const { id } = router.query;
+
   return (
     <aside className={`${styles["sidebar"]} ${toggleSidebar && styles.active}`}>
       <button
@@ -20,7 +22,7 @@ export function Sidebar() {
       </button>
       <ul className={styles["nav-list"]}>
         <li>
-          <Link href="/organizer/event-detail" passHref>
+          <Link href={`/organizer/event-detail/${id}`} passHref>
             <a
               className={`${styles["nav-link"]} ${
                 router.pathname.includes("/organizer/event-detail/") &&
