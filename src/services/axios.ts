@@ -31,8 +31,6 @@ export function getAPIClient(ctx?: any) {
   });
 
   api.interceptors.request.use((config) => {
-    // console.log(config);
-
     return config;
   });
 
@@ -70,6 +68,8 @@ export function getAPIClient(ctx?: any) {
             currentData > new Date(expirationTokenDate) &&
             currentData < new Date(expirationRefreshTokenDate)
           ) {
+            console.log("yes");
+
             if (!isRefreshing) {
               isRefreshing = true;
 
@@ -159,10 +159,14 @@ export function getAPIClient(ctx?: any) {
                 },
               });
             });
-          } else if (
-            currentData > new Date(expirationTokenDate) &&
-            currentData > new Date(expirationRefreshTokenDate)
-          ) {
+          } else if (currentData > new Date(expirationRefreshTokenDate)) {
+            console.log("yes");
+            if (typeof window !== "undefined") {
+              signOut();
+            } else {
+              return Promise.reject(new AuthTokenError());
+            }
+          } else if (!expirationRefreshTokenDate) {
             if (typeof window !== "undefined") {
               signOut();
             } else {

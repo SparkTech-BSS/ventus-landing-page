@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { v4 as uuidv4 } from "uuid";
+import { format } from "date-fns";
 import Modal from "react-modal";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import { CgClose } from "react-icons/cg";
@@ -11,6 +12,7 @@ import { Input } from "../Input";
 import { TicketLotDTO } from "dto/TicketLotDTO";
 import { Loading } from "components/Loading";
 import { RATE_PRICE } from "config";
+import { convertTwoDatesToMilliseconds } from "utils";
 import styles from "./styles.module.scss";
 
 interface Props {
@@ -20,6 +22,10 @@ interface Props {
   setTicketLot: Dispatch<SetStateAction<TicketLotDTO[]>>;
   ticketLotEditedData?: TicketLotDTO;
   ticketLot: TicketLotDTO[];
+  eventStartDate: string | Date;
+  eventEndDate: string | Date;
+  eventStartTime: string | Date;
+  eventEndTime: string | Date;
 }
 
 export function CreateTicketLotModal({
@@ -29,6 +35,10 @@ export function CreateTicketLotModal({
   setTicketLot,
   ticketLotEditedData,
   ticketLot,
+  eventStartDate,
+  eventEndDate,
+  eventStartTime,
+  eventEndTime,
 }: Props) {
   const ticketLotSchema = Yup.object().shape({
     type: Yup.string().required("Título obrigatório"),
@@ -43,6 +53,27 @@ export function CreateTicketLotModal({
         test: function (value: any) {
           return !(new Date(value) < new Date());
         },
+      })
+      .test({
+        name: "startDateCompareWithStartDateEventSmaller",
+        message:
+          "Data de ínicio não pode ser inferior a data de ínicio do evento",
+        test: function (value: any) {
+          const { dateOne, dateTwo } = convertTwoDatesToMilliseconds(
+            value,
+            eventStartDate
+          );
+
+          return dateOne >= dateTwo;
+        },
+      })
+      .test({
+        name: "startDateCompareWithStartDateEventLarger",
+        message:
+          "Data de ínicio não pode ser superior a data de termino do evento",
+        test: function (value: any) {
+          return new Date(value) <= new Date(eventEndDate);
+        },
       }),
     endDate: Yup.date()
       .required("campo é obrigatório")
@@ -52,6 +83,32 @@ export function CreateTicketLotModal({
         message: "Data de termino deve ser superior ou igual a data de início",
         test: function (value: any) {
           return new Date(value) >= new Date(this.parent.startDate);
+        },
+      })
+      .test({
+        name: "endDateCompareWithStartDateEventSmaller",
+        message:
+          "Data de termino não pode ser inferior a data de ínicio do evento",
+        test: function (value: any) {
+          const { dateOne, dateTwo } = convertTwoDatesToMilliseconds(
+            value,
+            eventStartDate
+          );
+
+          return dateOne >= dateTwo;
+        },
+      })
+      .test({
+        name: "endDateCompareWithStartDateEventLarger",
+        message:
+          "Data de termino não pode ser superior a data de termino do evento",
+        test: function (value: any) {
+          const { dateOne, dateTwo } = convertTwoDatesToMilliseconds(
+            value,
+            eventEndDate
+          );
+
+          return dateOne <= dateTwo;
         },
       }),
     startTime: Yup.string().required("Campo é obrigatório"),
@@ -101,9 +158,10 @@ export function CreateTicketLotModal({
     if (ticketLotFormMode === "Create") {
       const formattedData = {
         id: uuidv4(),
-        date: data?.startDate,
+        date: format(new Date(data!.startDate!), "yyyy-MM-dd"),
         ...data,
       };
+
       setTicketLot((prevState: TicketLotDTO[]) => [
         ...prevState,
         formattedData,
@@ -115,7 +173,7 @@ export function CreateTicketLotModal({
       let ticketLotArray = [...ticketLot];
       ticketLotArray[index] = {
         id: ticketLotEditedData?.id,
-        date: ticketLotEditedData?.startDate,
+        date: format(new Date(ticketLotEditedData!.startDate!), "yyyy-MM-dd"),
         ...data,
       };
       setTicketLot(ticketLotArray);
@@ -283,7 +341,7 @@ export function CreateTicketLotModal({
                 />
               </div>
 
-              {/* <div className={`${styles["input-block"]}`}>
+              <div className={`${styles["input-block"]}`}>
                 <div className={`${styles["input-block-label-wrapper"]}`}>
                   <label>Disponibilidade do Ingresso:</label>
                   <span>*</span>
@@ -341,12 +399,12 @@ export function CreateTicketLotModal({
                     </div>
                   </div>
                 </RadioGroup.Root>
-              </div> */}
+              </div>
 
-              {/* <div className={`${styles["row"]}`} style={{ margin: "2rem 0" }}>
+              <div className={`${styles["row"]}`} style={{ margin: "2rem 0" }}>
                 <div className={`${styles["input-block"]}`}>
                   <div className={`${styles["input-block-label-wrapper"]}`}>
-                    <label>Disponibilidade do Ingresso:</label>
+                    <label>Quantidade permitida por compra</label>
                   </div>
 
                   <div className={`${styles["row"]}`}>
@@ -362,9 +420,9 @@ export function CreateTicketLotModal({
                     />
                   </div>
                 </div>
-              </div> */}
+              </div>
 
-              {/* <div className={`${styles["input-block"]}`}>
+              <div className={`${styles["input-block"]}`}>
                 <label className={`${styles["input-block-label"]}`}>
                   Descrição do ingresso (opcional):
                 </label>
@@ -373,9 +431,10 @@ export function CreateTicketLotModal({
                   className={`${styles["input-description"]}`}
                   placeholder=""
                 />
-              </div> */}
+              </div>
             </div>
           </div>
+
           <div className={`${styles["footer"]}`}>
             <div className={`${styles["btn-group"]}`}>
               <button

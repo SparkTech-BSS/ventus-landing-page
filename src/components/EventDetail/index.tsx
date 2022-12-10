@@ -16,6 +16,7 @@ import {
   getHourFormatToAPI,
   getObjectDate,
   getStartDateAndEndDate,
+  isValidPhoto,
   MAP_INFO,
 } from "../../utils";
 
@@ -30,6 +31,8 @@ import {
 } from "../../components/Icon";
 
 import { Avatar } from "../Avatar";
+
+import EventAvatar from "../../assets/png/avatar/event.png";
 
 import EventService from "services/EventService";
 
@@ -58,6 +61,14 @@ export function EventDetail() {
       try {
         const eventData = await EventService.findById(id);
         const ticketData = await TicketService.findByEventId(id);
+
+        if (eventData?.event?.dates?.length === 1) {
+          selectSelectedDate(eventData?.event?.dates);
+          localStorage.setItem(
+            "@ventus:eventDate",
+            JSON.stringify(eventData?.event?.dates)
+          );
+        }
 
         setDataEvent(eventData);
         setDataTicket(ticketData);
@@ -100,13 +111,23 @@ export function EventDetail() {
       ) : (
         <>
           <div className={`${styles["event-banner"]}`}>
-            <Image
-              src={dataEvent?.event?.images[0]}
-              alt=""
-              width={100}
-              height={100}
-              className={styles["banner-img"]}
-            />
+            {isValidPhoto(dataEvent?.event?.images[0]) ? (
+              <Image
+                src={dataEvent?.event?.images[0]}
+                alt=""
+                width={100}
+                height={100}
+                className={styles["banner-img"]}
+              />
+            ) : (
+              <Image
+                src={EventAvatar}
+                width={100}
+                height={100}
+                className={styles["banner-img"]}
+                alt=""
+              />
+            )}
 
             {dataEvent?.event?.dates?.length > 1 ? (
               <div className={styles["date-multiple"]}>
@@ -146,13 +167,23 @@ export function EventDetail() {
           <div className={`container ${styles.container}`}>
             <div className={styles["box-row"]}>
               <div className={styles["box-row-img"]}>
-                <Image
-                  src={dataEvent?.event?.images[0]}
-                  alt=""
-                  width={100}
-                  height={100}
-                  className={styles["box-row-img__picture"]}
-                />
+                {isValidPhoto(dataEvent?.event?.images[0]) ? (
+                  <Image
+                    src={dataEvent?.event?.images[0]}
+                    alt=""
+                    width={100}
+                    height={100}
+                    className={styles["box-row-img__picture"]}
+                  />
+                ) : (
+                  <Image
+                    src={EventAvatar}
+                    width={100}
+                    height={100}
+                    className={styles["box-row-img__picture"]}
+                    alt=""
+                  />
+                )}
 
                 {dataEvent?.event?.dates?.length > 1 ? (
                   <div className={styles["date-multiple"]}>
@@ -254,39 +285,41 @@ export function EventDetail() {
               </span>
             </div>
 
-            <div className={styles["select-date-box"]}>
-              <div className={styles["select-date-box-heading__row"]}>
-                <GoCalendar size={24} color="#FF5555" />
+            {dataEvent?.event?.dates?.length > 1 && (
+              <div className={styles["select-date-box"]}>
+                <div className={styles["select-date-box-heading__row"]}>
+                  <GoCalendar size={24} color="#FF5555" />
 
-                <h2 className={styles["select-date-box-heading"]}>
-                  Selecione a Data do evento
-                </h2>
+                  <h2 className={styles["select-date-box-heading"]}>
+                    Selecione a Data do evento
+                  </h2>
+                </div>
+                <div className={styles["select-date-button-group"]}>
+                  {dataEvent?.event?.dates?.map((item: any) => {
+                    return (
+                      <button
+                        key={item}
+                        className={`${styles["selected-button"]} ${
+                          selectedDate === item ? styles["active"] : ""
+                        }`}
+                        onClick={() => {
+                          selectSelectedDate(item);
+                          localStorage.setItem(
+                            "@ventus:eventDate",
+                            JSON.stringify(item)
+                          );
+                        }}
+                      >
+                        <span>{getObjectDate(item).week_day}</span>
+                        <span>
+                          {getObjectDate(item).day}/{getObjectDate(item).month}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-              <div className={styles["select-date-button-group"]}>
-                {dataEvent?.event?.dates?.map((item: any) => {
-                  return (
-                    <button
-                      key={item}
-                      className={`${styles["selected-button"]} ${
-                        selectedDate === item ? styles["active"] : ""
-                      }`}
-                      onClick={() => {
-                        selectSelectedDate(item);
-                        localStorage.setItem(
-                          "@ventus:eventDate",
-                          JSON.stringify(item)
-                        );
-                      }}
-                    >
-                      <span>{getObjectDate(item).week_day}</span>
-                      <span>
-                        {getObjectDate(item).day}/{getObjectDate(item).month}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
+            )}
 
             <div className={styles["event-wrapper"]}>
               <div className={styles["event-item"]}>
@@ -325,23 +358,6 @@ export function EventDetail() {
 
             <div className={styles.content}>
               <p>{dataEvent?.event?.about}</p>
-              {/* <p className={styles.text}>Fala tigradaaaa 🐯</p>
-        <p className={styles.text}>
-          Sabemos que todos estavam ansiosos com o fim das provas, então nada
-          mais justo que comemorar com o tigrão!
-        </p>
-        <p className={styles.text}>
-          Dia 6/10, quinta-feira, teremos a 1ª F.O.D.A do mês (festa oficial
-          da atlética), com 6 HORAS DE OPEN BAR 🍻, e atrações como Kenan e
-          Kel, Baile do Duzão e Dj Clip!
-        </p>
-
-        <ul className={styles["content-list"]}>
-          <li>📆 06/10</li>
-          <li>⏰ 21hrs-3:30hrs</li>
-          <li>📍Campinas Hall</li>
-          <li>🍻 Open: breja, vodka, gin, energético e água.</li>
-        </ul> */}
             </div>
 
             <div className={styles["location-wrapper"]}>

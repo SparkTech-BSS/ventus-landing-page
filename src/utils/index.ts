@@ -513,3 +513,39 @@ export function getProvincesDate(
     };
   });
 }
+
+export function convertTwoDatesToMilliseconds(
+  dateOne: string | Date,
+  dateTwo: string | Date
+) {
+  const dateOneConverted = new Date(dateOne);
+  const dateTwoConverted = new Date(dateTwo);
+
+  return {
+    dateOne: dateOneConverted.setHours(0, 0, 0, 0),
+    dateTwo: dateTwoConverted.setHours(0, 0, 0, 0),
+  };
+}
+
+// export function isValidPhoto(fileName: string) {
+//   let allowed_extensions = new Array("jpg", "png", "svg", "JPG", "PNG");
+//   let file_extension = fileName!.split(".")!.pop()!.toLowerCase();
+
+//   for (let i = 0; i <= allowed_extensions.length; i++) {
+//     if (allowed_extensions[i] == file_extension) {
+//       return true; // valid file extension
+//     }
+//   }
+
+//   return false;
+// }
+
+export function isValidPhoto(fileName: string): boolean {
+  let allowed_extensions = new Array("jpg", "png", "svg", "JPG", "PNG");
+
+  for (let iterator in allowed_extensions) {
+    if (fileName.includes(iterator)) return true;
+  }
+
+  return false;
+}

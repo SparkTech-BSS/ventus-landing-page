@@ -15,4 +15,7 @@ export interface EventDTO {
     organizerName: string;
     about?: string;
     acceptResponsibility?: CheckedState;
+    isPublic: boolean;
+    isDraft: boolean;
+    absorbRate?: boolean;
 }

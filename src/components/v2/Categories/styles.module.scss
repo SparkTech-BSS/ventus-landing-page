@@ -14,20 +14,7 @@
   align-items: center;
   margin-top: 3.8rem;
   gap: 2rem;
-  overflow: auto;
-  padding: 2rem 0;
-  scroll-behavior: auto;
-
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
-  scrollbar-width: none; /* Firefox */
-
-  &::-webkit-scrollbar {
-    display: none; /* Safari and Chrome */
-  }
-
-  &::-webkit-scrollbar {
-    height: 8px;
-  }
+  position: relative;
 }
 
 .category-card {

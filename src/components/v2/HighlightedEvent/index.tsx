@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
+import { api } from "services/api";
 import { HighlightedCardEvent } from "../HighlightedCardEvent";
 import useEmblaCarousel from "embla-carousel-react";
 import { HighlightedEventData } from "data";
@@ -8,6 +9,10 @@ import { HighlightedEventDotButton } from "../HighlightedEventDotButton";
 import styles from "./styles.module.scss";
 
 export function HighlightedEvent() {
+  const [events, setEvents] = useState<any>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
   const [viewportRef, embla] = useEmblaCarousel({
     align: "center",
     skipSnaps: false,
@@ -52,6 +57,24 @@ export function HighlightedEvent() {
     embla.on("select", onSelect);
     onSelect();
   }, [embla, onSelect]);
+
+  async function fetchData() {
+    setLoading(true);
+    try {
+      const { data } = await api.get(`events/findbyhighlighted/${true}`);
+      setEvents(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  console.log(events)
 
   return (
     <section

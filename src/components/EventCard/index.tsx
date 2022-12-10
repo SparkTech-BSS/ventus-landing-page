@@ -10,9 +10,9 @@ import {
   ArrowEventICON,
 } from "../../components/Icon";
 
-import EventImg from "../../assets/png/event/event-1.png";
+import EventAvatar from "../../assets/png/avatar/event.png";
 
-import { getStartDateAndEndDate } from "../../utils";
+import { getStartDateAndEndDate, isValidPhoto } from "../../utils";
 
 import styles from "./styles.module.scss";
 
@@ -27,16 +27,28 @@ export function EventCard({ width, multipleData = true, data, link }: Props) {
   const dateObject = getStartDateAndEndDate(data?.dates);
   const linkToRedirect = link ? link : `/event-detail/${data?._id}`;
 
+  
+
   return (
     <Link href={linkToRedirect} prefetch={false}>
       <a className={`${styles.card} ${width === "full" ? styles.full : ""}`}>
-        <Image
-          src={data?.images[0]}
-          width={280}
-          height={207}
-          className={styles["card-img"]}
-          alt=""
-        />
+        {isValidPhoto(data?.images[0]) ? (
+          <Image
+            src={data?.images[0]}
+            width={280}
+            height={207}
+            className={styles["card-img"]}
+            alt=""
+          />
+        ) : (
+          <Image
+            src={EventAvatar}
+            width={280}
+            height={207}
+            className={styles["card-img"]}
+            alt=""
+          />
+        )}
 
         {data?.dates?.length > 1 ? (
           <div className={styles["date-multiple"]}>
@@ -103,7 +115,9 @@ export function EventCard({ width, multipleData = true, data, link }: Props) {
             <Avatar />
           </div> */}
 
-          <a className={`${styles["btn-buy-ticket"]}`}>Comprar ingresso</a>
+          <button className={`${styles["btn-buy-ticket"]}`}>
+            Comprar ingresso
+          </button>
         </div>
       </a>
     </Link>

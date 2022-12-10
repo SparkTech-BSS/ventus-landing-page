@@ -1,16 +1,16 @@
 import { parseCookies } from "nookies";
-import { Header } from "components/Organizer/Header";
 import Head from "next/head";
-import { DashboardContent } from "components/Organizer/DashboardContent";
+import { Header } from "components/Admin/Header";
+import { DashboardContent } from "components/Admin/DashboardContent";
 
-export default function OrganizerDashboardPage() {
+export default function AdminDashboardPage() {
   return (
     <>
       <Head>
-        <title>Ventus | Organizadores</title>
+        <title>Ventus | Admin</title>
       </Head>
       <Header />
-      <DashboardContent/>
+      <DashboardContent />
     </>
   );
 }
@@ -28,10 +28,7 @@ export const getServerSideProps = async (ctx: any) => {
     };
   }
 
-
   return {
-    props: {
-    },
-    // revalidate: 60,
+    props: {},
   };
 };

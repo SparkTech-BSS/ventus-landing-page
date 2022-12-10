@@ -31,10 +31,27 @@
   margin-left: -170px;
 }
 
+.embla__container__categories {
+  display: flex;
+  gap: 2rem;
+  gap: 2rem;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -khtml-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  width: 100%;
+  padding: 2rem 0;
+}
+
 .embla__slide {
   position: relative;
   min-width: 65%;
   /* padding-left: 10px; */
+}
+
+.embla__categories_slide {
+  position: relative;
+  min-width: unset;
 }
 
 .embla__slide__inner {

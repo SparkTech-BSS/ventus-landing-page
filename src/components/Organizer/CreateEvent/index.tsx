@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { format } from "date-fns";
 import Modal from "react-modal";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -18,14 +19,13 @@ import MapPage from "../MapPage";
 import { eventSchema } from "../../../validations/EventValidation";
 import { addEventOnElem, removeEventOnElem } from "utils";
 import { CreateTicketLotModal } from "../CreateTicketLotModal";
+import { AlertNoSelectedDateEventModal } from "../AlertNoSelectedDateEventModal";
 import { UploadImageEvent } from "../UploadImageEvent";
-import RichTextEditor from "components/RichTextEditor";
 import { CheckBox } from "components/CheckBox";
 import { ProvinceData } from "data";
 import { getProvincesDate } from "utils";
 import { RATE_PRICE } from "config";
 import { SwitchButton } from "../SwitchButton";
-import { CheckedState } from "@radix-ui/react-checkbox";
 import styles from "./styles.module.scss";
 
 Modal.setAppElement("#__next");
@@ -37,6 +37,10 @@ export function CreateEvent() {
   const [activeHeader, setActiveHeader] = useState(false);
   const [ticketLot, setTicketLot] = useState<TicketLotDTO[]>([]);
   const [openCreateTicketModal, setOpenCreateTicketModal] = useState(false);
+  const [
+    openAlertNoSelectedDateEventModal,
+    setOpenAlertNoSelectedDateEventModal,
+  ] = useState(false);
   const [eventImage, setEventImage] = useState("");
   const [categories, setCategories] = useState<any>([]);
   const [ticketLotEditedData, setTicketLotEditedData] =
@@ -50,6 +54,7 @@ export function CreateEvent() {
     watch,
     control,
     setValue,
+    getValues,
     register,
     handleSubmit,
     formState: { errors, isSubmitted },
@@ -57,7 +62,18 @@ export function CreateEvent() {
     mode: "all",
     reValidateMode: "onChange",
     resolver: yupResolver(eventSchema),
+    defaultValues: {
+      isPublic: true,
+      isDraft: false,
+      absorbRate: false,
+    },
   });
+
+  const isDateAndTimeEventSelected =
+    getValues("startTime") &&
+    getValues("endTime") &&
+    getValues("startDate") &&
+    getValues("endDate");
 
   function handleOpenCreateTicketModal() {
     setOpenCreateTicketModal(true);
@@ -65,6 +81,14 @@ export function CreateEvent() {
 
   function handleCloseCreateTicketModal() {
     setOpenCreateTicketModal(false);
+  }
+
+  function handleOpenAlertNoSelectedDateEventModal() {
+    setOpenAlertNoSelectedDateEventModal(true);
+  }
+
+  function handleCloseAlertNoSelectedDateEventModal() {
+    setOpenAlertNoSelectedDateEventModal(false);
   }
 
   const activeElementOnScroll = function () {
@@ -120,15 +144,17 @@ export function CreateEvent() {
     const formattedData = {
       about: data.about,
       category: data.category,
-      endDate: data.endDate,
+      endDate: format(new Date(data.endDate), "yyyy-MM-dd"),
       endTime: data.endTime,
       location: data.location,
       name: data.name,
       organizerName: data.organizerName,
-      startDate: data.startDate,
+      startDate: format(new Date(data.startDate), "yyyy-MM-dd"),
       startTime: data.startTime,
       ticketsLot: ticketLot,
       images: eventImage,
+      isPublic: data.isPublic,
+      isDraft: data.isDraft
     };
 
     try {
@@ -266,6 +292,24 @@ export function CreateEvent() {
                 Imagem obrigatório
               </span>
             )}
+
+            <div className={`${styles["input-row"]}`}>
+              <label className={`${styles["input-row-label"]}`}>
+                Público <span>*</span>
+              </label>
+
+              <Controller
+                control={control}
+                name="isPublic"
+                render={({ field: { onChange, onBlur, value, ref } }) => (
+                  <SwitchButton onCheckedChange={onChange} value={value} />
+                )}
+              />
+
+              <span className={styles["error-message"]}>
+                {errors?.isPublic?.message}
+              </span>
+            </div>
           </div>
 
           <div className={`${styles["card-box"]}`}>
@@ -348,7 +392,9 @@ export function CreateEvent() {
               <button
                 className={`${styles["ticket-btn"]}`}
                 onClick={() => {
-                  handleOpenCreateTicketModal();
+                  isDateAndTimeEventSelected
+                    ? handleOpenCreateTicketModal()
+                    : handleOpenAlertNoSelectedDateEventModal();
                   setTicketLotFormMode("Create");
                 }}
                 type="button"
@@ -445,7 +491,13 @@ export function CreateEvent() {
 
               <div className={styles["card-configuration-row"]}>
                 <div className={styles["card-configuration-box-row"]}>
-                  <SwitchButton />
+                  <Controller
+                    control={control}
+                    name="absorbRate"
+                    render={({ field: { onChange, onBlur, value, ref } }) => (
+                      <SwitchButton onCheckedChange={onChange} value={value} />
+                    )}
+                  />
 
                   <label>Absorver a taxa de serviço</label>
                 </div>
@@ -531,6 +583,15 @@ export function CreateEvent() {
         setTicketLot={setTicketLot}
         ticketLotEditedData={ticketLotEditedData}
         ticketLot={ticketLot}
+        eventStartDate={getValues("startDate")}
+        eventEndDate={getValues("endDate")}
+        eventStartTime={getValues("startTime")}
+        eventEndTime={getValues("endTime")}
+      />
+
+      <AlertNoSelectedDateEventModal
+        isOpen={openAlertNoSelectedDateEventModal}
+        onRequestClose={handleCloseAlertNoSelectedDateEventModal}
       />
     </>
   );

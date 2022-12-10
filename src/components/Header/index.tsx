@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import Link from "next/link";
 import Modal from "react-modal";
 import { IoIosArrowForward } from "react-icons/io";
