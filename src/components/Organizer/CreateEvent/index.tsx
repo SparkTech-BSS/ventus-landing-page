@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { format } from "date-fns";
 import Modal from "react-modal";
+import { Skeleton, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/router";
@@ -20,12 +21,14 @@ import { eventSchema } from "../../../validations/EventValidation";
 import { addEventOnElem, removeEventOnElem } from "utils";
 import { CreateTicketLotModal } from "../CreateTicketLotModal";
 import { AlertNoSelectedDateEventModal } from "../AlertNoSelectedDateEventModal";
+import { EventPreviewModal } from "../EventPreviewModal";
 import { UploadImageEvent } from "../UploadImageEvent";
 import { CheckBox } from "components/CheckBox";
 import { ProvinceData } from "data";
 import { getProvincesDate } from "utils";
 import { RATE_PRICE } from "config";
 import { SwitchButton } from "../SwitchButton";
+import MESSAGE from "message";
 import styles from "./styles.module.scss";
 
 Modal.setAppElement("#__next");
@@ -34,9 +37,14 @@ export function CreateEvent() {
   const router = useRouter();
   const { addToast } = useToasts();
   const [loading, setLoading] = useState(false);
+  const [submitDraft, setSubmitDraft] = useState(false);
   const [activeHeader, setActiveHeader] = useState(false);
   const [ticketLot, setTicketLot] = useState<TicketLotDTO[]>([]);
+  const [openEventPreviewModal, setOpenEventPreviewModal] = useState(false);
   const [openCreateTicketModal, setOpenCreateTicketModal] = useState(false);
+  const [openAlertPreviewEventModal, setOpenAlertPreviewEventModal] =
+    useState(false);
+  const [previewData, setPreviewData] = useState<any>({});
   const [
     openAlertNoSelectedDateEventModal,
     setOpenAlertNoSelectedDateEventModal,
@@ -83,12 +91,49 @@ export function CreateEvent() {
     setOpenCreateTicketModal(false);
   }
 
+  function handleOpenAlertPreviewEventModal() {
+    setOpenAlertPreviewEventModal(true);
+  }
+
+  function handleCloseAlertPreviewEventModal() {
+    setOpenAlertPreviewEventModal(false);
+  }
+
   function handleOpenAlertNoSelectedDateEventModal() {
     setOpenAlertNoSelectedDateEventModal(true);
   }
 
   function handleCloseAlertNoSelectedDateEventModal() {
     setOpenAlertNoSelectedDateEventModal(false);
+  }
+
+  function checkProperties(obj: any) {
+    for (var key in obj) {
+      if (obj[key] == null && obj[key] == "") return true;
+    }
+    return false;
+  }
+
+  function handleOpenEventPreviewModal() {
+    const {
+      about,
+      acceptResponsibility,
+      category,
+      endDate,
+      endTime,
+      location,
+      name,
+      organizerName,
+      province,
+      startDate,
+      startTime,
+    } = getValues();
+
+    setOpenEventPreviewModal(true);
+  }
+
+  function handleCloseEventPreviewModal() {
+    setOpenEventPreviewModal(false);
   }
 
   const activeElementOnScroll = function () {
@@ -122,6 +167,8 @@ export function CreateEvent() {
             };
           })
         );
+
+        setValue("category", data[0]?._id);
       } catch (error) {
         console.log(error);
       } finally {
@@ -154,27 +201,30 @@ export function CreateEvent() {
       ticketsLot: ticketLot,
       images: eventImage,
       isPublic: data.isPublic,
-      isDraft: data.isDraft
+      isDraft: submitDraft,
+      province: data.province,
     };
 
-    try {
-      const response = await api.post("events/create", formattedData);
+    console.log(formattedData);
 
-      addToast("Evento Criado com sucesso...", {
-        appearance: "success",
-        autoDismiss: true,
-      });
+    // try {
+    //   const response = await api.post("events/create", formattedData);
 
-      router.push(`/organizer/dashboard`);
-    } catch (error) {
-      addToast("Erro ao criar o evento...", {
-        appearance: "error",
-        autoDismiss: true,
-      });
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
+    //   addToast("Evento Criado com sucesso...", {
+    //     appearance: "success",
+    //     autoDismiss: true,
+    //   });
+
+    //   router.push(`/organizer/dashboard`);
+    // } catch (error) {
+    //   addToast("Erro ao criar o evento...", {
+    //     appearance: "error",
+    //     autoDismiss: true,
+    //   });
+    //   console.log(error);
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   return (
@@ -207,23 +257,32 @@ export function CreateEvent() {
                 }`}
                 type="submit"
                 form="form:createEvent"
+                onClick={() => {
+                  setSubmitDraft(false);
+                }}
               >
                 PUBLICAR EVENTO
               </button>
-              <a
+              <button
                 className={`${styles["btn"]} ${styles["btn-outline"]} ${
                   activeHeader && styles.active
                 }`}
+                onClick={handleOpenEventPreviewModal}
               >
                 PRÉ-VISUALIZAR
-              </a>
-              <a
+              </button>
+              <button
                 className={`${styles["btn"]} ${styles["btn-outline"]} ${
                   activeHeader && styles.active
                 }`}
+                type="submit"
+                form="form:createEvent"
+                onClick={() => {
+                  setSubmitDraft(true);
+                }}
               >
                 SALVAR RASCUNHO
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -248,6 +307,7 @@ export function CreateEvent() {
             <Select
               label="Província"
               options={getProvincesDate(ProvinceData)}
+              {...register("province")}
             />
             <Input
               label="Local"
@@ -592,6 +652,19 @@ export function CreateEvent() {
       <AlertNoSelectedDateEventModal
         isOpen={openAlertNoSelectedDateEventModal}
         onRequestClose={handleCloseAlertNoSelectedDateEventModal}
+        message={MESSAGE.ALERT_CREATE_EVENT_WITHOUT_SELECTING_DATE}
+      />
+
+      <AlertNoSelectedDateEventModal
+        isOpen={openAlertPreviewEventModal}
+        onRequestClose={handleCloseAlertPreviewEventModal}
+        message={MESSAGE.ALERT_CREATE_EVENT_WITHOUT_FILLING_OUT_ALL_FORM}
+      />
+
+      <EventPreviewModal
+        isOpen={openEventPreviewModal}
+        onRequestClose={handleCloseEventPreviewModal}
+        data={getValues()}
       />
     </>
   );
