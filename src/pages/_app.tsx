@@ -18,6 +18,7 @@ import type { DehydratedState } from "@tanstack/react-query";
 import "react-quill/dist/quill.snow.css";
 import "../styles/globals.scss";
 import "../styles/embla.css";
+import "../styles/swiper.scss";
 
 interface PageProps {
   dehydratedState?: DehydratedState;

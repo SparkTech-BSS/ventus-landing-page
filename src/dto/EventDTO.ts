@@ -18,4 +18,5 @@ export interface EventDTO {
     isPublic: boolean;
     isDraft: boolean;
     absorbRate?: boolean;
+    province: string;
 }

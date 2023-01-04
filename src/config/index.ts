@@ -17,5 +17,4 @@ export const MAX_IMAGE_ALLOWED_SIZE = 2 * 1024 * 1024;
 
 export const MAX_EVENT_IMAGE_ALLOWED_SIZE = 2 * 1024 * 1024;
 
-
 export const RATE_PRICE = 375;

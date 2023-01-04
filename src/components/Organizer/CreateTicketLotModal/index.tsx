@@ -187,16 +187,21 @@ export function CreateTicketLotModal({
       setValue("type", ticketLotEditedData!.type);
       setValue("qtdTotal", ticketLotEditedData!.qtdTotal);
       setValue("price", ticketLotEditedData!.price);
-      setValue("startDate", String(ticketLotEditedData!.startDate));
-      setValue("endDate", String(ticketLotEditedData!.endDate));
-      // setValue("startDate", new Date(String(ticketLotEditedData!.startDate)));
-      // setValue("endDate", new Date(String(ticketLotEditedData!.endDate)));
+      // setValue("startDate", String(ticketLotEditedData!.startDate));
+      // setValue("endDate", String(ticketLotEditedData!.endDate));
+      setValue("startDate", new Date(String(ticketLotEditedData!.startDate)));
+      setValue("endDate", new Date(String(ticketLotEditedData!.endDate)));
       setValue("startTime", ticketLotEditedData!.startTime);
       setValue("endTime", ticketLotEditedData!.endTime);
     } else {
       reset();
     }
   }, [ticketLotFormMode, ticketLotEditedData, setValue, isOpen, reset]);
+
+  useEffect(() => {
+    isOpen && document.documentElement.style.setProperty("--overflow", `hidden`);
+    !isOpen && document.documentElement.style.setProperty("--overflow", `auto`);
+  }, [isOpen]);
 
   return (
     <div className={`${styles["modal-wrapper"]}`}>

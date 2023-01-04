@@ -1,5 +1,5 @@
+import { useEffect } from "react";
 import Modal from "react-modal";
-import Link from "next/link";
 import { CgClose } from "react-icons/cg";
 import { FiAlertCircle } from "react-icons/fi";
 
@@ -8,12 +8,20 @@ import styles from "./styles.module.scss";
 interface Props {
   isOpen: boolean;
   onRequestClose: () => void;
+  message: string;
 }
 
 export function AlertNoSelectedDateEventModal({
   isOpen,
   onRequestClose,
+  message
 }: Props) {
+
+  useEffect(() => {
+    isOpen && document.documentElement.style.setProperty("--overflow", `hidden`);
+    !isOpen && document.documentElement.style.setProperty("--overflow", `auto`);
+  }, [isOpen]);
+
   return (
     <Modal
       isOpen={isOpen}
@@ -36,10 +44,13 @@ export function AlertNoSelectedDateEventModal({
         </div>
 
         <h1 className={`${styles["heading"]}`}>
-          A data de início, de termino e a hora de ínicio e termino do evento não foram selecionados, para criar
-          um ingresso deve primeio adicionar a data de íncio, termino e a hora de ínicio e termino do evento.
+          {message}
         </h1>
       </div>
     </Modal>
   );
 }
+
+
+//A data de início, de termino e a hora de ínicio e termino do evento não foram selecionados, para criar
+//um ingresso deve primeio adicionar a data de íncio, termino e a hora de ínicio e termino do evento.

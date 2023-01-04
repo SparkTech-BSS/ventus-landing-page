@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import Modal from "react-modal";
 import Link from "next/link";
 import Router from "next/router";
@@ -78,6 +78,11 @@ export function LoginModal({ isOpen, onRequestClose }: Props) {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    isOpen && document.documentElement.style.setProperty("--overflow", `hidden`);
+    !isOpen && document.documentElement.style.setProperty("--overflow", `auto`);
+  }, [isOpen]);
 
   return (
     <Modal

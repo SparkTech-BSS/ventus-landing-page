@@ -1,87 +1,34 @@
-import { useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { EventCard } from "../EventCard";
-import { useRouter } from "next/router";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { useKeenSlider } from "keen-slider/react";
-import "keen-slider/keen-slider.min.css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from "swiper";
+import { Swiper as SwiperCore } from "swiper/types";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 import styles from "./styles.module.scss";
-import { useEvents } from "hooks/api/events";
 
 interface Props {
   data: any;
 }
 
 export function Event({ data }: Props) {
-  const router = useRouter();
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [mounted, setMounted] = useState(false);
-  const [loaded, setLoaded] = useState(false);
-  const [ref, instanceRef] = useKeenSlider<HTMLDivElement>(
-    {
-      breakpoints: {
-        "(min-width: 575px)": {
-          slides: { perView: 1, spacing: 5 },
-        },
-        "(min-width: 600px)": {
-          slides: { perView: 2, spacing: 5 },
-        },
-        "(min-width: 992px)": {
-          slides: { perView: 3, spacing: 5 },
-        },
-        "(min-width: 1000px)": {
-          slides: { perView: 3, spacing: 10 },
-        },
-        "(min-width: 1200px)": {
-          slides: { perView: 4, spacing: 10 },
-        },
-      },
-      loop: true,
-      slides: { perView: 1 },
-      initial: 0,
-      slideChanged(slider) {
-        setCurrentSlide(slider.track.details.rel);
-      },
-      created() {
-        setLoaded(true);
-      },
-    },
-    [
-      (slider) => {
-        let timeout: ReturnType<typeof setTimeout>;
-        let mouseOver = false;
-        function clearNextTimeout() {
-          clearTimeout(timeout);
-        }
-        function nextTimeout() {
-          clearTimeout(timeout);
-          if (mouseOver) return;
-          timeout = setTimeout(() => {
-            slider.next();
-          }, 2000);
-        }
-        slider.on("created", () => {
-          slider.container.addEventListener("mouseover", () => {
-            mouseOver = true;
-            clearNextTimeout();
-          });
-          slider.container.addEventListener("mouseout", () => {
-            mouseOver = false;
-            nextTimeout();
-          });
-          nextTimeout();
-        });
-        slider.on("dragStarted", clearNextTimeout);
-        slider.on("animationEnded", nextTimeout);
-        slider.on("updated", nextTimeout);
-      },
-    ]
-  );
+  const swiperRef = useRef<SwiperCore>();
+  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    setHydrated(true);
   }, []);
+
+  if (!hydrated) {
+    // Returns null on first render, so the client and server match
+    return null;
+  }
 
   return (
     <section
@@ -98,41 +45,66 @@ export function Event({ data }: Props) {
           </Link>
         </div>
 
-        {mounted && (
-          <div className={`${styles["carousel-wrapper"]}`}>
-            <div ref={ref} className="keen-slider">
-              {data?.map((item: any) => {
-                return (
-                  <div className="keen-slider__slide" key={item?.event?._id}>
-                    <EventCard data={item?.event} />
-                  </div>
-                );
-              })}
-            </div>
-
-            {loaded && instanceRef.current && (
-              <div className="dots">
-                {Array.from(
-                  Array(
-                    instanceRef?.current?.track?.details?.slides?.length
-                  ).keys()
-                ).map((idx) => {
-                  return (
-                    <button
-                      key={idx}
-                      onClick={() => {
-                        instanceRef?.current?.moveToIdx(idx);
-                      }}
-                      className={
-                        "dot" + (currentSlide === idx ? " active" : "")
-                      }
-                    ></button>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-        )}
+        <div className={`${styles["carousel-wrapper"]}`}>
+          <Swiper
+            modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
+            slidesPerView={1}
+            // slidesPerView={"auto"}
+            // centeredSlides={true}
+            draggable
+            updateOnWindowResize
+            observer
+            freeMode={true}
+            // cssMode={true}
+            // loop={typeof window !== 'undefined' ? true : false}
+            observeParents
+            breakpoints={{
+              640: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+              },
+              992: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+              },
+              1200: {
+                slidesPerView: 4,
+                spaceBetween: 20,
+              },
+            }}
+            navigation={{
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+              disabledClass: 'disabled_swiper_button'
+            }}
+            scrollbar={{ draggable: true }}
+            autoplay={{ delay: 2000, disableOnInteraction: false }}
+            onBeforeInit={(swiper) => {
+              swiperRef.current = swiper;
+            }}
+            className="swiper"
+          >
+            {data.map((item: any) => {
+              return (
+                <SwiperSlide key={item?.event?._id}>
+                  <EventCard data={item?.event} />
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+          <button
+            className={`${styles["btn-event-carousel"]} ${styles["btn-event-carousel--prev"]} swiper-button-prev`}
+            onClick={() => swiperRef.current?.slidePrev()}
+          >
+            {/* <IoIosArrowBack size={28} /> */}
+          </button>
+          <button
+            className={`${styles["btn-event-carousel"]} ${styles["btn-event-carousel--next"]} swiper-button-next`}
+            onClick={() => swiperRef.current?.slideNext()}
+          >
+            {/* <IoIosArrowForward size={28} /> */}
+          </button>
+        </div>
 
         <Link href="/events" passHref>
           <button className={styles["btn-buy-ticket"]}>
