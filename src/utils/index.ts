@@ -1,3 +1,5 @@
+import { addDays, format } from "date-fns";
+
 export const pageAnimation = {
   hidden: {
     opacity: 0,
@@ -548,4 +550,63 @@ export function isValidPhoto(fileName: string): boolean {
   }
 
   return false;
+}
+
+export function getDates(
+  startDate: string | Date | any,
+  stopDate: string | Date | any
+) {
+  let dateArray = new Array();
+  let currentDate = startDate;
+  while (currentDate <= stopDate) {
+    dateArray.push(new Date(currentDate));
+    currentDate = addDays(new Date(currentDate), 1);
+  }
+
+  return dateArray;
+}
+
+export function checkIfTArrayIsEqual(
+  firstArray: Array<any | string>,
+  secondArray: Array<any | string>
+): boolean {
+  if (firstArray.length !== secondArray.length) return false;
+
+  for (let counter = 0; counter < firstArray.length; counter++) {
+    const firstFormattedDate = format(
+      new Date(firstArray[counter]),
+      "MM/dd/yyyy"
+    );
+
+    const lastFormattedDate = format(
+      new Date(secondArray[counter]),
+      "MM/dd/yyyy"
+    );
+
+    if (firstFormattedDate !== lastFormattedDate) return false;
+  }
+
+  return true;
+}
+
+export function isFileImage(file: File | any) {
+  const acceptedImageTypes = ["image/gif", "image/jpeg", "image/png"];
+
+  return file && acceptedImageTypes.includes(file["type"]);
+}
+
+export function isUndefined(data: any) {
+  return typeof data == "undefined";
+}
+
+export function checkIfArrayElementsIsNotEmpty(
+  arrayToCheck: Array<any | string>
+) {
+  for (let counter = 0; counter < arrayToCheck.length; counter++) {
+    if (isUndefined(arrayToCheck[counter])) return false;
+
+    if (!arrayToCheck[counter].length) return false;
+  }
+
+  return true;
 }

@@ -18,7 +18,12 @@ import { Select } from "../Select";
 import { Spinner } from "components/Spinner";
 import MapPage from "../MapPage";
 import { eventSchema } from "../../../validations/EventValidation";
-import { addEventOnElem, removeEventOnElem } from "utils";
+import {
+  addEventOnElem,
+  checkIfArrayElementsIsNotEmpty,
+  checkIfTArrayIsEqual,
+  removeEventOnElem,
+} from "utils";
 import { CreateTicketLotModal } from "../CreateTicketLotModal";
 import { AlertNoSelectedDateEventModal } from "../AlertNoSelectedDateEventModal";
 import { EventPreviewModal } from "../EventPreviewModal";
@@ -29,7 +34,9 @@ import { getProvincesDate } from "utils";
 import { RATE_PRICE } from "config";
 import { SwitchButton } from "../SwitchButton";
 import MESSAGE from "message";
+import { getDates } from "utils";
 import styles from "./styles.module.scss";
+import { EventStatus } from "utils/Enum";
 
 Modal.setAppElement("#__next");
 
@@ -40,11 +47,12 @@ export function CreateEvent() {
   const [submitDraft, setSubmitDraft] = useState(false);
   const [activeHeader, setActiveHeader] = useState(false);
   const [ticketLot, setTicketLot] = useState<TicketLotDTO[]>([]);
+  const [openAlertDateOutOfRangeModal, setOpenAlertDateOutOfRangeModal] =
+    useState(false);
   const [openEventPreviewModal, setOpenEventPreviewModal] = useState(false);
   const [openCreateTicketModal, setOpenCreateTicketModal] = useState(false);
   const [openAlertPreviewEventModal, setOpenAlertPreviewEventModal] =
     useState(false);
-  const [previewData, setPreviewData] = useState<any>({});
   const [
     openAlertNoSelectedDateEventModal,
     setOpenAlertNoSelectedDateEventModal,
@@ -77,12 +85,6 @@ export function CreateEvent() {
     },
   });
 
-  const isDateAndTimeEventSelected =
-    getValues("startTime") &&
-    getValues("endTime") &&
-    getValues("startDate") &&
-    getValues("endDate");
-
   function handleOpenCreateTicketModal() {
     setOpenCreateTicketModal(true);
   }
@@ -107,28 +109,15 @@ export function CreateEvent() {
     setOpenAlertNoSelectedDateEventModal(false);
   }
 
-  function checkProperties(obj: any) {
-    for (var key in obj) {
-      if (obj[key] == null && obj[key] == "") return true;
-    }
-    return false;
+  function handleOpenAlertDateOutOfRangeModal() {
+    setOpenAlertDateOutOfRangeModal(true);
+  }
+
+  function handleCloseAlertDateOutOfRangeModal() {
+    setOpenAlertDateOutOfRangeModal(false);
   }
 
   function handleOpenEventPreviewModal() {
-    const {
-      about,
-      acceptResponsibility,
-      category,
-      endDate,
-      endTime,
-      location,
-      name,
-      organizerName,
-      province,
-      startDate,
-      startTime,
-    } = getValues();
-
     setOpenEventPreviewModal(true);
   }
 
@@ -177,7 +166,7 @@ export function CreateEvent() {
     }
 
     fetchData();
-  }, []);
+  }, [setValue]);
 
   function handleRemoveTicketLotItem(id: string) {
     setTicketLot(ticketLot.filter((item: TicketLotDTO) => item?.id !== id));
@@ -203,28 +192,44 @@ export function CreateEvent() {
       isPublic: data.isPublic,
       isDraft: submitDraft,
       province: data.province,
+      status: EventStatus.PENDING,
     };
 
-    console.log(formattedData);
+    console.log(formattedData)
 
-    // try {
-    //   const response = await api.post("events/create", formattedData);
+    const ticketLotArrayDateGenerated = [...ticketLot.map((item) => item.date)];
 
-    //   addToast("Evento Criado com sucesso...", {
-    //     appearance: "success",
-    //     autoDismiss: true,
-    //   });
+    const eventArrayDateGenerated = getDates(data.startDate, data.endDate);
 
-    //   router.push(`/organizer/dashboard`);
-    // } catch (error) {
-    //   addToast("Erro ao criar o evento...", {
-    //     appearance: "error",
-    //     autoDismiss: true,
-    //   });
-    //   console.log(error);
-    // } finally {
-    //   setLoading(false);
-    // }
+    const isValidTicketLotRangeDate = checkIfTArrayIsEqual(
+      ticketLotArrayDateGenerated,
+      eventArrayDateGenerated
+    );
+
+    if (!isValidTicketLotRangeDate) {
+      handleOpenAlertDateOutOfRangeModal();
+      setLoading(false);
+      return;
+    }
+
+    try {
+      await api.post("events/create", formattedData);
+
+      addToast("Evento Criado com sucesso...", {
+        appearance: "success",
+        autoDismiss: true,
+      });
+
+      router.push(`/organizer/dashboard`);
+    } catch (error) {
+      addToast("Erro ao criar o evento...", {
+        appearance: "error",
+        autoDismiss: true,
+      });
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -317,7 +322,7 @@ export function CreateEvent() {
               {...register("location")}
               errorMessage={errors?.location?.message}
             />
-            <MapPage />
+            {/* <MapPage /> */}
           </div>
 
           <div className={`${styles["card-box"]}`}>
@@ -452,7 +457,12 @@ export function CreateEvent() {
               <button
                 className={`${styles["ticket-btn"]}`}
                 onClick={() => {
-                  isDateAndTimeEventSelected
+                  checkIfArrayElementsIsNotEmpty([
+                    getValues("startTime"),
+                    getValues("endTime"),
+                    getValues("startDate"),
+                    getValues("endDate"),
+                  ])
                     ? handleOpenCreateTicketModal()
                     : handleOpenAlertNoSelectedDateEventModal();
                   setTicketLotFormMode("Create");
@@ -481,6 +491,7 @@ export function CreateEvent() {
                       <th scope="col">TIPO</th>
                       <th scope="col">VENDIDOS/TOTAL</th>
                       <th scope="col">VALOR</th>
+                      <th scope="col">DATA</th>
                       <th scope="col">TAXA</th>
                       <th scope="col">Ações</th>
                     </tr>
@@ -503,6 +514,7 @@ export function CreateEvent() {
                               currency: "AOA",
                             }).format(item?.price)}
                           </td>
+                          <td>{format(new Date(item?.date!), "dd/MM/yyyy")}</td>
                           <td>
                             {new Intl.NumberFormat("de-DE", {
                               style: "currency",
@@ -645,8 +657,6 @@ export function CreateEvent() {
         ticketLot={ticketLot}
         eventStartDate={getValues("startDate")}
         eventEndDate={getValues("endDate")}
-        eventStartTime={getValues("startTime")}
-        eventEndTime={getValues("endTime")}
       />
 
       <AlertNoSelectedDateEventModal
@@ -661,10 +671,16 @@ export function CreateEvent() {
         message={MESSAGE.ALERT_CREATE_EVENT_WITHOUT_FILLING_OUT_ALL_FORM}
       />
 
+      <AlertNoSelectedDateEventModal
+        isOpen={openAlertDateOutOfRangeModal}
+        onRequestClose={handleCloseAlertDateOutOfRangeModal}
+        message={MESSAGE.ALERT_CREATE_EVENT_DATE_OUT_OF_RANGE}
+      />
+
       <EventPreviewModal
         isOpen={openEventPreviewModal}
         onRequestClose={handleCloseEventPreviewModal}
-        data={getValues()}
+        data={{ ...getValues(), eventImage: eventImage }}
       />
     </>
   );

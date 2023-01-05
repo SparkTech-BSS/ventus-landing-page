@@ -18,19 +18,18 @@ import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 
 import { Loading } from "components/Loading";
 
-import { formatFileSize } from "utils";
-
 import { CgImage } from "react-icons/cg";
 
 import { MAX_EVENT_IMAGE_ALLOWED_SIZE } from "config";
 
 import styles from "./styles.module.scss";
+import { isFileImage } from "utils";
 
 interface Props {
   setEventImage: Dispatch<SetStateAction<string>>;
 }
 
-export function UploadImageEvent({ setEventImage }:Props) {
+export function UploadImageEvent({ setEventImage }: Props) {
   const wrapperRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
   const inputRef = useRef() as React.MutableRefObject<HTMLInputElement>;
@@ -67,6 +66,16 @@ export function UploadImageEvent({ setEventImage }:Props) {
       return;
     }
 
+    if (!isFileImage(file)) {
+      addToast("O ficheiro selecionado não é uma imagem...", {
+        appearance: "error",
+        autoDismiss: true,
+      });
+      setFileUploaded("");
+      setEventImage("");
+      return;
+    }
+
     if (file?.size > MAX_EVENT_IMAGE_ALLOWED_SIZE) {
       addToast("Tamanho da imagem superior a 2mb ...", {
         appearance: "error",
@@ -83,23 +92,14 @@ export function UploadImageEvent({ setEventImage }:Props) {
 
     uploadBytes(imageRef, file).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
-        // setImageList((prev: any) => [...prev, url])
-        console.log(url)
         setEventImage(url);
       });
       setIsLoading(false);
       setIsSelectedFile(true);
-
     });
 
     setIsLoading(true);
     setSelectedFile(file);
-
-    // setTimeout(() => {
-    //   setIsLoading(false);
-    //   setSelectedFile(file);
-    //   setIsSelectedFile(true);
-    // }, 2000);
   };
 
   function handleRemoveFile() {
@@ -142,6 +142,7 @@ export function UploadImageEvent({ setEventImage }:Props) {
                   </span>
                   <input
                     type="file"
+                    title="Selecionar imagem"
                     value=""
                     onChange={changeHandler}
                     accept=".png, .jpg, .jpeg"

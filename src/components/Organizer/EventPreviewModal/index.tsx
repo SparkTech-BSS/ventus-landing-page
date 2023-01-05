@@ -5,7 +5,7 @@ import { CgClose } from "react-icons/cg";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { LocationICON, TimeICON, StarICON } from "../../Icon";
-import { MAP_INFO } from "utils";
+import { getHourFormatToAPI, MAP_INFO } from "utils";
 import styles from "./styles.module.scss";
 
 interface Props {
@@ -35,9 +35,8 @@ export function EventPreviewModal({ isOpen, onRequestClose, data }: Props) {
     province,
     startDate,
     startTime,
+    eventImage,
   } = data;
-
-  console.log(data);
 
   useEffect(() => {
     isOpen &&
@@ -62,13 +61,21 @@ export function EventPreviewModal({ isOpen, onRequestClose, data }: Props) {
 
       <div className={styles["content"]}>
         <div className={`${styles["image-cover"]}`} />
-        <Image
-          src={URL_EVENT_IMAGE}
-          alt=""
-          width={100}
-          height={100}
-          className={styles["event-image"]}
-        />
+        {eventImage ? (
+          <>
+            <Image
+              src={URL_EVENT_IMAGE}
+              alt=""
+              width={100}
+              height={100}
+              className={styles["event-image"]}
+            />
+          </>
+        ) : (
+          <div className={`${styles["avatar-skeleton-event-image-wrapper"]}`}>
+            <Skeleton className={`${styles["avatar-skeleton-event-image"]}`} />
+          </div>
+        )}
 
         <div className={styles["heading-row"]}>
           {name ? (
@@ -83,7 +90,6 @@ export function EventPreviewModal({ isOpen, onRequestClose, data }: Props) {
           ) : (
             <Skeleton
               count={1}
-              // height="1rem"
               className={`${styles["avatar-skeleton-event-name"]}`}
             />
           )}
@@ -98,9 +104,13 @@ export function EventPreviewModal({ isOpen, onRequestClose, data }: Props) {
                 <LocationICON />
               </div>
 
-              <span className={styles["event-item-text"]}>
-                Rua Aspicuelta 684 - Vila Madalena - São Paulo/SP
-              </span>
+              {location ? (
+                <span className={styles["event-item-text"]}>{location}</span>
+              ) : (
+                <Skeleton
+                  className={`${styles["avatar-skeleton-event-location"]}`}
+                />
+              )}
             </div>
 
             <div className={styles["event-item"]}>
@@ -108,31 +118,49 @@ export function EventPreviewModal({ isOpen, onRequestClose, data }: Props) {
                 <TimeICON />
               </div>
 
-              <span className={styles["event-item-text"]}>18h às 20h</span>
+              {startTime || endTime ? (
+                <span className={styles["event-item-text"]}>
+                  {getHourFormatToAPI(startTime)}h às{" "}
+                  {getHourFormatToAPI(endTime)}h
+                </span>
+              ) : (
+                <Skeleton
+                  className={`${styles["avatar-skeleton-event-time"]}`}
+                />
+              )}
             </div>
 
             <div className={styles["event-item"]}>
-              <span className={styles["event-item-text"]}>Por</span>
-              <span className={styles["event-item-heading"]}>
-                LS Republicano
-              </span>
+              {organizerName ? (
+                <>
+                  <span className={styles["event-item-text"]}>Por</span>
+                  <span className={styles["event-item-heading"]}>
+                    LS Republicano
+                  </span>
+                </>
+              ) : (
+                <Skeleton
+                  className={`${styles["avatar-skeleton-event-organizer-name"]}`}
+                />
+              )}
             </div>
           </div>
 
           <h2 className={`${styles["subheading"]}`}>Sobre o evento</h2>
 
           <div className={`${styles["about-event"]}`}>
-            <p>
-              Fala tigradaaaa 🐯 Sabemos que todos estavam ansiosos com o fim
-              das provas, então nada mais justo que comemorar com o tigrão! Dia
-              6/10, quinta-feira, teremos a 1ª F.O.D.A do mês (festa oficial da
-              atlética), com 6 HORAS DE OPEN BAR 🍻, e atrações como Kenan e
-              Kel, Baile do Duzão e Dj Clip! 📆 06/10 ⏰ 21hrs-3:30hrs
-              📍Campinas Hall 🍻 Open: breja, vodka, gin, energético e água.
-            </p>
+            {about ? (
+              <p>
+                {about}
+              </p>
+            ) : (
+              <Skeleton
+                className={`${styles["avatar-skeleton-event-about"]}`}
+              />
+            )}
           </div>
 
-          <h2 className={`${styles["subheading"]}`}>LOCALIZAÇÃO </h2>
+          {/* <h2 className={`${styles["subheading"]}`}>LOCALIZAÇÃO </h2>
 
           <div className={styles["location-map"]}>
             <iframe
@@ -143,7 +171,7 @@ export function EventPreviewModal({ isOpen, onRequestClose, data }: Props) {
               referrerPolicy="no-referrer-when-downgrade"
               loading="lazy"
             ></iframe>
-          </div>
+          </div> */}
         </div>
       </div>
     </Modal>
