@@ -449,6 +449,18 @@ export function getAllDateObject(date: string) {
   return dateObject;
 }
 
+export function getStartDateAndEdnDateForUniqueDate(date: string | Date) {
+  const convertedDate = new Date(date);
+
+  return {
+    month: getMonthTypeOne(convertedDate.getMonth()),
+    day:
+      convertedDate.getDate().toString().length > 1
+        ? convertedDate.getDate()
+        : `0${convertedDate.getDate()}`,
+  };
+}
+
 export function getStartDateAndEndDate(dates: any) {
   let startIndex = 0,
     endIndex = dates?.length - 1;
@@ -609,4 +621,18 @@ export function checkIfArrayElementsIsNotEmpty(
   }
 
   return true;
+}
+
+/**
+ * Check if date is equal
+ * return: -1 - 0 - 1
+ */
+export function compareDate(
+  firstDateToCompare: string | Date,
+  secondDateToCompare: string | Date
+) {
+  if (new Date(firstDateToCompare) > new Date(secondDateToCompare)) return -1;
+  else if (new Date(firstDateToCompare) < new Date(secondDateToCompare))
+    return 1;
+  return 0;
 }

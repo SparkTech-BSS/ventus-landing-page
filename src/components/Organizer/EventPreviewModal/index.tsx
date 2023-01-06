@@ -4,8 +4,13 @@ import Image from "next/future/image";
 import { CgClose } from "react-icons/cg";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { LocationICON, TimeICON, StarICON } from "../../Icon";
-import { getHourFormatToAPI, MAP_INFO } from "utils";
+import { LocationICON, TimeICON, StarICON, ArrowEventICON } from "../../Icon";
+import {
+  compareDate,
+  getHourFormatToAPI,
+  getStartDateAndEdnDateForUniqueDate,
+  MAP_INFO,
+} from "utils";
 import styles from "./styles.module.scss";
 
 interface Props {
@@ -38,11 +43,18 @@ export function EventPreviewModal({ isOpen, onRequestClose, data }: Props) {
     eventImage,
   } = data;
 
+  const dateEventCondition =
+    startDate && endDate ? compareDate(startDate, endDate) : 2;
+
+  console.log(dateEventCondition)
+
   useEffect(() => {
     isOpen &&
       document.documentElement.style.setProperty("--overflow", `hidden`);
     !isOpen && document.documentElement.style.setProperty("--overflow", `auto`);
   }, [isOpen]);
+
+  console.log(startDate && endDate ? compareDate(startDate, endDate) : "");
 
   return (
     <Modal
@@ -75,6 +87,39 @@ export function EventPreviewModal({ isOpen, onRequestClose, data }: Props) {
           <div className={`${styles["avatar-skeleton-event-image-wrapper"]}`}>
             <Skeleton className={`${styles["avatar-skeleton-event-image"]}`} />
           </div>
+        )}
+
+        {dateEventCondition === 1 ? (
+          <div className={styles["date-multiple"]}>
+            <div className={styles["date-multiple__col"]}>
+              <span className={styles["date-month"]}>
+                {getStartDateAndEdnDateForUniqueDate(startDate)?.month}
+              </span>
+              <span className={styles["date-day"]}>
+                {getStartDateAndEdnDateForUniqueDate(startDate)?.day}
+              </span>
+            </div>
+            <ArrowEventICON />
+            <div className={styles["date-multiple__col"]}>
+              <span className={styles["date-month"]}>
+                {getStartDateAndEdnDateForUniqueDate(endDate)?.month}
+              </span>
+              <span className={styles["date-day"]}>
+                {getStartDateAndEdnDateForUniqueDate(endDate)?.day}
+              </span>
+            </div>
+          </div>
+        ) : dateEventCondition === 0 ? (
+          <div className={styles.date}>
+            <span className={styles["date-month"]}>
+              {getStartDateAndEdnDateForUniqueDate(startDate)?.month}
+            </span>
+            <span className={styles["date-day"]}>
+              {getStartDateAndEdnDateForUniqueDate(startDate)?.day}
+            </span>
+          </div>
+        ) : (
+          ""
         )}
 
         <div className={styles["heading-row"]}>
@@ -150,9 +195,7 @@ export function EventPreviewModal({ isOpen, onRequestClose, data }: Props) {
 
           <div className={`${styles["about-event"]}`}>
             {about ? (
-              <p>
-                {about}
-              </p>
+              <p>{about}</p>
             ) : (
               <Skeleton
                 className={`${styles["avatar-skeleton-event-about"]}`}

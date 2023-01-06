@@ -69,12 +69,15 @@ export function CreateTicketLotModal({
         },
       }),
     price: Yup.number()
+      .min(1, "Preço deve ser superior a zero")
       .required("Preço obrigatório")
       .typeError("Campo inválido"),
     qtdTotal: Yup.number()
+      .min(1, "Quantidade deve ser superior a zero")
       .required("Quantidade total obrigatório")
       .typeError("Campo inválido"),
     qtdTotalPerUser: Yup.number()
+      .min(1, "Quantidade permitida por compra deve ser superior a zero")
       .required("Quantidade permitida por compra obrigatório")
       .test({
         name: "max",
@@ -111,7 +114,7 @@ export function CreateTicketLotModal({
       const formattedData = {
         ...data,
         id: uuidv4(),
-        date: format(new Date(data!.date!), 'yyyy-MM-dd'),
+        date: format(new Date(data!.date!), "yyyy-MM-dd"),
       };
 
       setTicketLot((prevState: TicketLotDTO[]) => [
@@ -126,7 +129,7 @@ export function CreateTicketLotModal({
       ticketLotArray[index] = {
         ...data,
         id: ticketLotEditedData?.id,
-        date: format(new Date(data!.date!), 'yyyy-MM-dd'),
+        date: format(new Date(data!.date!), "yyyy-MM-dd"),
       };
       setTicketLot(ticketLotArray);
     }
@@ -139,8 +142,11 @@ export function CreateTicketLotModal({
       setValue("type", ticketLotEditedData!.type);
       setValue("qtdTotal", ticketLotEditedData!.qtdTotal);
       setValue("price", ticketLotEditedData!.price);
-      format(new Date(ticketLotEditedData!.date!), 'MM/dd/yyyy')
-      setValue("date", format(new Date(ticketLotEditedData!.date!), 'yyyy-MM-dd'));
+      format(new Date(ticketLotEditedData!.date!), "MM/dd/yyyy");
+      setValue(
+        "date",
+        format(new Date(ticketLotEditedData!.date!), "yyyy-MM-dd")
+      );
       setValue("qtdTotalPerUser", ticketLotEditedData!.qtdTotalPerUser);
     } else {
       reset();
@@ -237,7 +243,7 @@ export function CreateTicketLotModal({
                 />
               </div>
 
-              <div className={`${styles["input-block"]}`}>
+              {/* <div className={`${styles["input-block"]}`}>
                 <label className={`${styles["input-block-label"]}`}>
                   Descrição do ingresso (opcional):
                 </label>
@@ -246,7 +252,7 @@ export function CreateTicketLotModal({
                   className={`${styles["input-description"]}`}
                   placeholder=""
                 />
-              </div>
+              </div> */}
             </div>
           </div>
 

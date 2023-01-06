@@ -556,7 +556,7 @@ export function CreateEvent() {
               ""
             )}
 
-            <div className={`${styles["card-configuration"]}`}>
+            {/* <div className={`${styles["card-configuration"]}`}>
               <h3 className={`${styles["card-configuration-heading"]}`}>
                 Configurações
               </h3>
@@ -583,18 +583,18 @@ export function CreateEvent() {
                   </select>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className={`${styles["card-box"]}`}>
             <h2 className={`${styles["card-box-heading"]}`}>
               6. Sobre o produtor
             </h2>
-            <span className={styles["card-box-subheading"]}>
+            {/* <span className={styles["card-box-subheading"]}>
               Conte um pouco sobre você ou a sua empresa. É importante mostrar
               ao público quem está por trás do evento, dando mais credibilidade
               à sua produção.
-            </span>
+            </span> */}
 
             <Input
               label="Nome da organizadora"
@@ -605,7 +605,7 @@ export function CreateEvent() {
               errorMessage={errors?.organizerName?.message}
             />
 
-            <div className={`${styles["input-box"]}`}>
+            {/* <div className={`${styles["input-box"]}`}>
               <label className={styles["input-box-label"]}>
                 Descrição do produtor (opcional)
               </label>
@@ -614,7 +614,7 @@ export function CreateEvent() {
                 className={`${styles["input-description"]}`}
                 placeholder=""
               />
-            </div>
+            </div> */}
           </div>
 
           <div className={`${styles["card-box"]}`}>

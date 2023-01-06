@@ -111,7 +111,7 @@ export function UploadImageEvent({ setEventImage }: Props) {
 
   return (
     <div className={`${styles["upload-image-event-wrapper"]}`}>
-      <label className={styles["label"]}>Image de divulgação (opcional)</label>
+      <label className={styles["label"]}>Image de divulgação</label>
 
       <div className={`${styles["upload-image-event-row"]}`}>
         <div className={`${styles["upload-image-event-box"]}`}>

@@ -20,14 +20,17 @@
   border-radius: 10px;
   background: var(--primary-color);
 
+  position: absolute;
+  left: 36%;
+  top: 10rem;
+  transform: translate(-50%, -50%);
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  position: absolute;
-  right: 1.4rem;
-  top: 10rem;
+  z-index: 90;
 
   .date-month,
   .date-day {
@@ -52,6 +55,12 @@
   border-radius: 10px;
   background: var(--primary-color);
 
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  top: 22rem;
+  transform: translate(-50%, -50%);
+
   padding: 1rem 2rem;
 
   display: flex;
@@ -59,9 +68,11 @@
   gap: 1rem;
   align-items: center;
 
-  position: absolute;
-  right: 1.4rem;
-  top: 12.7rem;
+  // position: absolute;
+  // right: 1.4rem;
+  // top: 12.7rem;
+
+  z-index: 90;
 
   .date-month,
   .date-day {
@@ -107,7 +118,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 4rem;
-  margin-top: 1.4rem;
+  margin-top: 4rem;
   padding-bottom: 2rem;
 }
 
