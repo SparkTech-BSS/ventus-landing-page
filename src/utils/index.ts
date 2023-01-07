@@ -636,3 +636,29 @@ export function compareDate(
     return 1;
   return 0;
 }
+
+export function getEventVisibilityClassName(status: boolean) {
+  return status
+    ? { className: "public", value: "Público" }
+    : { className: "private", value: "Privado" };
+}
+
+type StatusValues = "pending" | "approved" | "refused";
+
+export function getStatusExtendingName(status: StatusValues) {
+  const statusObject = {
+    pending: "Pendente",
+    approved: "Aprovado",
+    refused: "Recusado",
+  };
+
+  return statusObject[status];
+}
+
+export function getStatusClassName(status: string) {
+  return status === "pending"
+    ? { className: "inactive", value: "Pendente" }
+    : status === "approved"
+    ? { className: "active", value: "Público" }
+    : { className: "refused", value: "Recusado" };
+}

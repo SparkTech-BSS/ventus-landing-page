@@ -140,6 +140,7 @@
 
   th {
     padding: 1.2rem 1.5rem;
+    text-transform: uppercase;
   }
 
   td {
@@ -148,6 +149,18 @@
     overflow: hidden;
     text-overflow: ellipsis;
     position: relative;
+
+    .public {
+      color: #00b150 !important;
+      font-size: 1.4rem;
+      font-weight: 500;
+    }
+
+    .private {
+      color: var(--primary-color) !important;
+      font-size: 1.4rem;
+      font-weight: 500;
+    }
 
     span:nth-child(1) {
       color: rgba(0, 0, 0, 0.4);
@@ -208,6 +221,23 @@
       }
     }
 
+    &.refused {
+      color: #FF0001;
+      font-weight: 500;
+      padding-left: 2.5rem;
+
+      &::before {
+        content: "";
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        background: #FF0001;
+        border-radius: 14px;
+        left: 0;
+        top: 2.5rem;
+      }
+    }
+
     &.wait {
       color: #ee9547;
       font-weight: 500;
@@ -224,6 +254,7 @@
         top: 2.5rem;
       }
     }
+    
   }
 
   thead {
@@ -297,7 +328,7 @@
         color: var(--white-color);
       }
     }
-    
+
     &--button-transparent {
       background-color: #17a8fd;
       color: var(--white-color);
