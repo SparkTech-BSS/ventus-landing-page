@@ -1,16 +1,15 @@
-import { useState, useEffect, Dispatch, SetStateAction } from "react";
+import { useEffect, Dispatch, SetStateAction } from "react";
 import * as Yup from "yup";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { v4 as uuidv4 } from "uuid";
+import { format } from "date-fns";
 import Modal from "react-modal";
-import * as RadioGroup from "@radix-ui/react-radio-group";
 import { CgClose } from "react-icons/cg";
-import { api } from "services/api";
 import { Input } from "../Input";
 import { TicketLotDTO } from "dto/TicketLotDTO";
-import { Loading } from "components/Loading";
 import { RATE_PRICE } from "config";
+import { convertTwoDatesToMilliseconds } from "utils";
 import styles from "./styles.module.scss";
 
 interface Props {
@@ -20,6 +19,8 @@ interface Props {
   setTicketLot: Dispatch<SetStateAction<TicketLotDTO[]>>;
   ticketLotEditedData?: TicketLotDTO;
   ticketLot: TicketLotDTO[];
+  eventStartDate: string | Date;
+  eventEndDate: string | Date;
 }
 
 export function CreateTicketLotModal({
@@ -29,10 +30,12 @@ export function CreateTicketLotModal({
   setTicketLot,
   ticketLotEditedData,
   ticketLot,
+  eventStartDate,
+  eventEndDate,
 }: Props) {
   const ticketLotSchema = Yup.object().shape({
     type: Yup.string().required("Título obrigatório"),
-    startDate: Yup.date()
+    date: Yup.date()
       .required("Campo é obrigatório")
       .typeError("Campo inválido")
       .test({
@@ -43,41 +46,50 @@ export function CreateTicketLotModal({
         test: function (value: any) {
           return !(new Date(value) < new Date());
         },
-      }),
-    endDate: Yup.date()
-      .required("campo é obrigatório")
-      .typeError("Campo inválido")
+      })
       .test({
-        name: "dataCompare",
-        message: "Data de termino deve ser superior ou igual a data de início",
+        name: "startDateCompareWithStartDateEventSmaller",
+        message:
+          "Data de ínicio não pode ser inferior a data de ínicio do evento",
         test: function (value: any) {
-          return new Date(value) >= new Date(this.parent.startDate);
+          const { dateOne, dateTwo } = convertTwoDatesToMilliseconds(
+            value,
+            eventStartDate
+          );
+
+          return dateOne >= dateTwo;
         },
-      }),
-    startTime: Yup.string().required("Campo é obrigatório"),
-    endTime: Yup.string()
-      .required("Campo é obrigatórbio")
+      })
       .test({
-        name: "max",
-        message: "Hora de termino deve ser maior que a hora de inicio",
-        test: function (value) {
-          if (
-            new Date(this.parent.endDate).getTime() ===
-            new Date(this.parent.startDate).getTime()
-          ) {
-            return (
-              Number(value?.split(":")[0]) >
-              Number(this.parent.startTime?.split(":")[0])
-            );
-          }
-          return true;
+        name: "startDateCompareWithStartDateEventLarger",
+        message:
+          "Data de ínicio não pode ser superior a data de termino do evento",
+        test: function (value: any) {
+          return new Date(value) <= new Date(eventEndDate);
         },
       }),
     price: Yup.number()
+      .min(1, "Preço deve ser superior a zero")
       .required("Preço obrigatório")
       .typeError("Campo inválido"),
     qtdTotal: Yup.number()
+      .min(1, "Quantidade deve ser superior a zero")
       .required("Quantidade total obrigatório")
+      .typeError("Campo inválido"),
+    qtdTotalPerUser: Yup.number()
+      .min(1, "Quantidade permitida por compra deve ser superior a zero")
+      .required("Quantidade permitida por compra obrigatório")
+      .test({
+        name: "max",
+        message:
+          "A quantidade máxima permitido para compra não deve ser superior a quantidade de ingresso disponível.",
+        test: function (value) {
+          if (value! > this.parent.qtdTotal) {
+            return false;
+          }
+          return true;
+        },
+      })
       .typeError("Campo inválido"),
   });
 
@@ -100,10 +112,11 @@ export function CreateTicketLotModal({
   const onSubmit: SubmitHandler<TicketLotDTO> = (data) => {
     if (ticketLotFormMode === "Create") {
       const formattedData = {
-        id: uuidv4(),
-        date: data?.startDate,
         ...data,
+        id: uuidv4(),
+        date: format(new Date(data!.date!), "yyyy-MM-dd"),
       };
+
       setTicketLot((prevState: TicketLotDTO[]) => [
         ...prevState,
         formattedData,
@@ -114,9 +127,9 @@ export function CreateTicketLotModal({
       );
       let ticketLotArray = [...ticketLot];
       ticketLotArray[index] = {
-        id: ticketLotEditedData?.id,
-        date: ticketLotEditedData?.startDate,
         ...data,
+        id: ticketLotEditedData?.id,
+        date: format(new Date(data!.date!), "yyyy-MM-dd"),
       };
       setTicketLot(ticketLotArray);
     }
@@ -129,16 +142,22 @@ export function CreateTicketLotModal({
       setValue("type", ticketLotEditedData!.type);
       setValue("qtdTotal", ticketLotEditedData!.qtdTotal);
       setValue("price", ticketLotEditedData!.price);
-      setValue("startDate", String(ticketLotEditedData!.startDate));
-      setValue("endDate", String(ticketLotEditedData!.endDate));
-      // setValue("startDate", new Date(String(ticketLotEditedData!.startDate)));
-      // setValue("endDate", new Date(String(ticketLotEditedData!.endDate)));
-      setValue("startTime", ticketLotEditedData!.startTime);
-      setValue("endTime", ticketLotEditedData!.endTime);
+      format(new Date(ticketLotEditedData!.date!), "MM/dd/yyyy");
+      setValue(
+        "date",
+        format(new Date(ticketLotEditedData!.date!), "yyyy-MM-dd")
+      );
+      setValue("qtdTotalPerUser", ticketLotEditedData!.qtdTotalPerUser);
     } else {
       reset();
     }
   }, [ticketLotFormMode, ticketLotEditedData, setValue, isOpen, reset]);
+
+  useEffect(() => {
+    isOpen &&
+      document.documentElement.style.setProperty("--overflow", `hidden`);
+    !isOpen && document.documentElement.style.setProperty("--overflow", `auto`);
+  }, [isOpen]);
 
   return (
     <div className={`${styles["modal-wrapper"]}`}>
@@ -205,164 +224,24 @@ export function CreateTicketLotModal({
                 </div>
               </div>
 
-              {/* <div className={`${styles["input-block"]}`}>
-                <div className={`${styles["input-block-label-wrapper"]}`}>
-                  <label>Período das vendas deste ingresso</label>
-                  <span>*</span>
-                </div>
-                <RadioGroup.Root
-                  className={styles["RadioGroupRoot"]}
-                  defaultValue="default"
-                  aria-label="View density"
-                >
-                  <div className={styles["RadioGroupRoot-Wrapper"]}>
-                    <div className={styles["RadioGroupRoot-Wrapper__item"]}>
-                      <RadioGroup.Item
-                        className={styles["RadioGroupItem"]}
-                        value="default"
-                        id="r1"
-                      >
-                        <RadioGroup.Indicator
-                          className={styles["RadioGroupIndicator"]}
-                        />
-                      </RadioGroup.Item>
-                      <label className={styles["Label"]} htmlFor="r1">
-                        Por data
-                      </label>
-                    </div>
-
-                    <div className={styles["RadioGroupRoot-Wrapper__item"]}>
-                      <RadioGroup.Item
-                        className={styles["RadioGroupItem"]}
-                        value="comfortable"
-                        id="r2"
-                      >
-                        <RadioGroup.Indicator
-                          className={styles["RadioGroupIndicator"]}
-                        />
-                      </RadioGroup.Item>
-                      <label className={styles["Label"]} htmlFor="r2">
-                        Por lote
-                      </label>
-                    </div>
-                  </div>
-                </RadioGroup.Root>
-              </div> */}
-
               <div className={styles["row"]} style={{ margin: "2rem 0" }}>
                 <Input
                   label="Data de Início"
                   requiredSymbol
                   type="date"
-                  {...register("startDate")}
-                  errorMessage={errors?.startDate?.message}
+                  {...register("date")}
+                  errorMessage={errors?.date?.message}
                 />
 
                 <Input
-                  label="Hora de Início"
+                  label="Máxima"
                   requiredSymbol
-                  type="time"
-                  {...register("startTime")}
-                  errorMessage={errors?.startTime?.message}
-                />
-
-                <Input
-                  label="Data de Término "
-                  requiredSymbol
-                  type="date"
-                  {...register("endDate")}
-                  errorMessage={errors?.endDate?.message}
-                />
-
-                <Input
-                  label="Hora de Término"
-                  requiredSymbol
-                  type="time"
-                  {...register("endTime")}
-                  errorMessage={errors?.endTime?.message}
+                  type="number"
+                  placeholder="Número máxima"
+                  {...register("qtdTotalPerUser")}
+                  errorMessage={errors?.qtdTotalPerUser?.message}
                 />
               </div>
-
-              {/* <div className={`${styles["input-block"]}`}>
-                <div className={`${styles["input-block-label-wrapper"]}`}>
-                  <label>Disponibilidade do Ingresso:</label>
-                  <span>*</span>
-                </div>
-
-                <RadioGroup.Root
-                  className={styles["RadioGroupRoot"]}
-                  defaultValue="default"
-                  aria-label="View density"
-                >
-                  <div className={styles["RadioGroupRoot-Wrapper-col"]}>
-                    <div className={styles["RadioGroupRoot-Wrapper__item"]}>
-                      <RadioGroup.Item
-                        className={styles["RadioGroupItem"]}
-                        value="default"
-                        id="d1"
-                      >
-                        <RadioGroup.Indicator
-                          className={styles["RadioGroupIndicator"]}
-                        />
-                      </RadioGroup.Item>
-                      <label className={styles["Label"]} htmlFor="d1">
-                        Para todo o público
-                      </label>
-                    </div>
-
-                    <div className={styles["RadioGroupRoot-Wrapper__item"]}>
-                      <RadioGroup.Item
-                        className={styles["RadioGroupItem"]}
-                        value="comfortable"
-                        id="d2"
-                      >
-                        <RadioGroup.Indicator
-                          className={styles["RadioGroupIndicator"]}
-                        />
-                      </RadioGroup.Item>
-                      <label className={styles["Label"]} htmlFor="d2">
-                        Restrito a convidados
-                      </label>
-                    </div>
-
-                    <div className={styles["RadioGroupRoot-Wrapper__item"]}>
-                      <RadioGroup.Item
-                        className={styles["RadioGroupItem"]}
-                        value="manuel"
-                        id="d3"
-                      >
-                        <RadioGroup.Indicator
-                          className={styles["RadioGroupIndicator"]}
-                        />
-                      </RadioGroup.Item>
-                      <label className={styles["Label"]} htmlFor="d3">
-                        Adicionar manualmente
-                      </label>
-                    </div>
-                  </div>
-                </RadioGroup.Root>
-              </div> */}
-
-              {/* <div className={`${styles["row"]}`} style={{ margin: "2rem 0" }}>
-                <div className={`${styles["input-block"]}`}>
-                  <div className={`${styles["input-block-label-wrapper"]}`}>
-                    <label>Disponibilidade do Ingresso:</label>
-                  </div>
-
-                  <div className={`${styles["row"]}`}>
-                    <Input
-                      label="Mínima"
-                      requiredSymbol
-                      placeholder="Nome do evento"
-                    />
-                    <Input
-                      label="Máxima"
-                      requiredSymbol
-                      placeholder="Nome do evento"
-                    />
-                  </div>
-                </div>
-              </div> */}
 
               {/* <div className={`${styles["input-block"]}`}>
                 <label className={`${styles["input-block-label"]}`}>
@@ -376,11 +255,13 @@ export function CreateTicketLotModal({
               </div> */}
             </div>
           </div>
+
           <div className={`${styles["footer"]}`}>
             <div className={`${styles["btn-group"]}`}>
               <button
                 type="button"
                 className={`${styles["btn"]} ${styles["btn-cancel"]}`}
+                onClick={onRequestClose}
               >
                 CANCELAR
               </button>

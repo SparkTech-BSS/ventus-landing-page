@@ -10,9 +10,9 @@ import {
   ArrowEventICON,
 } from "../../components/Icon";
 
-import EventImg from "../../assets/png/event/event-1.png";
+import EventAvatar from "../../assets/png/avatar/event.png";
 
-import { getStartDateAndEndDate } from "../../utils";
+import { getStartDateAndEndDate, isValidPhoto } from "../../utils";
 
 import styles from "./styles.module.scss";
 
@@ -23,22 +23,32 @@ interface Props {
   link?: string;
 }
 
-// /support/generate-reference/event-detail/
-
 export function EventCard({ width, multipleData = true, data, link }: Props) {
   const dateObject = getStartDateAndEndDate(data?.dates);
   const linkToRedirect = link ? link : `/event-detail/${data?._id}`;
 
+  
+
   return (
     <Link href={linkToRedirect} prefetch={false}>
       <a className={`${styles.card} ${width === "full" ? styles.full : ""}`}>
-        <Image
-          src={data?.images[0]}
-          width={280}
-          height={207}
-          className={styles["card-img"]}
-          alt=""
-        />
+        {isValidPhoto(data?.images[0]) ? (
+          <Image
+            src={data?.images[0]}
+            width={280}
+            height={207}
+            className={styles["card-img"]}
+            alt=""
+          />
+        ) : (
+          <Image
+            src={EventAvatar}
+            width={280}
+            height={207}
+            className={styles["card-img"]}
+            alt=""
+          />
+        )}
 
         {data?.dates?.length > 1 ? (
           <div className={styles["date-multiple"]}>
@@ -66,32 +76,36 @@ export function EventCard({ width, multipleData = true, data, link }: Props) {
         )}
 
         <div className={styles["card-content"]}>
-          <div className={styles["card-title-row"]}>
-            <h3 className={styles["card-title"]}>{data?.name}</h3>
+          <div>
+            <div className={styles["card-title-row"]}>
+              <h3 className={styles["card-title"]}>{data?.name}</h3>
 
-            <span className={styles["rating-container"]}>
-              <StarICON />
-              4.9
-            </span>
-          </div>
-
-          <div className={styles["card-item"]}>
-            <div className={styles["card-item-icon"]}>
-              <LocationICON />
+              <span className={styles["rating-container"]}>
+                <StarICON />
+                4.9
+              </span>
             </div>
 
-            <span className={styles["card-item-text"]}>{data?.location}</span>
-          </div>
+            <div className={styles["card-item"]}>
+              <div className={styles["card-item-icon"]}>
+                <LocationICON />
+              </div>
 
-          <div className={styles["card-item"]}>
-            <div className={styles["card-item-icon"]}>
-              <TimeICON />
+              <span className={styles["card-item-text"]}>{data?.location}</span>
             </div>
 
-            <span className={styles["card-item-text"]}>{data?.startTime} às {data?.endTime}</span>
+            <div className={styles["card-item"]}>
+              <div className={styles["card-item-icon"]}>
+                <TimeICON />
+              </div>
+
+              <span className={styles["card-item-text"]}>
+                {data?.startTime} às {data?.endTime}
+              </span>
+            </div>
           </div>
 
-          <div className={styles["card-item"]}>
+          {/* <div className={styles["card-item"]}>
             <div className={styles["card-item-icon"]}>
               <PeopleICON />
             </div>
@@ -99,7 +113,11 @@ export function EventCard({ width, multipleData = true, data, link }: Props) {
             <span className={styles["card-item-text"]}>Pessoas:</span>
 
             <Avatar />
-          </div>
+          </div> */}
+
+          <button className={`${styles["btn-buy-ticket"]}`}>
+            Comprar ingresso
+          </button>
         </div>
       </a>
     </Link>

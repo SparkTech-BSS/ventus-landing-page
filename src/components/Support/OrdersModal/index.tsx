@@ -34,6 +34,12 @@ export function OrdersModal({ isOpen, onRequestClose, userId }: Props) {
     fetchData();
   }, [userId]);
 
+  useEffect(() => {
+    isOpen &&
+      document.documentElement.style.setProperty("--overflow", `hidden`);
+    !isOpen && document.documentElement.style.setProperty("--overflow", `auto`);
+  }, [isOpen]);
+
   return (
     <Modal
       isOpen={isOpen}

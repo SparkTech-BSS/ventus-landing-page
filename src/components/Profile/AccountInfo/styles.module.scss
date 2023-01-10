@@ -1,0 +1,98 @@
+.container {
+  width: 100%;
+  padding: 6rem 12rem 4rem 7rem;
+}
+
+.account-info-box {
+  padding: 2rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.heading {
+  color: var(--black-900);
+  font-size: 3.2rem;
+  font-weight: 700;
+}
+
+.subheading {
+  color: var(--black-900);
+  font-size: 2.4rem;
+  font-weight: 700;
+}
+
+.divider {
+  height: 0.1rem;
+  width: 100%;
+  background-color: #ccd6dd;
+  margin: 2rem 0;
+}
+
+.btn-group {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  border-radius: 34px;
+  font-weight: 800;
+  padding: 1rem 2.5rem;
+  transition: all 0.3s;
+  color: #939598;
+  border: 1px solid #ccd6dd;
+  background-color: transparent;
+
+  &:hover {
+    opacity: 0.6;
+  }
+
+  &[data-state="active"] {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    border: 1px solid var(--primary-color);
+  }
+
+  &:focus {
+    position: relative;
+    box-shadow: 0 0 0 2px black;
+  }
+
+  &.btn-submit {
+    border-radius: 5px;
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    border: 1px solid var(--primary-color);
+  }
+}
+
+.btn-outline {
+  color: #939598;
+  border: 1px solid #ccd6dd;
+  background-color: transparent;
+}
+
+.btn-full {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+
+.input-controller-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding-right: 24rem;
+  width: 100%;
+}

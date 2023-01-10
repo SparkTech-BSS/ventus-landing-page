@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { format } from "date-fns";
 import Modal from "react-modal";
+import { Skeleton, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useRouter } from "next/router";
+import { useToasts } from "react-toast-notifications";
 import { EventDTO } from "../../../dto/EventDTO";
 import { TicketLotDTO } from "dto/TicketLotDTO";
 import { CgMathPlus } from "react-icons/cg";
@@ -14,27 +18,45 @@ import { Select } from "../Select";
 import { Spinner } from "components/Spinner";
 import MapPage from "../MapPage";
 import { eventSchema } from "../../../validations/EventValidation";
-import { addEventOnElem, removeEventOnElem } from "utils";
+import {
+  addEventOnElem,
+  checkIfArrayElementsIsNotEmpty,
+  checkIfTArrayIsEqual,
+  removeEventOnElem,
+} from "utils";
 import { CreateTicketLotModal } from "../CreateTicketLotModal";
+import { AlertNoSelectedDateEventModal } from "../AlertNoSelectedDateEventModal";
+import { EventPreviewModal } from "../EventPreviewModal";
 import { UploadImageEvent } from "../UploadImageEvent";
-import RichTextEditor from "components/RichTextEditor";
 import { CheckBox } from "components/CheckBox";
 import { ProvinceData } from "data";
 import { getProvincesDate } from "utils";
 import { RATE_PRICE } from "config";
 import { SwitchButton } from "../SwitchButton";
-import { CheckedState } from "@radix-ui/react-checkbox";
+import MESSAGE from "message";
+import { getDates } from "utils";
 import styles from "./styles.module.scss";
+import { EventStatus } from "utils/Enum";
 
 Modal.setAppElement("#__next");
 
 export function CreateEvent() {
+  const router = useRouter();
+  const { addToast } = useToasts();
   const [loading, setLoading] = useState(false);
+  const [submitDraft, setSubmitDraft] = useState(false);
   const [activeHeader, setActiveHeader] = useState(false);
   const [ticketLot, setTicketLot] = useState<TicketLotDTO[]>([]);
+  const [openAlertDateOutOfRangeModal, setOpenAlertDateOutOfRangeModal] =
+    useState(false);
+  const [openEventPreviewModal, setOpenEventPreviewModal] = useState(false);
   const [openCreateTicketModal, setOpenCreateTicketModal] = useState(false);
-  const [acceptResponsibility, setAcceptResponsibility] =
-    useState<CheckedState>(false);
+  const [openAlertPreviewEventModal, setOpenAlertPreviewEventModal] =
+    useState(false);
+  const [
+    openAlertNoSelectedDateEventModal,
+    setOpenAlertNoSelectedDateEventModal,
+  ] = useState(false);
   const [eventImage, setEventImage] = useState("");
   const [categories, setCategories] = useState<any>([]);
   const [ticketLotEditedData, setTicketLotEditedData] =
@@ -48,6 +70,7 @@ export function CreateEvent() {
     watch,
     control,
     setValue,
+    getValues,
     register,
     handleSubmit,
     formState: { errors, isSubmitted },
@@ -55,6 +78,11 @@ export function CreateEvent() {
     mode: "all",
     reValidateMode: "onChange",
     resolver: yupResolver(eventSchema),
+    defaultValues: {
+      isPublic: true,
+      isDraft: false,
+      absorbRate: false,
+    },
   });
 
   function handleOpenCreateTicketModal() {
@@ -63,6 +91,38 @@ export function CreateEvent() {
 
   function handleCloseCreateTicketModal() {
     setOpenCreateTicketModal(false);
+  }
+
+  function handleOpenAlertPreviewEventModal() {
+    setOpenAlertPreviewEventModal(true);
+  }
+
+  function handleCloseAlertPreviewEventModal() {
+    setOpenAlertPreviewEventModal(false);
+  }
+
+  function handleOpenAlertNoSelectedDateEventModal() {
+    setOpenAlertNoSelectedDateEventModal(true);
+  }
+
+  function handleCloseAlertNoSelectedDateEventModal() {
+    setOpenAlertNoSelectedDateEventModal(false);
+  }
+
+  function handleOpenAlertDateOutOfRangeModal() {
+    setOpenAlertDateOutOfRangeModal(true);
+  }
+
+  function handleCloseAlertDateOutOfRangeModal() {
+    setOpenAlertDateOutOfRangeModal(false);
+  }
+
+  function handleOpenEventPreviewModal() {
+    setOpenEventPreviewModal(true);
+  }
+
+  function handleCloseEventPreviewModal() {
+    setOpenEventPreviewModal(false);
   }
 
   const activeElementOnScroll = function () {
@@ -96,21 +156,80 @@ export function CreateEvent() {
             };
           })
         );
+
+        setValue("category", data[0]?._id);
       } catch (error) {
+        console.log(error);
       } finally {
         setLoading(false);
       }
     }
 
     fetchData();
-  }, []);
+  }, [setValue]);
 
   function handleRemoveTicketLotItem(id: string) {
     setTicketLot(ticketLot.filter((item: TicketLotDTO) => item?.id !== id));
   }
 
-  const onSubmit: SubmitHandler<EventDTO> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<EventDTO> = async (data) => {
+    if (!ticketLot.length || !eventImage.length) return;
+
+    setLoading(true);
+
+    const formattedData = {
+      about: data.about,
+      category: data.category,
+      endDate: format(new Date(data.endDate), "yyyy-MM-dd"),
+      endTime: data.endTime,
+      location: data.location,
+      name: data.name,
+      organizerName: data.organizerName,
+      startDate: format(new Date(data.startDate), "yyyy-MM-dd"),
+      startTime: data.startTime,
+      ticketsLot: ticketLot,
+      images: eventImage,
+      isPublic: data.isPublic,
+      isDraft: submitDraft,
+      province: data.province,
+      status: EventStatus.PENDING,
+    };
+
+    console.log(formattedData)
+
+    const ticketLotArrayDateGenerated = [...ticketLot.map((item) => item.date)];
+
+    const eventArrayDateGenerated = getDates(data.startDate, data.endDate);
+
+    const isValidTicketLotRangeDate = checkIfTArrayIsEqual(
+      ticketLotArrayDateGenerated,
+      eventArrayDateGenerated
+    );
+
+    if (!isValidTicketLotRangeDate) {
+      handleOpenAlertDateOutOfRangeModal();
+      setLoading(false);
+      return;
+    }
+
+    try {
+      await api.post("events/create", formattedData);
+
+      addToast("Evento Criado com sucesso...", {
+        appearance: "success",
+        autoDismiss: true,
+      });
+
+      router.push(`/organizer/dashboard`);
+    } catch (error) {
+      addToast("Erro ao criar o evento...", {
+        appearance: "error",
+        autoDismiss: true,
+      });
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -143,23 +262,32 @@ export function CreateEvent() {
                 }`}
                 type="submit"
                 form="form:createEvent"
+                onClick={() => {
+                  setSubmitDraft(false);
+                }}
               >
                 PUBLICAR EVENTO
               </button>
-              <a
+              <button
                 className={`${styles["btn"]} ${styles["btn-outline"]} ${
                   activeHeader && styles.active
                 }`}
+                onClick={handleOpenEventPreviewModal}
               >
                 PRÉ-VISUALIZAR
-              </a>
-              <a
+              </button>
+              <button
                 className={`${styles["btn"]} ${styles["btn-outline"]} ${
                   activeHeader && styles.active
                 }`}
+                type="submit"
+                form="form:createEvent"
+                onClick={() => {
+                  setSubmitDraft(true);
+                }}
               >
                 SALVAR RASCUNHO
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -184,6 +312,7 @@ export function CreateEvent() {
             <Select
               label="Província"
               options={getProvincesDate(ProvinceData)}
+              {...register("province")}
             />
             <Input
               label="Local"
@@ -193,7 +322,7 @@ export function CreateEvent() {
               {...register("location")}
               errorMessage={errors?.location?.message}
             />
-            <MapPage />
+            {/* <MapPage /> */}
           </div>
 
           <div className={`${styles["card-box"]}`}>
@@ -228,6 +357,24 @@ export function CreateEvent() {
                 Imagem obrigatório
               </span>
             )}
+
+            <div className={`${styles["input-row"]}`}>
+              <label className={`${styles["input-row-label"]}`}>
+                Público <span>*</span>
+              </label>
+
+              <Controller
+                control={control}
+                name="isPublic"
+                render={({ field: { onChange, onBlur, value, ref } }) => (
+                  <SwitchButton onCheckedChange={onChange} value={value} />
+                )}
+              />
+
+              <span className={styles["error-message"]}>
+                {errors?.isPublic?.message}
+              </span>
+            </div>
           </div>
 
           <div className={`${styles["card-box"]}`}>
@@ -310,7 +457,14 @@ export function CreateEvent() {
               <button
                 className={`${styles["ticket-btn"]}`}
                 onClick={() => {
-                  handleOpenCreateTicketModal();
+                  checkIfArrayElementsIsNotEmpty([
+                    getValues("startTime"),
+                    getValues("endTime"),
+                    getValues("startDate"),
+                    getValues("endDate"),
+                  ])
+                    ? handleOpenCreateTicketModal()
+                    : handleOpenAlertNoSelectedDateEventModal();
                   setTicketLotFormMode("Create");
                 }}
                 type="button"
@@ -321,7 +475,7 @@ export function CreateEvent() {
 
               <button
                 className={`${styles["ticket-btn"]}`}
-                onClick={handleOpenCreateTicketModal}
+                // onClick={handleOpenCreateTicketModal}
                 type="button"
               >
                 <CgMathPlus size={20} />
@@ -337,6 +491,7 @@ export function CreateEvent() {
                       <th scope="col">TIPO</th>
                       <th scope="col">VENDIDOS/TOTAL</th>
                       <th scope="col">VALOR</th>
+                      <th scope="col">DATA</th>
                       <th scope="col">TAXA</th>
                       <th scope="col">Ações</th>
                     </tr>
@@ -359,6 +514,7 @@ export function CreateEvent() {
                               currency: "AOA",
                             }).format(item?.price)}
                           </td>
+                          <td>{format(new Date(item?.date!), "dd/MM/yyyy")}</td>
                           <td>
                             {new Intl.NumberFormat("de-DE", {
                               style: "currency",
@@ -400,14 +556,20 @@ export function CreateEvent() {
               ""
             )}
 
-            <div className={`${styles["card-configuration"]}`}>
+            {/* <div className={`${styles["card-configuration"]}`}>
               <h3 className={`${styles["card-configuration-heading"]}`}>
                 Configurações
               </h3>
 
               <div className={styles["card-configuration-row"]}>
                 <div className={styles["card-configuration-box-row"]}>
-                  <SwitchButton />
+                  <Controller
+                    control={control}
+                    name="absorbRate"
+                    render={({ field: { onChange, onBlur, value, ref } }) => (
+                      <SwitchButton onCheckedChange={onChange} value={value} />
+                    )}
+                  />
 
                   <label>Absorver a taxa de serviço</label>
                 </div>
@@ -421,18 +583,18 @@ export function CreateEvent() {
                   </select>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className={`${styles["card-box"]}`}>
             <h2 className={`${styles["card-box-heading"]}`}>
               6. Sobre o produtor
             </h2>
-            <span className={styles["card-box-subheading"]}>
+            {/* <span className={styles["card-box-subheading"]}>
               Conte um pouco sobre você ou a sua empresa. É importante mostrar
               ao público quem está por trás do evento, dando mais credibilidade
               à sua produção.
-            </span>
+            </span> */}
 
             <Input
               label="Nome da organizadora"
@@ -443,7 +605,7 @@ export function CreateEvent() {
               errorMessage={errors?.organizerName?.message}
             />
 
-            <div className={`${styles["input-box"]}`}>
+            {/* <div className={`${styles["input-box"]}`}>
               <label className={styles["input-box-label"]}>
                 Descrição do produtor (opcional)
               </label>
@@ -452,7 +614,7 @@ export function CreateEvent() {
                 className={`${styles["input-description"]}`}
                 placeholder=""
               />
-            </div>
+            </div> */}
           </div>
 
           <div className={`${styles["card-box"]}`}>
@@ -493,6 +655,32 @@ export function CreateEvent() {
         setTicketLot={setTicketLot}
         ticketLotEditedData={ticketLotEditedData}
         ticketLot={ticketLot}
+        eventStartDate={getValues("startDate")}
+        eventEndDate={getValues("endDate")}
+      />
+
+      <AlertNoSelectedDateEventModal
+        isOpen={openAlertNoSelectedDateEventModal}
+        onRequestClose={handleCloseAlertNoSelectedDateEventModal}
+        message={MESSAGE.ALERT_CREATE_EVENT_WITHOUT_SELECTING_DATE}
+      />
+
+      <AlertNoSelectedDateEventModal
+        isOpen={openAlertPreviewEventModal}
+        onRequestClose={handleCloseAlertPreviewEventModal}
+        message={MESSAGE.ALERT_CREATE_EVENT_WITHOUT_FILLING_OUT_ALL_FORM}
+      />
+
+      <AlertNoSelectedDateEventModal
+        isOpen={openAlertDateOutOfRangeModal}
+        onRequestClose={handleCloseAlertDateOutOfRangeModal}
+        message={MESSAGE.ALERT_CREATE_EVENT_DATE_OUT_OF_RANGE}
+      />
+
+      <EventPreviewModal
+        isOpen={openEventPreviewModal}
+        onRequestClose={handleCloseEventPreviewModal}
+        data={{ ...getValues(), eventImage: eventImage }}
       />
     </>
   );

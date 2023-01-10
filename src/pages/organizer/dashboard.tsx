@@ -1,7 +1,5 @@
-import dynamic from "next/dynamic";
 import { parseCookies } from "nookies";
 import { Header } from "components/Organizer/Header";
-import { GetStaticProps } from "next";
 import Head from "next/head";
 import { DashboardContent } from "components/Organizer/DashboardContent";
 

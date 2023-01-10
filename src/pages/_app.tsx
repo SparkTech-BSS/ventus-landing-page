@@ -1,4 +1,3 @@
-import "../styles/globals.scss";
 import { useState } from "react";
 import Script from "next/script";
 import type { NextPageContext } from "next";
@@ -17,6 +16,9 @@ import { ToastProvider } from "react-toast-notifications";
 import type { AppProps } from "next/app";
 import type { DehydratedState } from "@tanstack/react-query";
 import "react-quill/dist/quill.snow.css";
+import "../styles/globals.scss";
+import "../styles/embla.css";
+import "../styles/swiper.scss";
 
 interface PageProps {
   dehydratedState?: DehydratedState;

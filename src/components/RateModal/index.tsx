@@ -4,6 +4,7 @@ import { CgClose } from "react-icons/cg";
 import { FiAlertCircle } from "react-icons/fi";
 
 import styles from "./styles.module.scss";
+import { useEffect } from "react";
 
 interface Props {
   isOpen: boolean;
@@ -11,6 +12,12 @@ interface Props {
 }
 
 export function RateModal({ isOpen, onRequestClose }: Props) {
+  useEffect(() => {
+    isOpen &&
+      document.documentElement.style.setProperty("--overflow", `hidden`);
+    !isOpen && document.documentElement.style.setProperty("--overflow", `auto`);
+  }, [isOpen]);
+
   return (
     <Modal
       isOpen={isOpen}
@@ -39,7 +46,9 @@ export function RateModal({ isOpen, onRequestClose }: Props) {
           bancárias, comissões e outros custos administrativos.
         </p>
         {/* <p className={styles["text-bold"]}>sfdfdsfsdfd</p> */}
-        <button className={styles["buy-btn"]} onClick={onRequestClose}>OK</button>
+        <button className={styles["buy-btn"]} onClick={onRequestClose}>
+          OK
+        </button>
       </div>
     </Modal>
   );

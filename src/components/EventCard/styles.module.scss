@@ -17,11 +17,18 @@
   }
 
   &:hover {
-    // transform: scale(0.9);
+    // transform: scale(1.05);
   }
 
   .card-img {
     object-fit: cover;
+    border-radius: 10px 10px 0px 0px;
+    height: 206px;
+    width: 100%;
+  }
+
+  .card-img-avatar {
+    background-color: #9c9c9c;
     border-radius: 10px 10px 0px 0px;
     height: 206px;
     width: 100%;
@@ -98,6 +105,9 @@
     border-radius: 0px 0px 10px 10px;
     padding: 2rem;
     flex: 1;
+
+    display: flex;
+    flex-direction: column;
   }
 
   .card-title-row {
@@ -142,5 +152,23 @@
     color: var(--black-700);
     font-size: var(--fs-md);
     font-weight: var(--fw-400);
+  }
+
+  .btn-buy-ticket {
+    color: var(--white-color);
+    background-color: var(--primary-color);
+    margin-top: auto;
+    font-weight: 700;
+    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 63px;
+    padding: 1rem;
+    transition: all 0.3s;
+
+    &:hover {
+      background-color: var(--primary-color-hover);
+    }
   }
 }

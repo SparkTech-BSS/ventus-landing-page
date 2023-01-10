@@ -59,6 +59,12 @@ export function ClientListModal({
     );
   }, [search, users]);
 
+  useEffect(() => {
+    isOpen &&
+      document.documentElement.style.setProperty("--overflow", `hidden`);
+    !isOpen && document.documentElement.style.setProperty("--overflow", `auto`);
+  }, [isOpen]);
+
   return (
     <Modal
       isOpen={isOpen}
@@ -120,7 +126,9 @@ export function ClientListModal({
                             <span className={styles["list-item-heading"]}>
                               {item?.firstName} {item?.lastName}
                             </span>
-                            <span className={styles["list-item-subheading"]}>{item?.email}</span>
+                            <span className={styles["list-item-subheading"]}>
+                              {item?.email}
+                            </span>
                           </div>
 
                           <button

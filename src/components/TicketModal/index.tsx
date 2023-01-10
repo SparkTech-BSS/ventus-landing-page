@@ -1,4 +1,4 @@
-import { useState, useContext, useRef } from "react";
+import { useState, useContext, useRef, useEffect } from "react";
 import Link from "next/link";
 import Modal from "react-modal";
 import ReactToPrint from "react-to-print";
@@ -52,6 +52,11 @@ export function TicketModal({ isOpen, onRequestClose, data }: Props) {
   function handleToggleSocialShare() {
     setOpenSocialShare(!openSocialShare);
   }
+
+  useEffect(() => {
+    isOpen && document.documentElement.style.setProperty("--overflow", `hidden`);
+    !isOpen && document.documentElement.style.setProperty("--overflow", `auto`);
+  }, [isOpen]);
 
   return (
     <Modal

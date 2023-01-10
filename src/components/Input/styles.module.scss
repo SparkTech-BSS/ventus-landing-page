@@ -1,0 +1,97 @@
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+
+  input {
+    height: 4rem;
+    color: var(--black-900);
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
+    font-size: 1.4rem;
+    font-weight: 400;
+    transition: all 0.3s;
+    padding: 1.4rem 2rem 1.4rem 1rem;
+    width: 100%;
+
+    &::placeholder {
+      color: #939598;
+      font-size: 1.4rem;
+      font-weight: 500;
+    }
+
+    &:focus {
+      outline: 0;
+      border: 1px solid var(--primary-color);
+      box-shadow: 0 0 0 0.25rem #ffcaca;
+    }
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 2px;
+    opacity: 0.6;
+    filter: invert(0.3);
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+  }
+}
+
+.label-row {
+  position: relative;
+  margin-bottom: 0.5rem;
+
+  label {
+    color: var(--black-900);
+    font-size: 1.4rem;
+    font-weight: 500;
+  }
+
+  span {
+    display: none;
+    color: #ff6564;
+    margin-left: 0.5rem;
+    font-size: 1.4rem;
+
+    position: absolute;
+    top: 0;
+    right: -1rem;
+
+    &.requiredSymbol {
+      display: block;
+    }
+  }
+}
+
+.label-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+
+  label {
+    color: #7ba6d0;
+    font-size: 1.4rem;
+    font-weight: 400;
+  }
+
+  span {
+    color: #ff6564;
+    margin-left: 0.5rem;
+    font-size: 1.4rem;
+
+    position: absolute;
+    top: 0;
+    right: -1rem;
+  }
+}
+
+.error-message {
+  color: #ff0000;
+  font-size: 1.4rem;
+}
