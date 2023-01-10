@@ -1,4 +1,4 @@
-import { Button } from "components/Experment/Button";
+import { Button } from "components/Experment/Experment1/Button";
 import Layout from "components/Layout";
 
 
