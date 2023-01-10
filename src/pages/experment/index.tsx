@@ -1,7 +1,14 @@
-export default function Experment () {
+import { Button } from "components/Experment/Button";
+import Layout from "components/Layout";
+
+
+export default function Experment() {
   return (
     <>
-    <h1>Welcome To Jomanji!</h1>
+      <Layout>
+        <h1>Welcome To Jomanji!</h1>
+        <Button />
+      </Layout>
     </>
-  )
+  );
 }
