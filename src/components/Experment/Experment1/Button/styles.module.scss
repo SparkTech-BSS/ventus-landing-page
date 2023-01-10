@@ -1,9 +1,115 @@
+.container {
+  padding: 10rem;
+}
+
+
+
 /* Componente button start */
 
+<<<<<<< HEAD
 .button {
   background-color: red;
   padding: 10rem;
   margin: 20px;
+=======
+.btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 13px 10px;
+  gap: 10px;
+
+  position: relative;
+  width: 222px;
+  height: 48px;
+
+  a {
+    font-family: 'Inter';
+    font-style: normal;
+    line-height: 19px;
+
+  }
+}
+
+
+.btn-primary-bg {
+  background: #FF5555;
+
+
+}
+
+
+.btn-gradient-bg {
+  background: linear-gradient(90deg, #FF5555 0%, #FF8B71 100%);
+}
+
+.btn-default-bg {
+  background: transparent;
+}
+
+.btn-primary-borderRadius {
+  border-radius: 5px;
+}
+
+
+.btn-secondary-borderRadius {
+  border-radius: 10px;
+}
+
+
+.btn-default-borderRadius {
+  border-radius: 60px;
+}
+
+.btn-size-16 {
+  font-size: 16px;
+}
+
+.btn-size-13 {
+  font-size: 13px;
+}
+
+.btn-size-12 {
+  font-size: 12px;
+}
+
+.btn-fontWeight-900 {
+  font-weight: 900;
+}
+
+.btn-fontWeight-700 {
+  font-weight: 700;
+}
+
+.btn-fontWeight-600 {
+  font-weight: 600;
+}
+
+
+.btn-color-primary {
+  color: #FFFFFF;
+}
+
+.btn-color-secondary {
+  color: #17A8fd;
+}
+
+.btn-color-default {
+  color: #FF5555;
+}
+
+.btn-border-default {
+  border: none;
+}
+
+.btn-border-solid-primary {
+  border: 1px solid #FF5555;
+}
+
+.btn-border-solid-secondary {
+  border: 1px solid #17A8fd;
+>>>>>>> 8e6a403543fde8a78172f9059069abceecb5a62f
 }
 
 /* Componente button end */
