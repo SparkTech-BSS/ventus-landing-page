@@ -39,11 +39,14 @@ export function Sidebar() {
           </Link>
         </li>
 
-        {/* <li>
-          <Link href="/organizer/tickets" passHref>
+        <li>
+          <Link 
+            href={`/organizer/tickets/${id}`} 
+            passHref
+          >
             <a
               className={`${styles["nav-link"]} ${
-                router.pathname == "/organizer/tickets" && styles.active
+                router.pathname.includes("/organizer/tickets/") && styles.active
               }`}
             >
               <TicketIconSVG
@@ -52,7 +55,7 @@ export function Sidebar() {
               Ingressos
             </a>
           </Link>
-        </li> */}
+        </li>
       </ul>
     </aside>
   );

@@ -26,7 +26,6 @@ export function CardTicketLot({ ticketData }: Props) {
       setTotalGain(responseTotal.data.totalGain);
       setTotalSold(responseTotal.data.totalSold);
 
-
     } catch (error) {
     } finally {
       setLoading(false);

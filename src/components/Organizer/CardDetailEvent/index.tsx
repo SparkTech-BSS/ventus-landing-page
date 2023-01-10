@@ -2,9 +2,6 @@ import { useState } from "react";
 import {
   FacebookShareButton,
   WhatsappShareButton,
-  LinkedinShareButton,
-  TwitterShareButton,
-  TelegramShareButton,
 } from "react-share";
 import { QRCodeSVG } from "qrcode.react";
 import useCopyToClipboard from "../../../hooks/useCopyToClipboard";

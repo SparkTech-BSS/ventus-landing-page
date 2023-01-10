@@ -1,3 +1,5 @@
+import { addDays, format } from "date-fns";
+
 export const pageAnimation = {
   hidden: {
     opacity: 0,
@@ -447,6 +449,18 @@ export function getAllDateObject(date: string) {
   return dateObject;
 }
 
+export function getStartDateAndEdnDateForUniqueDate(date: string | Date) {
+  const convertedDate = new Date(date);
+
+  return {
+    month: getMonthTypeOne(convertedDate.getMonth()),
+    day:
+      convertedDate.getDate().toString().length > 1
+        ? convertedDate.getDate()
+        : `0${convertedDate.getDate()}`,
+  };
+}
+
 export function getStartDateAndEndDate(dates: any) {
   let startIndex = 0,
     endIndex = dates?.length - 1;
@@ -512,4 +526,139 @@ export function getProvincesDate(
       label: item.name,
     };
   });
+}
+
+export function convertTwoDatesToMilliseconds(
+  dateOne: string | Date,
+  dateTwo: string | Date
+) {
+  const dateOneConverted = new Date(dateOne);
+  const dateTwoConverted = new Date(dateTwo);
+
+  return {
+    dateOne: dateOneConverted.setHours(0, 0, 0, 0),
+    dateTwo: dateTwoConverted.setHours(0, 0, 0, 0),
+  };
+}
+
+// export function isValidPhoto(fileName: string) {
+//   let allowed_extensions = new Array("jpg", "png", "svg", "JPG", "PNG");
+//   let file_extension = fileName!.split(".")!.pop()!.toLowerCase();
+
+//   for (let i = 0; i <= allowed_extensions.length; i++) {
+//     if (allowed_extensions[i] == file_extension) {
+//       return true; // valid file extension
+//     }
+//   }
+
+//   return false;
+// }
+
+export function isValidPhoto(fileName: string): boolean {
+  let allowed_extensions = new Array("jpg", "png", "svg", "JPG", "PNG");
+
+  for (let iterator in allowed_extensions) {
+    if (fileName.includes(iterator)) return true;
+  }
+
+  return false;
+}
+
+export function getDates(
+  startDate: string | Date | any,
+  stopDate: string | Date | any
+) {
+  let dateArray = new Array();
+  let currentDate = startDate;
+  while (currentDate <= stopDate) {
+    dateArray.push(new Date(currentDate));
+    currentDate = addDays(new Date(currentDate), 1);
+  }
+
+  return dateArray;
+}
+
+export function checkIfTArrayIsEqual(
+  firstArray: Array<any | string>,
+  secondArray: Array<any | string>
+): boolean {
+  if (firstArray.length !== secondArray.length) return false;
+
+  for (let counter = 0; counter < firstArray.length; counter++) {
+    const firstFormattedDate = format(
+      new Date(firstArray[counter]),
+      "MM/dd/yyyy"
+    );
+
+    const lastFormattedDate = format(
+      new Date(secondArray[counter]),
+      "MM/dd/yyyy"
+    );
+
+    if (firstFormattedDate !== lastFormattedDate) return false;
+  }
+
+  return true;
+}
+
+export function isFileImage(file: File | any) {
+  const acceptedImageTypes = ["image/gif", "image/jpeg", "image/png"];
+
+  return file && acceptedImageTypes.includes(file["type"]);
+}
+
+export function isUndefined(data: any) {
+  return typeof data == "undefined";
+}
+
+export function checkIfArrayElementsIsNotEmpty(
+  arrayToCheck: Array<any | string>
+) {
+  for (let counter = 0; counter < arrayToCheck.length; counter++) {
+    if (isUndefined(arrayToCheck[counter])) return false;
+
+    if (!arrayToCheck[counter].length) return false;
+  }
+
+  return true;
+}
+
+/**
+ * Check if date is equal
+ * return: -1 - 0 - 1
+ */
+export function compareDate(
+  firstDateToCompare: string | Date,
+  secondDateToCompare: string | Date
+) {
+  if (new Date(firstDateToCompare) > new Date(secondDateToCompare)) return -1;
+  else if (new Date(firstDateToCompare) < new Date(secondDateToCompare))
+    return 1;
+  return 0;
+}
+
+export function getEventVisibilityClassName(status: boolean) {
+  return status
+    ? { className: "public", value: "Público" }
+    : { className: "private", value: "Privado" };
+}
+
+type StatusValues = "pending" | "approved" | "refused";
+
+export function getStatusExtendingName(status: StatusValues) {
+  const statusObject = {
+    pending: "Pendente",
+    approved: "Aprovado",
+    refused: "Recusado",
+  };
+
+  return statusObject[status];
+}
+
+export function getStatusClassName(status: string) {
+  return status === "pending"
+    ? { className: "inactive", value: "Pendente" }
+    : status === "approved"
+    ? { className: "active", value: "Público" }
+    : { className: "refused", value: "Recusado" };
 }

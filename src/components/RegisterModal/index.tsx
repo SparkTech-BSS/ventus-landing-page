@@ -60,6 +60,13 @@ export function RegisterModal({ isOpen, onRequestClose }: Props) {
     fetchUsers();
   }, []);
 
+  useEffect(() => {
+    isOpen &&
+      document.documentElement.style.setProperty("--overflow", `hidden`);
+    !isOpen && document.documentElement.style.setProperty("--overflow", `auto`);
+  }, [isOpen]);
+  
+
   const userSchema = Yup.object().shape({
     firstName: Yup.string().required("Primeiro nome é obrigatório"),
     lastName: Yup.string().required("Último nome é obrigatório"),

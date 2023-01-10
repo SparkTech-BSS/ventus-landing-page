@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import Link from "next/link";
 import Modal from "react-modal";
 import { IoIosArrowForward } from "react-icons/io";
@@ -126,8 +126,6 @@ export function Header() {
           <SearchBox />
 
           <nav className={`${styles.navbar} ${showMenu ? styles.active : ""}`}>
-            {/* <UserHeaderMobileBox handleCloseMenu={handleCloseMenu} /> */}
-
             <UserHeaderMobileBox handleCloseMenu={handleCloseMenu} />
 
             <ul className={`${styles["navbar-list"]}`}>

@@ -67,7 +67,7 @@ export function SearchBox() {
 
           <input
             className={styles["input-text"]}
-            placeholder="Buscar Evento..."
+            placeholder="Buscar Evento, show, festa ou teatro..."
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
             onKeyDown={handleSearch}
@@ -87,12 +87,12 @@ export function SearchBox() {
           )}
         </div>
 
-        {/* <div
+        <div
           className={`${styles["suggestion-wrapper"]} ${
             active ? styles.active : ""
           }`}
         >
-          <h2 className={styles["suggestion-list-title"]}>Sugestão</h2>
+          <h2 className={styles["suggestion-list-title"]}>Sugestões</h2>
 
           <ul className={styles["suggestion-list"]}>
             <li>
@@ -116,7 +116,7 @@ export function SearchBox() {
           </ul>
 
           <a className={styles["se-more-link"]}>VER TODOS OS EVENTOS</a>
-        </div> */}
+        </div>
       </div>
     </div>
   );

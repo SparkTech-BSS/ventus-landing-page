@@ -1,0 +1,48 @@
+{
+	"name": "Vive Fest Luanda",
+	"category": "63316e6639d6d7bbbff42efd",
+	"startDate": "2022-12-02",
+	"endDate": "2022-12-04",
+	"startTime": "14:00",
+	"endTime": "23:00",
+	"ticketsLot": [{
+		"type": "1 Adulto & 2 Crianças",
+		"date": "2022-12-02",
+		"price": 5000,
+		"qtdTotal": 500
+	},
+								{
+		"type": "2 Adultos & 2 Crianças",
+		"date": "2022-12-02",
+		"price": 8000,
+		"qtdTotal": 500
+	},
+	{
+		"type": "1 Adulto & 2 Crianças",
+		"date": "2022-12-03",
+		"price": 5000,
+		"qtdTotal": 500
+	},
+								{
+		"type": "2 Adultos & 2 Crianças",
+		"date": "2022-12-03",
+		"price": 8000,
+		"qtdTotal": 500
+	},
+	{
+		"type": "1 Adulto & 2 Crianças",
+		"date": "2022-12-04",
+		"price": 5000,
+		"qtdTotal": 500
+	},
+								{
+		"type": "2 Adultos & 2 Crianças",
+		"date": "2022-12-04",
+		"price": 8000,
+		"qtdTotal": 500
+	}],
+	"images": ["https://firebasestorage.googleapis.com/v0/b/ventusfirebase.appspot.com/o/xyami.jpeg?alt=media&token=d64bee48-d52c-461e-9ec8-f818112804f6"],
+	"location": "Xyami shopping Nova Vida",
+	"organizerName": "Jonss Solar",
+	"about": "SORAIA RAMOS DE MALAS FEITAS PARA ANGOLA PARA O “VIVE FEST“ NO XYAMI DO NOVA VIDA. \n O festival acontecerá nos dias 2,3 e 4 de Dezembro no Xyami Shopping Nova Vida e além de ter a cantora Soraya Ramos como actração principal, contará também com a actuação de diversos nomes conhecidos da música entre eles, C4 Pedro, Chelsea Dinorah, Preto Show e outros. \n Xyami Shopping que tem sido palco de diversos eventos durante o ano de 2022, abraçou desta vez o projecto festival Vive Fest Luanda em parceria com Jonss Solar e Karreirozuxx com o objectivo de proporcionar momentos de descontração e diversão, num ambiente para a família e amigos, ladeado de boa música e gastronomia. \n Contacto: 923 397 783 / 936 970 036"
+}

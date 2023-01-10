@@ -52,6 +52,11 @@ export function TicketListModal({
     fetchRegisters();
   }, [clientSelectedId, count, clientSelectedName]);
 
+  useEffect(() => {
+    isOpen &&
+      document.documentElement.style.setProperty("--overflow", `hidden`);
+    !isOpen && document.documentElement.style.setProperty("--overflow", `auto`);
+  }, [isOpen]);
 
   return (
     <Modal

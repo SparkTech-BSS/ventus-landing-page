@@ -21,6 +21,7 @@ export function EventDetail() {
   const [ticketLot, setTicketLot] = useState<any>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [draftText, setDraftText] = useState("Evento Rascunho");
   const router = useRouter();
 
   const { id } = router.query;
@@ -39,7 +40,7 @@ export function EventDetail() {
         const responseTicketLot = await api.get(
           `/ticket-lot/findbyeventid/${id}`
         );
-        
+
         setTicketLot(responseTicketLot.data);
         setEvent(responseEvent.data);
         setTotalGainByEvent(responseTotalGainByEvent?.data);
@@ -62,6 +63,8 @@ export function EventDetail() {
   if (loading) {
     return <Spinner />;
   }
+
+  console.log(event)
 
   return (
     <div className={styles["event-detail"]}>
@@ -97,6 +100,30 @@ export function EventDetail() {
                 {event?.event?.location}
               </span>
             </div>
+
+            <div className={`${styles["bnt-drafting-group"]}`}>
+              <button className={`${styles["btn-drafting"]} `}>
+                EDITAR EVENTO
+              </button>
+
+              {event?.event?.isDraft ? (
+                <button
+                  className={`${styles["btn-drafting"]} ${styles["outline"]}`}
+                  onMouseEnter={() => setDraftText("Publicar Evento")}
+                  onMouseLeave={() => setDraftText("Evento Rascunho")}
+                >
+                  {draftText}
+                </button>
+              ) : event?.event?.status === "pending" ? (
+                <span className={`${styles["tag-wait"]}`}>Pendente</span>
+              ) : event?.event?.status === "refused" ? (
+                <span className={`${styles["tag-refused"]}`}>Recusado</span>
+              ) : event?.event?.status === "approved" ? (
+                <span className={`${styles["tag-published"]}`}>Publicado</span>
+              ) : (
+                <span className={`${styles["tag-closed"]}`}>Encerrado</span>
+              )}
+            </div>
           </>
         )}
       </div>
@@ -127,7 +154,7 @@ export function EventDetail() {
               totalGain={totalGainByEvent}
               totalSold={totalSoldByEvent}
             />
-            <CardTicketLot ticketData={ticketLot}/>
+            <CardTicketLot ticketData={ticketLot} />
           </div>
           <CardReportChart />
         </Tabs.Content>

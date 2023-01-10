@@ -29,6 +29,7 @@ export function TicketToPrint() {
   useEffect(() => {
     document.documentElement.style.setProperty("--overflow", `auto`);
   }, []);
+  
 
   useEffect(() => {
     async function fetchData() {
@@ -49,6 +50,8 @@ export function TicketToPrint() {
   if (error) {
     return <ServerError />;
   }
+
+  if (!id) return null;
 
   return (
     <section className={`${styles["ticket-to-print"]}`}>

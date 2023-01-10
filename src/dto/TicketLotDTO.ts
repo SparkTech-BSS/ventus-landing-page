@@ -12,4 +12,5 @@ export interface TicketLotDTO {
   startTime?: string;
   endTime?: string;
   id?: string;
+  qtdTotalPerUser: number;
 }
