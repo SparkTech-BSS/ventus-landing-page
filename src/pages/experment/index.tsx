@@ -1,26 +1,12 @@
 import { Button } from "components/Experment/Experment1/Button";
 import Layout from "components/Layout";
-<<<<<<< HEAD
 import { ButtonGeneric } from "components/Experment/Experment2/Button";
-=======
->>>>>>> 8e6a403543fde8a78172f9059069abceecb5a62f
 
 export default function Experment() {
   return (
     <>
       <Layout>
         <h1>Welcome To Jomanji!</h1>
-<<<<<<< HEAD
-        <section>
-          <Button />
-          <ButtonGeneric 
-          
-          />
-        </section>
-        
-        
-        
-=======
 
         <Button
           backgroundColors="btn-primary-bg"
@@ -53,7 +39,6 @@ export default function Experment() {
           fontSize="btn-size-12"
           textContent="Publicar Evento"
         />
->>>>>>> 8e6a403543fde8a78172f9059069abceecb5a62f
       </Layout>
     </>
   );

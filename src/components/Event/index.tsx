@@ -38,7 +38,7 @@ export function Event({ data }: Props) {
     >
       <div className={`container ${styles.container}`}>
         <div className={styles["header-row"]}>
-          <h1 className={`section-heading`}>Eventos</h1>
+          <h1 className={`section-heading`}>Eventosdssssssssss</h1>
 
           <Link href="/events" shallow={true}>
             <a className={styles["se-more"]}>Ver mais</a>
