@@ -1,5 +1,5 @@
 import { Button } from "components/Experment/Experment1/Button";
-import { CardHome } from "components/Experment/Experment1/CardHome";
+import { CardValor } from "components/Experment/Experment1/CardValor";
 import Layout from "components/Layout";
 
 export default function Experment() {
@@ -7,8 +7,7 @@ export default function Experment() {
     <>
       <Layout>
         <h1>Welcome To Jomanji!</h1>
-      <CardHome />
-       
+        <CardValor color="" />
       </Layout>
     </>
   );

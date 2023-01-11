@@ -1,0 +1,96 @@
+.container {
+  margin: 10rem;
+  //background: #E8E8E8;
+}
+
+.cardHome {
+  position: relative;
+  width: 344px;
+  height: 177px;
+
+  background: #FFFFFF;
+  border-radius: 10px;
+}
+
+.cardHome .cardTitle {
+  position: absolute;
+  width: 142px;
+  height: 17px;
+  left: 20px;
+  top: 20px;
+
+  font-family: 'Inter';
+  font-style: normal;
+  line-height: 17px;
+
+}
+
+.cardHome .cardSubtitle {
+  position: absolute;
+  width: 261px;
+  height: 17px;
+  left: 20px;
+  top: 62px;
+
+  font-family: 'Inter';
+  font-style: normal;
+  line-height: 17px;
+
+}
+
+.cardHome .cardValor {
+  position: absolute;
+  width: 85px;
+  height: 29px;
+  left: 20px;
+  top: 99px;
+
+  font-family: 'Inter';
+  font-style: normal;
+  line-height: 29px;
+
+}
+
+
+
+.card-size-14 {
+  font-size: 14px;
+}
+
+.card-size-12 {
+  font-size: 12px;
+}
+
+.card-fontWeight-900 {
+  font-weight: 900;
+}
+
+.card-fontWeight-700 {
+  font-weight: 700;
+}
+
+.card-fontWeight-600 {
+  font-weight: 600;
+}
+
+
+.card-color-primary {
+  color: #939598;
+}
+
+.card-color-secondary {
+  color: #17A8fd;
+}
+
+.card-color-default {
+  color: #FF5555;
+}
+
+.valor-color-primary {
+  color: #939598;
+}
+
+.valor-color-secondary {
+  color: #FF5555;
+}
+
