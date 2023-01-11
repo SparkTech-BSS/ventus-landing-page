@@ -22,7 +22,7 @@ interface ButtonProps {
 }
 
 export function Button({
-  textContent,
+  textContent = "Aqui",
   backgroundColors = "btn-default-bg",
   borderRadius = "btn-default-borderRadius",
   fontSize = "btn-size-16",
