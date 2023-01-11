@@ -7,7 +7,7 @@ interface CardValorProps {
   color?: "card-color-primary" | "card-color-secondary" | "card-color-default";
   valorColor?: "valor-color-primary" | "valor-color-secondary";
   fontWeight?:
-    | "card-fontWeight-900"
+    | "card-fontWeight-800"
     | "card-fontWeight-700"
     | "card-fontWeight-600";
   fontSize?: "card-size-14" | "card-size-12";

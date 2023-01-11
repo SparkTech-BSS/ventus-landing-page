@@ -7,7 +7,7 @@ export default function Experment() {
     <>
       <Layout>
         <h1>Welcome To Jomanji!</h1>
-        <CardValor color="" />
+        <CardValor  />
       </Layout>
     </>
   );
