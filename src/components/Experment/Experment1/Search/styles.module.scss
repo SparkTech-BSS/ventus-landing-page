@@ -56,3 +56,28 @@
 }
 
 /* Props */
+
+
+/*Responsividade para 376px */
+@media (max-width: 376px) {
+  .search .content .input_search {
+    max-width: 39.95rem;
+  }
+
+  .search .content .input_search .bx-search {
+    font-size: 2rem;
+    top: 0.7rem;
+  }
+
+  .search .content .input_search input {
+    padding: 10px 36px;
+    gap: 16px;
+    width: 311px;
+    height: 44px;
+    font-size: 16px;
+  }
+
+  .search .content h2 {
+    font-size: 20px;
+  }
+}
